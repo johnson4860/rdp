@@ -1,46 +1,85 @@
-RDP Issue Monitor v1.1 安装说明
+RDP Issue Monitor v1.2.1 安装说明（API 认证修复）
 
-本版本升级重点：
-1. 对相同 INI 内容计算 SHA-256，重复内容只存一份。
-2. 保留完整 INI Section；不会自行补造缺失的 [10.0.x.x] 主 Section。
-3. 分开显示标题中的 Windows OS Build 提示、INI Section Target Version、明确标注的 termsrv.dll Version，以及其他 10.0 版本字符串。
-4. 为每个 Candidate 保存来源：Issue Description 或 Comment、作者、时间及原始链接。
-5. 将唯一 Candidate 保存到 Repository 根目录的 compatibility-candidates.json。
-6. 保持所有 Candidate 为 unverified；不会下载、安装或发布 rdpwrap.ini。
-7. 加入本地单元测试，检查 #4564 类完整双 Section 配置及 #4567 类缺少主 Section 的情况。
+本版本是在 v1.1 基础上升级，不需要建立新的 Repository。
 
-Repository 目标结构：
-  .github/workflows/rdp-monitor.yml
-  .github/scripts/rdp_issue_monitor.py
-  tests/test_rdp_issue_monitor.py
-  monitor-state.json                  （运行时自动生成/更新）
-  compatibility-candidates.json      （运行时自动生成/更新）
+需要替换/新增的文件：
+1. 替换 .github/workflows/rdp-monitor.yml
+2. 替换 .github/scripts/rdp_issue_monitor.py
+3. 替换 tests/test_rdp_issue_monitor.py
 
-安装方式（建议 GitHub 网页操作）：
-A. 更新 Workflow：
-   1. 打开 johnson4860/rdp。
-   2. 进入 .github/workflows/rdp-monitor.yml，点 Edit。
-   3. 用本包同名文件完整替换，Commit changes。
+重要：保留 Repository 根目录现有的 monitor-state.json 和 compatibility-candidates.json，不要手动删除。
 
-B. 更新 Python 脚本：
-   1. 打开 .github/scripts/rdp_issue_monitor.py，点 Edit。
-   2. 用本包同名文件完整替换，Commit changes。
+升级行为：
+- 程序会自动把 compatibility-candidates.json 从 schema_version 1 迁移至 2。
+- 首次 v1.2 执行会自动回溯最近 30 天，重新丰富现有 Issue 的版本关系、失败信号、重复关系和来源时间。
+- 已有 INI Candidate、SHA-256 和来源会保留，不会因升级而清空。
+- 数据库仍使用 compatibility-candidates.json；新增的 issue-level 资料存放在其中的 "issues" 对象。
 
-C. 新增测试：
-   1. 建立 tests/test_rdp_issue_monitor.py。
-   2. 复制本包同名文件内容，Commit changes。
+GitHub 网页安装步骤：
+A. 更新 Workflow
+   1. 打开 Repository johnson4860/rdp。
+   2. 打开 .github/workflows/rdp-monitor.yml。
+   3. 点击 Edit，将本包同名文件完整内容替换进去。
+   4. Commit changes。
 
-重要：如果当前 Repository 已有 monitor-state.json，请保留，不要删除。v1.1 会检测 compatibility-candidates.json 是否存在；由于它是新数据库，首次运行会自动回溯最近 30 天，导入旧版 Monitor 已经发现的近期 Issue/Comment Candidate，然后后续继续使用 monitor-state.json 增量检查。
+B. 更新 Python 程序
+   1. 打开 .github/scripts/rdp_issue_monitor.py。
+   2. 点击 Edit，将本包同名文件完整内容替换进去。
+   3. Commit changes。
 
-执行：
+C. 更新测试文件
+   1. 打开 tests/test_rdp_issue_monitor.py。
+   2. 点击 Edit，替换完整内容；如果文件不存在则建立同路径文件。
+   3. Commit changes。
+
+运行：
 1. 打开 GitHub > Actions > RDP Update Monitor。
-2. 点击 Run workflow。
-3. Job 会先运行测试，再扫描上游 Issue 和评论。
-4. 成功后，Workflow 会把 monitor-state.json 和 compatibility-candidates.json 提交回 main。
-5. 在 Run 的 Summary 查看报告；在 Repository 根目录打开 compatibility-candidates.json 查看累积的唯一候选配置及来源。
+2. 点击 Run workflow > Run workflow。
+3. 等待 Test compatibility parser and classification 与 Monitor 两个步骤通过。
+4. Workflow 会提交 monitor-state.json 和 compatibility-candidates.json。
+5. 打开 Run Summary 查看每个 Issue 的分类、版本关系、失败信号、INI 完整性和来源。
 
-安全说明：
-- 不需要手动建立 Personal Access Token；Workflow 使用 GitHub 自动提供的 GITHUB_TOKEN。
-- Workflow 需要 contents: write，以保存检查点和 Candidate 数据库。
-- 此程序只收集资料，不会自动下载 termsrv.zip，不会安装/修改客户电脑，也不会覆盖生产 rdpwrap.ini。
-- INI Candidate 不是兼容性证明。请先确认实际 Windows Build、termsrv.dll File Version，并在测试环境验证。
+v1.2 新增分类：
+- Issue classification: reported_failure / duplicate_issue / maintainer_labeled_invalid / compatibility_request / general_activity。
+- Candidate review_classification: reported_failure / incomplete / unverified。
+- "reported_failure" 只表示 Issue 文字中检测到失败描述，不代表已经证明 INI 导致故障。
+- "Not RDP Wrapper bug" 等文字会作为 triage note 保存，不会自动判定配置有效。
+- Windows 标题中的 10.0.x.x 会单独记录为 title version hint；只有文本明确将版本与 termsrv/termsrv.dll 关联时，才归类为 termsrv.dll version。
+
+安全边界：
+- Monitor 只读取公开 GitHub Issue、评论和元数据。
+- 不会下载或运行 termsrv.zip / 其他附件。
+- 不会自动修改、安装或发布生产 rdpwrap.ini。
+- 不会因为 Issue Closed、Duplicate 或某个评论而把 Candidate 自动标记为 Verified。
+- `compatibility-candidates.json` 中的候选配置仍须人工审核并在隔离测试环境验证。
+
+
+v1.2.1 修复内容：
+- 明确在监控 Step 注入 GitHub Actions 自动生成的 GH_TOKEN。
+- 权限声明增加 issues: read；保留 contents: write 以提交监控数据库。
+- Python 程序启动时先检查认证状态和 REST API core quota。
+- 如果 GH_TOKEN 缺失，程序立即停止，不再匿名请求 GitHub API。
+- 日志只显示 token 是否存在及 quota，不会输出 token 内容。
+
+不需要建立 Personal Access Token，也不需要在 Repository Secrets 手动新增 GITHUB_TOKEN。
+GITHUB_TOKEN 是 GitHub Actions 自动提供的 token，由 Workflow 的 ${{ secrets.GITHUB_TOKEN }} 引用。
+
+
+本次错误说明（HTTP 403 rate-limit remaining=0, message 显示 IP address）：
+这代表之前的请求以未认证方式访问 GitHub API，触发公开匿名 API 的 60 次/小时限制。
+v1.2.1 在 monitor step 明确传入 GH_TOKEN，并在正式扫描前调用 /rate_limit 验证认证状态。
+正常情况下会在 Actions Log 看到类似：
+  GitHub API authentication: token supplied (value hidden)
+  GitHub REST core quota: 999/1000 requests remaining
+如果 token 缺失，程序会在发送 API 请求前停止，避免再次消耗匿名额度。
+
+安装 v1.2.1：
+1. 替换 .github/workflows/rdp-monitor.yml
+2. 替换 .github/scripts/rdp_issue_monitor.py
+3. 替换 tests/test_rdp_issue_monitor.py
+4. Commit changes 后，手动 Run workflow。
+5. 在 Log 先确认 GitHub REST core quota 显示的 limit 明显高于 60（通常为 1000（GITHUB_TOKEN 在 Actions 中按 Repository 计））。
+6. 再确认 Monitor 主步骤能继续扫描 Issues。
+
+无需自己建立 Personal Access Token；无需手动新增 Repository Secret。
+程序不会输出 token 本身，也不会下载或发布任何 INI。

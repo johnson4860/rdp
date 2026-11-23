@@ -1,0 +1,15 @@
+RDP Issue Monitor v1.2.1 — GitHub API authentication hotfix
+
+Problem observed:
+GitHub API returned HTTP 403 with rate-limit remaining=0 and identified a runner IP address. This is the unauthenticated 60-requests/hour rate limit.
+
+Changes:
+- Pass the automatically generated secrets.GITHUB_TOKEN to the monitor step as GH_TOKEN.
+- Declare issues: read while retaining contents: write for the database commit.
+- Refuse to send anonymous GitHub API requests if no token is present.
+- Check /rate_limit before scanning and print quota metadata only; never print the token.
+- Add clearer diagnostics for missing, rejected, or unrecognized authentication.
+- Keep the existing v1.2 parser, classification and database schema.
+
+No Personal Access Token or manually configured repository secret is required.
+No existing monitor-state.json or compatibility-candidates.json file should be deleted.

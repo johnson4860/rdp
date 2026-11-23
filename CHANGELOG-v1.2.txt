@@ -1,0 +1,21 @@
+RDP Issue Monitor v1.2 changes
+
+Compatibility Intelligence
+- Classifies an Issue as reported_failure, duplicate_issue, maintainer_labeled_invalid, compatibility_request, or general_activity.
+- Detects explicit failure signals such as service crashes, service start failures, Error 1067, BSOD/blue-screen reports, and reports of failure after applying patch codes.
+- Records matching triage/rebuttal notes (for example, "Not RDP Wrapper bug") with commenter, date, URL, and excerpt. This is informational and does not prove an INI is valid or invalid.
+- INI candidates receive a separate review_classification: reported_failure, incomplete, or unverified. No candidate is automatically marked verified or published.
+- Separates OS release, explicit OS Build hints, title-only Windows 10.0 version hints, explicitly associated termsrv.dll versions, and INI Section target versions.
+- Builds per-version role relationships so a single version can be both an explicitly named termsrv.dll version and an INI target.
+- Stores persistent issue-level records in the existing compatibility-candidates.json under the new "issues" object.
+
+Data quality
+- Source dates show created_at separately from updated_at; Issue updated_at is not described as the date an INI was posted.
+- Existing source records are refreshed when an Issue description or Comment is edited instead of duplicating the source URL.
+- Candidate classifications are recomputed from all recorded sources, so a later failure report can flag a previously found candidate.
+- Duplicate/invalid labels and related Issue references are tracked separately from candidate validity.
+
+Migration and safety
+- Automatically migrates v1.1 compatibility-candidates.json to schema_version 2 without deleting existing candidate content or source records.
+- The first v1.2 run after upgrade performs a 30-day enrichment backfill to populate issue-level and classification metadata.
+- Does not download termsrv.zip, execute attachments, install anything, or publish/replace the production rdpwrap.ini.

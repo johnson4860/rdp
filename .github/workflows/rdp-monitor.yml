@@ -1,23 +1,44 @@
-
 name: RDP Update Monitor
 
 on:
   workflow_dispatch:
-
   schedule:
-    - cron: "0 0,12 * * *"
+    # Runs every 6 hours: 00:00, 06:00, 12:00, 18:00 UTC
+    # Malaysia time (UTC+8): 08:00, 14:00, 20:00, 02:00
+    - cron: "17 0,6,12,18 * * *"
 
 permissions:
-  contents: read
+  contents: write
+
+concurrency:
+  group: rdp-update-monitor
+  cancel-in-progress: false
 
 jobs:
   monitor:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
-      - name: Check monitor
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.x"
+
+      - name: Monitor RDP Wrapper issues and comments
+        run: python .github/scripts/rdp_issue_monitor.py
+
+      - name: Save monitoring checkpoint
         run: |
-          echo "RDP Update Monitor Started"
-          echo "Date: $(date -u)"
-          echo "Repository: $GITHUB_REPOSITORY"
-          echo "Status: Running"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add monitor-state.json
+          if git diff --cached --quiet; then
+            echo "No checkpoint changes to save."
+          else
+            git commit -m "Update RDP monitor checkpoint"
+            git push
+          fi

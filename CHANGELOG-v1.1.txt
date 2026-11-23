@@ -1,0 +1,12 @@
+RDP Issue Monitor v1.1 changes
+
+- Deduplicates byte-for-byte/whitespace-equivalent INI candidates using SHA-256.
+- Keeps complete section headers and content; never invents missing INI sections.
+- Detects and warns when a candidate contains an SLInit section but lacks its primary version section.
+- Separates Windows OS release/build hints, INI section target versions, explicit termsrv.dll version mentions, and unclassified 10.0.x.x strings.
+- Stores candidate provenance (Issue description or comment, author, date, URLs, issue state, labels).
+- Persists cumulative unique candidates in compatibility-candidates.json.
+- Merges multiple sources for the same candidate instead of storing duplicate content.
+- Adds five parser/database regression tests.
+- On first v1.1 run, backfills the previous 30 days when compatibility-candidates.json does not yet exist, even if monitor-state.json from v1.0 is already present.
+- Does not download termsrv.zip, install anything, or overwrite production rdpwrap.ini.

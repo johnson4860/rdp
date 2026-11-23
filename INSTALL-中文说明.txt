@@ -1,0 +1,46 @@
+RDP Issue Monitor v1.1 安装说明
+
+本版本升级重点：
+1. 对相同 INI 内容计算 SHA-256，重复内容只存一份。
+2. 保留完整 INI Section；不会自行补造缺失的 [10.0.x.x] 主 Section。
+3. 分开显示标题中的 Windows OS Build 提示、INI Section Target Version、明确标注的 termsrv.dll Version，以及其他 10.0 版本字符串。
+4. 为每个 Candidate 保存来源：Issue Description 或 Comment、作者、时间及原始链接。
+5. 将唯一 Candidate 保存到 Repository 根目录的 compatibility-candidates.json。
+6. 保持所有 Candidate 为 unverified；不会下载、安装或发布 rdpwrap.ini。
+7. 加入本地单元测试，检查 #4564 类完整双 Section 配置及 #4567 类缺少主 Section 的情况。
+
+Repository 目标结构：
+  .github/workflows/rdp-monitor.yml
+  .github/scripts/rdp_issue_monitor.py
+  tests/test_rdp_issue_monitor.py
+  monitor-state.json                  （运行时自动生成/更新）
+  compatibility-candidates.json      （运行时自动生成/更新）
+
+安装方式（建议 GitHub 网页操作）：
+A. 更新 Workflow：
+   1. 打开 johnson4860/rdp。
+   2. 进入 .github/workflows/rdp-monitor.yml，点 Edit。
+   3. 用本包同名文件完整替换，Commit changes。
+
+B. 更新 Python 脚本：
+   1. 打开 .github/scripts/rdp_issue_monitor.py，点 Edit。
+   2. 用本包同名文件完整替换，Commit changes。
+
+C. 新增测试：
+   1. 建立 tests/test_rdp_issue_monitor.py。
+   2. 复制本包同名文件内容，Commit changes。
+
+重要：如果当前 Repository 已有 monitor-state.json，请保留，不要删除。v1.1 会检测 compatibility-candidates.json 是否存在；由于它是新数据库，首次运行会自动回溯最近 30 天，导入旧版 Monitor 已经发现的近期 Issue/Comment Candidate，然后后续继续使用 monitor-state.json 增量检查。
+
+执行：
+1. 打开 GitHub > Actions > RDP Update Monitor。
+2. 点击 Run workflow。
+3. Job 会先运行测试，再扫描上游 Issue 和评论。
+4. 成功后，Workflow 会把 monitor-state.json 和 compatibility-candidates.json 提交回 main。
+5. 在 Run 的 Summary 查看报告；在 Repository 根目录打开 compatibility-candidates.json 查看累积的唯一候选配置及来源。
+
+安全说明：
+- 不需要手动建立 Personal Access Token；Workflow 使用 GitHub 自动提供的 GITHUB_TOKEN。
+- Workflow 需要 contents: write，以保存检查点和 Candidate 数据库。
+- 此程序只收集资料，不会自动下载 termsrv.zip，不会安装/修改客户电脑，也不会覆盖生产 rdpwrap.ini。
+- INI Candidate 不是兼容性证明。请先确认实际 Windows Build、termsrv.dll File Version，并在测试环境验证。

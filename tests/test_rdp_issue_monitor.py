@@ -445,6 +445,61 @@ SingleUserCode.x64=mov_eax_1_nop_2
         self.assertIn("production_has_extra_keys", result["comparison_flags"])
 
 
+    def test_version_groups_merge_multiple_hashes_under_one_ini_target(self):
+        baseline = self.BASELINE.replace("ExtraProductionKey.x64=present\n", "")
+        exact = self.make_candidate(INI_28000, candidate_id="exact-candidate")
+        alternate_text = INI_28000.replace(
+            "SingleUserCode.x64=mov_eax_1_nop_2",
+            "SingleUserCode.x64=mov_eax_1_nop_2\nCandidateOnly.x64=ABC",
+        )
+        alternate = self.make_candidate(
+            alternate_text, review="reported_failure", candidate_id="alternate-candidate"
+        )
+        alternate["sources"][0]["issue_number"] = 4565
+        alternate["sources"][0]["source_url"] = "https://github.com/stascorp/rdpwrap/issues/4565"
+        result = monitor.build_production_comparison(
+            {"candidates": {exact["sha256"]: exact, alternate["sha256"]: alternate}},
+            baseline,
+            "commit123",
+        )
+        self.assertEqual(result["candidate_count"], 2)
+        self.assertEqual(result["version_group_count"], 1)
+        group = result["version_groups"][0]
+        self.assertEqual(group["target_version"], "10.0.28000.3614")
+        self.assertEqual(group["candidate_count"], 2)
+        self.assertEqual(group["group_status"], "mixed_variants")
+        self.assertTrue(group["has_reported_failure"])
+        self.assertEqual(group["source_issue_numbers"], [4564, 4565])
+        self.assertEqual(group["comparison_status_counts"], {"exact_match": 1, "new_keys": 1})
+
+    def test_grouped_comparison_report_lists_versions_variants_and_review_signals(self):
+        baseline = self.BASELINE.replace("ExtraProductionKey.x64=present\n", "")
+        candidate = self.make_candidate(INI_28000, candidate_id="grouped-candidate")
+        result = monitor.build_production_comparison(
+            {"candidates": {candidate["sha256"]: candidate}}, baseline
+        )
+        report = monitor.build_comparison_report(result)
+        self.assertIn("Grouped by INI target version", report)
+        self.assertIn("10.0.28000.3614", report)
+        self.assertIn("ALL CANDIDATES MATCH PRODUCTION", report)
+        self.assertIn("Version group details", report)
+        self.assertIn("Candidate `grouped-candidate`", report)
+        self.assertIn("source Issue(s): #4564", report)
+
+    def test_version_groups_are_sorted_newest_first_and_keep_incomplete_variants(self):
+        baseline = self.BASELINE.replace("ExtraProductionKey.x64=present\n", "")
+        newest = self.make_candidate(
+            INI_28000.replace("28000.3614", "28000.9999"), candidate_id="newest"
+        )
+        incomplete = self.make_candidate(INI_26100_INCOMPLETE, candidate_id="incomplete")
+        result = monitor.build_production_comparison(
+            {"candidates": {newest["sha256"]: newest, incomplete["sha256"]: incomplete}},
+            baseline,
+        )
+        self.assertEqual(result["version_groups"][0]["target_version"], "10.0.28000.9999")
+        self.assertEqual(result["version_groups"][1]["target_version"], "10.0.26100.10068")
+        self.assertEqual(result["version_groups"][1]["group_status"], "incomplete")
+
     def test_workflow_commits_comparison_json_and_checks_out_production_ini(self):
         workflow_path = SCRIPT.parents[2] / ".github" / "workflows" / "rdp-monitor.yml"
         workflow = workflow_path.read_text(encoding="utf-8")

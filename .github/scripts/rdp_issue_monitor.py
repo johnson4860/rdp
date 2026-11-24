@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""RDP Wrapper upstream monitor v1.2.3.
+"""RDP Wrapper upstream monitor v1.2.4.
 
 Collects public issue/comment activity, extracts INI candidates, and classifies
 reported compatibility context. It never downloads, installs, or publishes INI.
@@ -35,6 +35,7 @@ INI_MARKERS = (
 VERSION_RE = re.compile(r"(?<![\d.])10\.0\.\d{4,5}\.\d{1,7}(?!\d)")
 SECTION_RE = re.compile(r"^\s*\[([^\]\r\n]+)\]\s*$")
 KEY_RE = re.compile(r"^\s*[A-Za-z_][A-Za-z0-9_.-]*\s*=")
+ARCH_KEY_RE = re.compile(r"\.(x86|x64)$", re.IGNORECASE)
 FENCE_RE = re.compile(r"```[^\n`]*\n(.*?)```", re.DOTALL)
 URL_RE = re.compile(r"https?://[^\s<>\]\[()\"']+", re.IGNORECASE)
 
@@ -149,7 +150,7 @@ def api_get(url: str):
     headers = {
         "Accept": "application/vnd.github+json",
         "X-GitHub-Api-Version": "2022-11-28",
-        "User-Agent": "johnson4860-rdp-update-monitor/1.2.2",
+        "User-Agent": "johnson4860-rdp-update-monitor/1.2.4",
         "Authorization": f"Bearer {token}",
     }
     request = Request(url, headers=headers)
@@ -311,6 +312,45 @@ def extract_ini_candidates(text: str) -> list[dict]:
     ]
 
 
+def _key_architecture(key: str) -> str | None:
+    """Return x86/x64 only when the INI key explicitly carries that suffix."""
+    match = ARCH_KEY_RE.search((key or "").strip())
+    return match.group(1).lower() if match else None
+
+
+def detect_ini_architecture(content: str) -> dict:
+    """Detect candidate architecture from explicit INI key suffixes only.
+
+    OS titles and version strings are deliberately not used as architecture
+    evidence. Shared PatchCodes names are excluded because they are not
+    architecture-suffixed INI settings.
+    """
+    counts = {"x86": 0, "x64": 0}
+    current_section = ""
+    for raw_line in (content or "").replace("\ufeff", "").splitlines():
+        line = raw_line.strip()
+        section_match = SECTION_RE.match(line)
+        if section_match:
+            current_section = section_match.group(1).strip().casefold()
+            continue
+        if not line or line.startswith((";", "#")) or "=" not in line:
+            continue
+        if current_section == "patchcodes":
+            continue
+        key = line.split("=", 1)[0].strip()
+        architecture = _key_architecture(key)
+        if architecture:
+            counts[architecture] += 1
+
+    found = [arch for arch, count in counts.items() if count]
+    architecture = found[0] if len(found) == 1 else ("mixed" if len(found) > 1 else "unknown")
+    return {
+        "architecture": architecture,
+        "architecture_key_counts": counts,
+        "architecture_detection": "explicit_ini_key_suffix" if found else "not_detected",
+    }
+
+
 def inspect_candidate(content: str) -> dict:
     sections = []
     ini_targets, main_targets, slinit_targets = set(), set(), set()
@@ -340,11 +380,15 @@ def inspect_candidate(content: str) -> dict:
     missing = [key for key in expected_keys if key.lower() not in lower_content]
     if missing:
         warnings.append("Common patch key(s) not detected: " + ", ".join(missing) + ".")
+    architecture = detect_ini_architecture(content)
     return {
         "sections": sections,
         "ini_target_versions": sorted(ini_targets),
         "main_section_versions": sorted(main_targets),
         "slinit_section_versions": sorted(slinit_targets),
+        "architecture": architecture["architecture"],
+        "architecture_key_counts": architecture["architecture_key_counts"],
+        "architecture_detection": architecture["architecture_detection"],
         "warnings": warnings,
         "missing_common_keys": missing,
         "is_complete": bool(main_targets) and not missing,
@@ -527,6 +571,9 @@ def add_candidate_to_database(database: dict, candidate: dict, source: dict, now
             "ini_target_versions": details["ini_target_versions"],
             "main_section_versions": details["main_section_versions"],
             "slinit_section_versions": details["slinit_section_versions"],
+            "architecture": details["architecture"],
+            "architecture_key_counts": details["architecture_key_counts"],
+            "architecture_detection": details["architecture_detection"],
             "sections": details["sections"],
             "warnings": details["warnings"],
             "review_flags": [],
@@ -571,6 +618,9 @@ def add_candidate_to_database(database: dict, candidate: dict, source: dict, now
     existing["ini_target_versions"] = details["ini_target_versions"]
     existing["main_section_versions"] = details["main_section_versions"]
     existing["slinit_section_versions"] = details["slinit_section_versions"]
+    existing["architecture"] = details["architecture"]
+    existing["architecture_key_counts"] = details["architecture_key_counts"]
+    existing["architecture_detection"] = details["architecture_detection"]
     return ("new" if new_candidate else ("source-added" if added_source else "existing"), new_candidate)
 
 
@@ -666,11 +716,12 @@ def extract_main_updated(text: str) -> str | None:
 
 
 def compare_candidate_to_production(candidate: dict, production_text: str) -> dict:
-    """Compare one upstream candidate against production by section and key/value."""
+    """Compare one Candidate with Production while isolating x86 and x64 keys."""
     candidate_text = candidate.get("content", "")
     candidate_parsed = parse_ini_document(candidate_text)
     production_parsed = parse_ini_document(production_text)
     details = inspect_candidate(candidate_text)
+    architecture = details["architecture"]
 
     section_results = []
     flags: set[str] = set()
@@ -678,31 +729,70 @@ def compare_candidate_to_production(candidate: dict, production_text: str) -> di
     candidate_only_keys = []
     production_only_keys = []
     new_sections = []
-    exact_sections = 0
-    partial_sections = 0
+    new_architecture_sections = []
 
     for section_key in sorted(candidate_parsed["sections"].keys()):
         section_name = candidate_parsed["section_display"].get(section_key, section_key)
-        candidate_values = candidate_parsed["sections"][section_key]
+        candidate_full = candidate_parsed["sections"][section_key]
         if section_key not in production_parsed["sections"]:
             new_sections.append(section_name)
             flags.add("new_section")
             section_results.append({
                 "section": section_name,
                 "status": "new_section",
-                "candidate_key_count": len(candidate_values),
+                "architecture": architecture,
+                "candidate_key_count": len(candidate_full),
                 "production_key_count": 0,
+                "candidate_architecture_key_count": sum(_key_architecture(k) == architecture for k in candidate_full),
+                "production_architecture_key_count": 0,
+                "ignored_opposite_architecture_key_count": 0,
+                "production_opposite_architectures": [],
                 "value_differences": [],
-                "candidate_only_keys": sorted(candidate_values.keys()),
+                "candidate_only_keys": sorted(candidate_full.keys()),
                 "candidate_entries": [
                     {"key": key, "value": value}
-                    for key, value in sorted(candidate_values.items())
+                    for key, value in sorted(candidate_full.items())
                 ],
                 "production_only_keys": [],
             })
             continue
 
-        production_values = production_parsed["sections"][section_key]
+        production_full = production_parsed["sections"][section_key]
+        architecture_aware_section = architecture in ("x86", "x64") and section_key != "patchcodes"
+        if architecture_aware_section:
+            opposite_architecture = "x64" if architecture == "x86" else "x86"
+            candidate_values = {
+                key: value for key, value in candidate_full.items()
+                if _key_architecture(key) in (None, architecture)
+            }
+            production_values = {
+                key: value for key, value in production_full.items()
+                if _key_architecture(key) in (None, architecture)
+            }
+            candidate_arch_keys = {
+                key: value for key, value in candidate_full.items()
+                if _key_architecture(key) == architecture
+            }
+            production_arch_keys = {
+                key: value for key, value in production_full.items()
+                if _key_architecture(key) == architecture
+            }
+            production_opposite_keys = {
+                key: value for key, value in production_full.items()
+                if _key_architecture(key) == opposite_architecture
+            }
+            production_opposite_architectures = [opposite_architecture] if production_opposite_keys else []
+            is_new_architecture = bool(candidate_arch_keys) and not bool(production_arch_keys)
+            ignored_opposite_count = len(production_opposite_keys)
+        else:
+            candidate_values = candidate_full
+            production_values = production_full
+            candidate_arch_keys = {}
+            production_arch_keys = {}
+            production_opposite_architectures = []
+            is_new_architecture = False
+            ignored_opposite_count = 0
+
         section_value_differences = []
         section_candidate_only = []
         section_production_only = []
@@ -726,7 +816,11 @@ def compare_candidate_to_production(candidate: dict, production_text: str) -> di
                 section_production_only.append(record)
                 production_only_keys.append(record)
 
-        if section_value_differences:
+        if is_new_architecture:
+            section_status = "new_architecture"
+            new_architecture_sections.append(section_name)
+            flags.add("new_architecture")
+        elif section_value_differences:
             section_status = "value_difference"
             flags.add("value_difference")
         elif section_candidate_only:
@@ -734,16 +828,20 @@ def compare_candidate_to_production(candidate: dict, production_text: str) -> di
             flags.add("new_keys")
         elif section_production_only:
             section_status = "production_has_extra_keys"
-            partial_sections += 1
             flags.add("production_has_extra_keys")
         else:
             section_status = "exact_match"
-            exact_sections += 1
+
         section_results.append({
             "section": section_name,
             "status": section_status,
+            "architecture": architecture,
             "candidate_key_count": len(candidate_values),
             "production_key_count": len(production_values),
+            "candidate_architecture_key_count": len(candidate_arch_keys),
+            "production_architecture_key_count": len(production_arch_keys),
+            "ignored_opposite_architecture_key_count": ignored_opposite_count,
+            "production_opposite_architectures": production_opposite_architectures,
             "value_differences": section_value_differences,
             "candidate_only_keys": [item["key"] for item in section_candidate_only],
             "production_only_keys": [item["key"] for item in section_production_only],
@@ -755,17 +853,31 @@ def compare_candidate_to_production(candidate: dict, production_text: str) -> di
         flags.add("duplicate_ini_keys")
     if details.get("warnings"):
         flags.add("parser_warning")
+    if architecture == "mixed":
+        flags.add("mixed_architecture_candidate")
+    if architecture == "unknown":
+        flags.add("architecture_unknown")
 
     incomplete = bool(
         not details.get("is_complete")
         or candidate_parsed["unsectioned_entries"]
         or candidate_parsed["duplicate_keys"]
     )
-    difference_kinds = sum(bool(flag) for flag in (new_sections, value_differences, candidate_only_keys, production_only_keys))
+    new_architecture_section_keys = {name.casefold() for name in new_architecture_sections}
+    candidate_only_outside_new_arch = [
+        item for item in candidate_only_keys
+        if item.get("section", "").casefold() not in new_architecture_section_keys
+    ]
+    difference_kinds = sum(bool(flag) for flag in (
+        new_sections, new_architecture_sections, value_differences,
+        candidate_only_outside_new_arch, production_only_keys,
+    ))
     if incomplete:
         status = "incomplete"
     elif difference_kinds > 1:
         status = "mixed_difference"
+    elif new_architecture_sections:
+        status = "new_architecture"
     elif value_differences:
         status = "value_difference"
     elif new_sections:
@@ -781,11 +893,15 @@ def compare_candidate_to_production(candidate: dict, production_text: str) -> di
         "candidate_id": candidate.get("candidate_id") or candidate.get("sha256", "")[:16],
         "sha256": candidate.get("sha256"),
         "ini_target_versions": details.get("ini_target_versions", []),
+        "architecture": architecture,
+        "architecture_key_counts": details["architecture_key_counts"],
+        "architecture_detection": details["architecture_detection"],
         "candidate_review_classification": candidate.get("review_classification", "unverified"),
         "comparison_status": status,
         "comparison_flags": sorted(flags),
         "section_results": section_results,
         "new_sections": sorted(new_sections),
+        "new_architecture_sections": sorted(new_architecture_sections),
         "value_differences": value_differences,
         "candidate_only_keys": candidate_only_keys,
         "production_only_keys": production_only_keys,
@@ -818,18 +934,19 @@ def _version_sort_key(value: str) -> tuple:
 
 
 def build_version_groups(comparisons: list[dict]) -> list[dict]:
-    """Group unique INI hashes by target version without merging their content."""
-    grouped: dict[str, list[dict]] = {}
+    """Group candidate hashes by INI target version AND detected architecture."""
+    grouped: dict[tuple[str, str], list[dict]] = {}
     for item in comparisons:
         versions = item.get("ini_target_versions") or ["(version not detected)"]
+        architecture = item.get("architecture", "unknown")
         for version in versions:
-            grouped.setdefault(version, []).append(item)
+            grouped.setdefault((version, architecture), []).append(item)
 
     groups = []
-    for version, candidates in grouped.items():
-        # A candidate that declares multiple target sections appears in each
-        # corresponding version group, but only once inside each group.
-        unique_candidates = {item.get("candidate_id") or item.get("sha256"): item for item in candidates}
+    for (version, architecture), candidates in grouped.items():
+        unique_candidates = {
+            item.get("candidate_id") or item.get("sha256"): item for item in candidates
+        }
         candidate_items = list(unique_candidates.values())
         comparison_counts: dict[str, int] = {}
         review_counts: dict[str, int] = {}
@@ -841,11 +958,11 @@ def build_version_groups(comparisons: list[dict]) -> list[dict]:
             review_counts[review_status] = review_counts.get(review_status, 0) + 1
             for source in item.get("sources", []):
                 source_url = source.get("source_url") or ""
-                source_key = source_url or "|".join(str(source.get(k) or "") for k in (
+                source_key_value = source_url or "|".join(str(source.get(k) or "") for k in (
                     "source_type", "issue_number", "author", "created_at"
                 ))
-                if source_key:
-                    source_map[source_key] = {
+                if source_key_value:
+                    source_map[source_key_value] = {
                         "issue_number": source.get("issue_number"),
                         "author": source.get("author"),
                         "source_type": source.get("source_type"),
@@ -884,6 +1001,7 @@ def build_version_groups(comparisons: list[dict]) -> list[dict]:
             variants.append({
                 "candidate_id": item.get("candidate_id"),
                 "sha256": item.get("sha256"),
+                "architecture": item.get("architecture", architecture),
                 "comparison_status": item.get("comparison_status", "unknown"),
                 "review_classification": item.get("candidate_review_classification", "unverified"),
                 "section_results": [
@@ -892,6 +1010,9 @@ def build_version_groups(comparisons: list[dict]) -> list[dict]:
                         "status": section.get("status"),
                         "candidate_key_count": section.get("candidate_key_count", 0),
                         "production_key_count": section.get("production_key_count", 0),
+                        "candidate_architecture_key_count": section.get("candidate_architecture_key_count", 0),
+                        "production_architecture_key_count": section.get("production_architecture_key_count", 0),
+                        "ignored_opposite_architecture_key_count": section.get("ignored_opposite_architecture_key_count", 0),
                     }
                     for section in item.get("section_results", [])
                 ],
@@ -900,6 +1021,8 @@ def build_version_groups(comparisons: list[dict]) -> list[dict]:
 
         groups.append({
             "target_version": version,
+            "architecture": architecture,
+            "architecture_detection": "explicit_ini_key_suffix" if architecture in ("x86", "x64") else "mixed_or_not_detected",
             "candidate_count": len(candidate_items),
             "group_status": group_status,
             "comparison_status_counts": dict(sorted(comparison_counts.items())),
@@ -913,14 +1036,19 @@ def build_version_groups(comparisons: list[dict]) -> list[dict]:
             "sources": source_items,
         })
 
-    # Newest numeric target first; unknown version labels are listed last.
-    return sorted(groups, key=lambda group: _version_sort_key(group["target_version"]), reverse=True)
+    arch_order = {"x64": 4, "x86": 3, "mixed": 2, "unknown": 1}
+    return sorted(
+        groups,
+        key=lambda group: (_version_sort_key(group["target_version"]), arch_order.get(group["architecture"], 0)),
+        reverse=True,
+    )
 
 
 def _version_group_label(group: dict) -> str:
     labels = {
         "exact_match": "ALL CANDIDATES MATCH PRODUCTION",
         "new_section": "NEW SECTION — NOT IN PRODUCTION",
+        "new_architecture": "NEW ARCHITECTURE — SECTION EXISTS, ARCHITECTURE NOT IN PRODUCTION",
         "new_keys": "EXTRA KEYS — REVIEW DIFFERENCES",
         "value_difference": "VALUE DIFFERENCE",
         "mixed_difference": "MIXED DIFFERENCES",
@@ -943,27 +1071,45 @@ def build_production_comparison(database: dict, production_text: str, baseline_c
     priority = {
         "value_difference": 0,
         "mixed_difference": 1,
-        "new_section": 2,
-        "new_keys": 3,
-        "incomplete": 4,
-        "partial_match": 5,
-        "exact_match": 6,
+        "new_architecture": 2,
+        "new_section": 3,
+        "new_keys": 4,
+        "incomplete": 5,
+        "partial_match": 6,
+        "exact_match": 7,
     }
     comparisons.sort(key=lambda item: (
         priority.get(item["comparison_status"], 99),
         item.get("ini_target_versions", []),
+        item.get("architecture", "unknown"),
         item["candidate_id"],
     ))
     counts: dict[str, int] = {}
+    architecture_counts: dict[str, int] = {}
     for item in comparisons:
         status = item["comparison_status"]
         counts[status] = counts.get(status, 0) + 1
+        architecture = item.get("architecture", "unknown")
+        architecture_counts[architecture] = architecture_counts.get(architecture, 0) + 1
+
+    production_architecture_counts = {"x86": 0, "x64": 0}
+    for section_name, values in production_parsed["sections"].items():
+        if section_name == "patchcodes":
+            continue
+        for key in values:
+            key_arch = _key_architecture(key)
+            if key_arch:
+                production_architecture_counts[key_arch] += 1
+
     version_groups = build_version_groups(comparisons)
     group_status_counts: dict[str, int] = {}
     for group in version_groups:
         group_status_counts[group["group_status"]] = group_status_counts.get(group["group_status"], 0) + 1
+    unique_versions = sorted({
+        version for item in comparisons for version in (item.get("ini_target_versions") or ["(version not detected)"])
+    }, key=_version_sort_key, reverse=True)
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "generated_at": iso_utc(utc_now()),
         "baseline": {
             "path": str(PRODUCTION_INI_PATH),
@@ -971,9 +1117,14 @@ def build_production_comparison(database: dict, production_text: str, baseline_c
             "main_updated": extract_main_updated(production_text),
             "git_commit": baseline_commit,
             "section_count": len(production_parsed["sections"]),
+            "architecture_key_counts": production_architecture_counts,
         },
         "candidate_count": len(comparisons),
-        "version_group_count": len(version_groups),
+        "target_version_count": len(unique_versions),
+        "version_group_count": len(unique_versions),
+        "architecture_group_count": len(version_groups),
+        "version_architecture_group_count": len(version_groups),
+        "architecture_counts": dict(sorted(architecture_counts.items())),
         "version_group_status_counts": dict(sorted(group_status_counts.items())),
         "status_counts": counts,
         "version_groups": version_groups,
@@ -991,26 +1142,36 @@ def build_comparison_report(comparison: dict) -> str:
         f"- `[Main] Updated`: `{baseline.get('main_updated') or 'not detected'}`",
         f"- Baseline commit: `{baseline.get('git_commit') or 'not provided'}`",
         f"- Production sections parsed: `{baseline['section_count']}`",
+        f"- Production architecture key counts: x86=`{baseline.get('architecture_key_counts', {}).get('x86', 0)}`; x64=`{baseline.get('architecture_key_counts', {}).get('x64', 0)}`",
         f"- Unique upstream candidates compared: `{comparison['candidate_count']}`",
+        f"- Unique INI target versions: `{comparison.get('target_version_count', comparison.get('version_group_count', 0))}`",
+        f"- Version + architecture groups: `{comparison.get('version_group_count', 0)}`",
+        "- Architecture is detected only from explicit `.x86` / `.x64` INI key suffixes; OS titles are not used to infer it.",
         "- Comparison is read-only; it does not modify `rdpwrap.ini`.",
+        "",
+        "### Candidate architecture totals",
+        "",
+        "| Architecture | Candidates |",
+        "|---|---:|",
+    ]
+    for architecture in ("x64", "x86", "mixed", "unknown"):
+        lines.append(f"| `{architecture}` | {comparison.get('architecture_counts', {}).get(architecture, 0)} |")
+    lines.extend([
         "",
         "### Comparison totals",
         "",
         "| Result | Candidates |",
         "|---|---:|",
-    ]
-    for status in ("new_section", "value_difference", "new_keys", "mixed_difference", "partial_match", "exact_match", "incomplete"):
+    ])
+    for status in ("new_section", "new_architecture", "value_difference", "new_keys", "mixed_difference", "partial_match", "exact_match", "incomplete"):
         count = comparison["status_counts"].get(status, 0)
         lines.append(f"| `{status}` | {count} |")
     lines.extend([
         "",
-        f"- Unique INI target versions: `{comparison.get('version_group_count', len(comparison.get('version_groups', [])))}`",
-        "- Totals above count unique Candidate hashes; the version overview below groups those hashes by INI target version.",
+        "### Grouped by INI target version + architecture",
         "",
-        "### Grouped by INI target version",
-        "",
-        "| INI target version | Candidate variants | Production comparison | Review signals | Upstream Issues |",
-        "|---|---:|---|---|---|",
+        "| INI target version | Architecture | Candidate variants | Production comparison | Review signals | Upstream Issues |",
+        "|---|---|---:|---|---|---|",
     ])
     version_groups = comparison.get("version_groups") or build_version_groups(comparison.get("comparisons", []))
     for group in version_groups:
@@ -1024,27 +1185,29 @@ def build_comparison_report(comparison: dict) -> str:
             review_labels.append("none recorded")
         issue_text = ", ".join(f"[#{number}](https://github.com/{UPSTREAM_OWNER}/{UPSTREAM_REPO}/issues/{number})" for number in group.get("source_issue_numbers", [])) or "—"
         lines.append(
-            f"| `{group['target_version']}` | {group['candidate_count']} | "
+            f"| `{group['target_version']}` | **{group['architecture']}** | {group['candidate_count']} | "
             f"**{_version_group_label(group)}** | {'; '.join(review_labels)} | {issue_text} |"
         )
+
     if version_groups:
-        lines.extend(["", "#### Version group details", ""])
+        lines.extend(["", "#### Version group details (split by architecture)", ""])
         for group in version_groups:
-            lines.append(f"##### `{group['target_version']}` — {_version_group_label(group)}")
+            lines.append(f"##### `{group['target_version']}` — {group['architecture']} — {_version_group_label(group)}")
             lines.append(f"- Unique Candidate variants: `{group['candidate_count']}`")
             for variant in group.get("variants", []):
                 sections = ", ".join(
-                    f"`{section['section']}` ({section['status']}; {section['candidate_key_count']} candidate keys / {section['production_key_count']} production keys)"
+                    f"`{section['section']}` ({section['status']}; "
+                    f"{section['candidate_key_count']} candidate keys / {section['production_key_count']} matching-architecture Production keys)"
                     for section in variant.get("section_results", [])
                 ) or "no parsed sections"
                 issue_refs = ", ".join(f"#{number}" for number in variant.get("issue_numbers", [])) or "no issue source recorded"
                 lines.append(
-                    f"- Candidate `{variant['candidate_id']}` — `{variant['comparison_status']}`; "
-                    f"review `{variant['review_classification']}`; SHA-256 `{variant['sha256']}`; "
-                    f"source Issue(s): {issue_refs}; sections: {sections}"
+                    f"- Candidate `{variant['candidate_id']}` — `{variant['architecture']}`; "
+                    f"`{variant['comparison_status']}`; review `{variant['review_classification']}`; "
+                    f"SHA-256 `{variant['sha256']}`; source Issue(s): {issue_refs}; sections: {sections}"
                 )
             if group.get("has_reported_failure"):
-                lines.append("- **Review warning:** at least one Candidate in this target-version group carries a reported-failure signal. This is not proof that every variant is defective.")
+                lines.append("- **Review warning:** at least one Candidate in this target-version / architecture group carries a reported-failure signal. This is not proof that every variant is defective.")
             lines.append("")
 
     lines.extend(["### Full candidate comparison list", ""])
@@ -1054,6 +1217,7 @@ def build_comparison_report(comparison: dict) -> str:
 
     labels = {
         "new_section": "NEW SECTION — not in Production",
+        "new_architecture": "NEW ARCHITECTURE — same section exists only for another architecture",
         "value_difference": "VALUE DIFFERENCE",
         "new_keys": "NEW KEYS — absent from Production section",
         "mixed_difference": "MIXED DIFFERENCES",
@@ -1066,6 +1230,7 @@ def build_comparison_report(comparison: dict) -> str:
         lines.extend([
             f"#### `{item['candidate_id']}` — {labels.get(item['comparison_status'], item['comparison_status'])}",
             f"- INI target version(s): `{versions}`",
+            f"- Architecture: `{item.get('architecture', 'unknown')}` (x86 keys: {item.get('architecture_key_counts', {}).get('x86', 0)}; x64 keys: {item.get('architecture_key_counts', {}).get('x64', 0)})",
             f"- Candidate review status: `{item.get('candidate_review_classification', 'unverified')}`",
             f"- SHA-256: `{item['sha256']}`",
             f"- Sources: `{item['source_count']}`",
@@ -1086,7 +1251,8 @@ def build_comparison_report(comparison: dict) -> str:
             for section in item["section_results"]:
                 lines.append(
                     f"  - `{section['section']}`: `{section['status']}` "
-                    f"(candidate keys: {section['candidate_key_count']}; production keys: {section['production_key_count']})"
+                    f"(candidate keys: {section['candidate_key_count']}; matching-architecture Production keys: {section['production_key_count']}; "
+                    f"ignored opposite-architecture Production keys: {section.get('ignored_opposite_architecture_key_count', 0)})"
                 )
                 if section.get("candidate_entries"):
                     for entry in section["candidate_entries"][:50]:
@@ -1107,7 +1273,7 @@ def build_comparison_report(comparison: dict) -> str:
             for entry in item["candidate_only_keys"][:30]:
                 lines.append(f"  - `{entry['section']}` / `{entry['key']}` = `{entry['candidate_value']}`")
         if item.get("production_only_keys"):
-            lines.append("- Production has additional key(s) not present in Candidate:")
+            lines.append("- Production has additional matching-architecture key(s) not present in Candidate:")
             for entry in item["production_only_keys"][:30]:
                 lines.append(f"  - `{entry['section']}` / `{entry['key']}` = `{entry['production_value']}`")
         if item.get("unsectioned_entries"):
@@ -1121,18 +1287,22 @@ def build_comparison_report(comparison: dict) -> str:
 
     lines.extend([
         "### Comparison rules",
+        "- Architecture is inferred only from explicit `.x86` / `.x64` key suffixes in the candidate INI; OS title/build text is not used.",
+        "- For x86/x64 candidates, versioned and other architecture-specific sections compare only keys for the candidate architecture plus architecture-neutral keys.",
+        "- Opposite-architecture Production keys are counted and reported separately; they are not treated as missing candidate keys or value mismatches.",
+        "- `[PatchCodes]` remains shared and is compared without architecture filtering.",
+        "- If a Production section exists but contains only the opposite architecture, the Candidate section is marked `new_architecture`.",
         "- Section names and key names are compared case-insensitively; values are compared exactly after trimming surrounding whitespace.",
-        "- Candidate-only keys mean the Candidate contains settings absent from the same Production section.",
-        "- Production-only keys mean the Production section contains additional settings; this is reported as a partial match, not an exact match.",
         "- A missing main section or unsectioned key/value lines make the Candidate `incomplete`; valid sections may still show their individual comparison result.",
         "- A comparison match is not a compatibility test. No Candidate is automatically promoted to Verified or Published.",
     ])
     return "\n".join(lines) + "\n"
 
+
 def build_report(issues: list[dict], since: datetime, scan_type: str, database: dict, event_counts: dict) -> str:
     checked_at = utc_now()
     lines = [
-        "# RDP Wrapper upstream monitor v1.2.3",
+        "# RDP Wrapper upstream monitor v1.2.4",
         "",
         f"- Checked at (UTC): `{iso_utc(checked_at)}`",
         f"- Upstream: [`{UPSTREAM_OWNER}/{UPSTREAM_REPO}`](https://github.com/{UPSTREAM_OWNER}/{UPSTREAM_REPO})",
@@ -1388,6 +1558,15 @@ def build_report(issues: list[dict], since: datetime, scan_type: str, database: 
     return "\n".join(lines) + "\n"
 
 
+def enrich_architecture_metadata(database: dict) -> None:
+    """Backfill architecture evidence for old Candidate database entries."""
+    for candidate in database.get("candidates", {}).values():
+        details = inspect_candidate(candidate.get("content", ""))
+        candidate["architecture"] = details["architecture"]
+        candidate["architecture_key_counts"] = details["architecture_key_counts"]
+        candidate["architecture_detection"] = details["architecture_detection"]
+
+
 def main() -> int:
     # Read the production baseline before making API calls, so a missing file
     # fails fast and does not consume GitHub API quota.
@@ -1405,6 +1584,7 @@ def main() -> int:
     since, _first_run, scan_type = load_since()
     since_text = iso_utc(since)
     database = load_database()
+    enrich_architecture_metadata(database)
     event_counts = {"new": 0, "source-added": 0, "existing": 0, "duplicates": 0}
 
     issues_url = f"{API_ROOT}/repos/{UPSTREAM_OWNER}/{UPSTREAM_REPO}/issues"

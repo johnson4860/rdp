@@ -1,8 +1,60 @@
 {
   "schema_version": 2,
   "upstream": "stascorp/rdpwrap",
-  "updated_at": "2026-11-24T02:18:42Z",
+  "updated_at": "2026-11-24T07:16:20Z",
   "candidates": {
+    "9a5825a8120e53d5dfa7e2c0619287315b7fe416f9129e905eaca81a6130ffd9": {
+      "candidate_id": "9a5825a8120e53d5",
+      "sha256": "9a5825a8120e53d5dfa7e2c0619287315b7fe416f9129e905eaca81a6130ffd9",
+      "content": "[10.0.19041.7811]\nSingleUserPatch.x86=1\nSingleUserOffset.x86=45E27\nSingleUserCode.x86=pop_eax_add_esp_12_nop_2\nDefPolicyPatch.x86=1\nDefPolicyOffset.x86=41DC9\nDefPolicyCode.x86=CDefPolicy_Query_eax_ecx\nLocalOnlyPatch.x86=1\nLocalOnlyOffset.x86=C3A89\nLocalOnlyCode.x86=jmpshort\nSLInitHook.x86=1\nSLInitOffset.x86=71DDA\nSLInitFunc.x86=New_CSLQuery_Initialize\n[10.0.19041.7811-SLInit]\nbServerSku.x86=E5998\nbRemoteConnAllowed.x86=E59AC\nbFUSEnabled.x86=E59B8\nbAppServerAllowed.x86=E59A4\nbMultimonAllowed.x86=E59B0\nlMaxUserSessions.x86=E599C\nulMaxDebugSessions.x86=E59B4\nbInitialized.x86=E5994",
+      "status": "unverified",
+      "review_classification": "unverified",
+      "completeness": "complete",
+      "first_seen": "2026-11-24T07:16:20Z",
+      "last_seen": "2026-11-24T07:16:20Z",
+      "ini_target_versions": [
+        "10.0.19041.7811"
+      ],
+      "main_section_versions": [
+        "10.0.19041.7811"
+      ],
+      "slinit_section_versions": [
+        "10.0.19041.7811"
+      ],
+      "sections": [
+        "10.0.19041.7811",
+        "10.0.19041.7811-SLInit"
+      ],
+      "warnings": [],
+      "review_flags": [],
+      "sources": [
+        {
+          "issue_classification": "general_activity",
+          "failure_signals": [],
+          "triage_notes": [],
+          "duplicate_issue_refs": [],
+          "os_releases": [
+            "Windows 10 22H2"
+          ],
+          "os_build_hints": [
+            "19045.7846"
+          ],
+          "os_version_hints": [],
+          "termsrv_versions_explicit": [],
+          "labels": [],
+          "issue_state": "open",
+          "issue_number": 4569,
+          "issue_title": "10.0.19041.7811 -  Windows 10 Pro 22H2 19045.7846 x86",
+          "issue_url": "https://github.com/stascorp/rdpwrap/issues/4569",
+          "source_type": "comment",
+          "source_url": "https://github.com/stascorp/rdpwrap/issues/4569#issuecomment-7124558566",
+          "author": "saurav-biswas",
+          "created_at": "2026-11-24T07:02:55Z",
+          "updated_at": "2026-11-24T07:02:55Z"
+        }
+      ],
+      "reported_failure_signals": []
+    },
     "2431dba60cf09c2659b3a3abe0f90158b19cb56068138ee12536714aa58fd680": {
       "candidate_id": "2431dba60cf09c26",
       "sha256": "2431dba60cf09c2659b3a3abe0f90158b19cb56068138ee12536714aa58fd680",
@@ -1287,8 +1339,8 @@
       "state": "open",
       "labels": [],
       "created_at": "2026-11-22T23:17:47Z",
-      "updated_at": "2026-11-22T23:17:47Z",
-      "monitor_seen_at": "2026-11-24T02:18:30Z",
+      "updated_at": "2026-11-24T07:02:55Z",
+      "monitor_seen_at": "2026-11-24T07:16:20Z",
       "issue_classification": "general_activity",
       "failure_signals": [],
       "triage_notes": [],
@@ -1303,15 +1355,15 @@
         "os_version_hints": []
       },
       "termsrv_versions_explicit": [],
-      "ini_target_versions": [],
-      "other_version_identifiers": [
+      "ini_target_versions": [
         "10.0.19041.7811"
       ],
+      "other_version_identifiers": [],
       "version_relationships": [
         {
           "version": "10.0.19041.7811",
           "roles": [
-            "other_version_identifier"
+            "ini_section_target"
           ]
         },
         {
@@ -1321,13 +1373,15 @@
           ]
         }
       ],
-      "candidate_sha256s": [],
+      "candidate_sha256s": [
+        "9a5825a8120e53d5dfa7e2c0619287315b7fe416f9129e905eaca81a6130ffd9"
+      ],
       "attachment_links": [
         "https://github.com/user-attachments/assets/a7ec42ed-fe35-4bee-9611-0539f1fbed50",
         "https://github.com/user-attachments/files/35246987/termsrv.zip"
       ],
       "first_seen": "2026-11-24T02:18:30Z",
-      "last_seen": "2026-11-24T02:18:30Z"
+      "last_seen": "2026-11-24T07:16:20Z"
     },
     "4568": {
       "number": 4568,

@@ -1,21 +1,1037 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-24T02:18:42Z",
+  "generated_at": "2026-11-24T07:16:20Z",
   "baseline": {
     "path": "rdpwrap.ini",
     "sha256": "70b2bd9c97b990d1ed845b561f8265a5544fcb554c9eb1b08b623a3a3e88fe07",
     "main_updated": "2026-07-21",
-    "git_commit": "cdc479f9bbd5264e556be819dc1b072e28cb1c5b",
+    "git_commit": "7944912b697b896a011dcb7d5b02bb5f88c46ef7",
     "section_count": 1426
   },
-  "candidate_count": 19,
+  "candidate_count": 20,
+  "version_group_count": 14,
+  "version_group_status_counts": {
+    "exact_match": 1,
+    "incomplete": 1,
+    "mixed_difference": 1,
+    "mixed_variants": 2,
+    "new_section": 9
+  },
   "status_counts": {
     "mixed_difference": 1,
-    "new_section": 10,
+    "new_section": 11,
     "new_keys": 1,
     "incomplete": 2,
     "exact_match": 5
   },
+  "version_groups": [
+    {
+      "target_version": "10.0.29706.1000",
+      "candidate_count": 1,
+      "group_status": "new_section",
+      "comparison_status_counts": {
+        "new_section": 1
+      },
+      "review_classification_counts": {
+        "unverified": 1
+      },
+      "has_reported_failure": false,
+      "has_unverified_candidate": true,
+      "source_count": 1,
+      "source_issue_numbers": [
+        4560
+      ],
+      "candidate_ids": [
+        "a5bbfc377dc0a7d4"
+      ],
+      "variants": [
+        {
+          "candidate_id": "a5bbfc377dc0a7d4",
+          "sha256": "a5bbfc377dc0a7d4147b00a2c0536dc349701e8c736bde73338f04fb7b0291db",
+          "comparison_status": "new_section",
+          "review_classification": "unverified",
+          "section_results": [
+            {
+              "section": "10.0.29706.1000",
+              "status": "new_section",
+              "candidate_key_count": 12,
+              "production_key_count": 0
+            },
+            {
+              "section": "10.0.29706.1000-SLInit",
+              "status": "new_section",
+              "candidate_key_count": 8,
+              "production_key_count": 0
+            }
+          ],
+          "issue_numbers": [
+            4560
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "issue_number": 4560,
+          "author": "saurav-biswas",
+          "source_type": "comment",
+          "source_url": "https://github.com/stascorp/rdpwrap/issues/4560#issuecomment-7021152421",
+          "created_at": "2026-11-19T20:20:55Z",
+          "updated_at": "2026-11-19T20:20:55Z"
+        }
+      ]
+    },
+    {
+      "target_version": "10.0.29683.1000",
+      "candidate_count": 1,
+      "group_status": "mixed_difference",
+      "comparison_status_counts": {
+        "mixed_difference": 1
+      },
+      "review_classification_counts": {
+        "unverified": 1
+      },
+      "has_reported_failure": false,
+      "has_unverified_candidate": true,
+      "source_count": 1,
+      "source_issue_numbers": [
+        4521
+      ],
+      "candidate_ids": [
+        "cd9cda194131ab34"
+      ],
+      "variants": [
+        {
+          "candidate_id": "cd9cda194131ab34",
+          "sha256": "cd9cda194131ab34480f75a18e9df2eefaf35fc810abbdfb7bc639ca604035d1",
+          "comparison_status": "mixed_difference",
+          "review_classification": "unverified",
+          "section_results": [
+            {
+              "section": "10.0.29683.1000",
+              "status": "new_section",
+              "candidate_key_count": 12,
+              "production_key_count": 0
+            },
+            {
+              "section": "10.0.29683.1000-SLInit",
+              "status": "new_section",
+              "candidate_key_count": 8,
+              "production_key_count": 0
+            },
+            {
+              "section": "PatchCodes",
+              "status": "candidate_has_new_keys",
+              "candidate_key_count": 3,
+              "production_key_count": 21
+            },
+            {
+              "section": "SLInit",
+              "status": "exact_match",
+              "candidate_key_count": 8,
+              "production_key_count": 8
+            }
+          ],
+          "issue_numbers": [
+            4521
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "issue_number": 4521,
+          "author": "pingqLIN",
+          "source_type": "issue_body",
+          "source_url": "https://github.com/stascorp/rdpwrap/issues/4521",
+          "created_at": "2026-10-25T09:23:51Z",
+          "updated_at": "2026-10-31T14:38:21Z"
+        }
+      ]
+    },
+    {
+      "target_version": "10.0.28000.3614",
+      "candidate_count": 1,
+      "group_status": "new_section",
+      "comparison_status_counts": {
+        "new_section": 1
+      },
+      "review_classification_counts": {
+        "unverified": 1
+      },
+      "has_reported_failure": false,
+      "has_unverified_candidate": true,
+      "source_count": 1,
+      "source_issue_numbers": [
+        4564
+      ],
+      "candidate_ids": [
+        "fa699b64efdd5027"
+      ],
+      "variants": [
+        {
+          "candidate_id": "fa699b64efdd5027",
+          "sha256": "fa699b64efdd5027517b85ad37675c4217f31ae3244130dff24e6ddda168d72a",
+          "comparison_status": "new_section",
+          "review_classification": "unverified",
+          "section_results": [
+            {
+              "section": "10.0.28000.3614",
+              "status": "new_section",
+              "candidate_key_count": 12,
+              "production_key_count": 0
+            },
+            {
+              "section": "10.0.28000.3614-SLInit",
+              "status": "new_section",
+              "candidate_key_count": 8,
+              "production_key_count": 0
+            }
+          ],
+          "issue_numbers": [
+            4564
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "issue_number": 4564,
+          "author": "saurav-biswas",
+          "source_type": "comment",
+          "source_url": "https://github.com/stascorp/rdpwrap/issues/4564#issuecomment-7057612395",
+          "created_at": "2026-11-21T04:59:53Z",
+          "updated_at": "2026-11-21T04:59:53Z"
+        }
+      ]
+    },
+    {
+      "target_version": "10.0.28000.3393",
+      "candidate_count": 1,
+      "group_status": "new_section",
+      "comparison_status_counts": {
+        "new_section": 1
+      },
+      "review_classification_counts": {
+        "unverified": 1
+      },
+      "has_reported_failure": false,
+      "has_unverified_candidate": true,
+      "source_count": 1,
+      "source_issue_numbers": [
+        4539
+      ],
+      "candidate_ids": [
+        "d770f3499df85ab8"
+      ],
+      "variants": [
+        {
+          "candidate_id": "d770f3499df85ab8",
+          "sha256": "d770f3499df85ab83160d12f3ded033e52ec2a4a72282f694172fb56a206efe8",
+          "comparison_status": "new_section",
+          "review_classification": "unverified",
+          "section_results": [
+            {
+              "section": "10.0.28000.3393",
+              "status": "new_section",
+              "candidate_key_count": 12,
+              "production_key_count": 0
+            },
+            {
+              "section": "10.0.28000.3393-SLInit",
+              "status": "new_section",
+              "candidate_key_count": 8,
+              "production_key_count": 0
+            }
+          ],
+          "issue_numbers": [
+            4539
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "issue_number": 4539,
+          "author": "saurav-biswas",
+          "source_type": "comment",
+          "source_url": "https://github.com/stascorp/rdpwrap/issues/4539#issuecomment-6844856007",
+          "created_at": "2026-11-13T05:17:09Z",
+          "updated_at": "2026-11-13T05:17:09Z"
+        }
+      ]
+    },
+    {
+      "target_version": "10.0.28000.3365",
+      "candidate_count": 2,
+      "group_status": "new_section",
+      "comparison_status_counts": {
+        "new_section": 2
+      },
+      "review_classification_counts": {
+        "unverified": 2
+      },
+      "has_reported_failure": false,
+      "has_unverified_candidate": true,
+      "source_count": 2,
+      "source_issue_numbers": [
+        4525,
+        4556
+      ],
+      "candidate_ids": [
+        "4827a1244d9b4ca0",
+        "e03bf2c2eaed8de6"
+      ],
+      "variants": [
+        {
+          "candidate_id": "4827a1244d9b4ca0",
+          "sha256": "4827a1244d9b4ca0897dcb68373707fa2b6405cc3b668fe12e9949e85a44fe67",
+          "comparison_status": "new_section",
+          "review_classification": "unverified",
+          "section_results": [
+            {
+              "section": "10.0.28000.3365",
+              "status": "new_section",
+              "candidate_key_count": 12,
+              "production_key_count": 0
+            },
+            {
+              "section": "10.0.28000.3365-SLInit",
+              "status": "new_section",
+              "candidate_key_count": 8,
+              "production_key_count": 0
+            }
+          ],
+          "issue_numbers": [
+            4525,
+            4556
+          ]
+        },
+        {
+          "candidate_id": "e03bf2c2eaed8de6",
+          "sha256": "e03bf2c2eaed8de6463b5cb5e46513591639c659af18419994d82c2b79a84b46",
+          "comparison_status": "new_section",
+          "review_classification": "unverified",
+          "section_results": [
+            {
+              "section": "10.0.28000.3365",
+              "status": "new_section",
+              "candidate_key_count": 10,
+              "production_key_count": 0
+            }
+          ],
+          "issue_numbers": [
+            4556
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "issue_number": 4525,
+          "author": "saurav-biswas",
+          "source_type": "comment",
+          "source_url": "https://github.com/stascorp/rdpwrap/issues/4525#issuecomment-6526386626",
+          "created_at": "2026-10-30T15:23:25Z",
+          "updated_at": "2026-10-30T15:23:25Z"
+        },
+        {
+          "issue_number": 4556,
+          "author": "BlackCharon142",
+          "source_type": "issue_body",
+          "source_url": "https://github.com/stascorp/rdpwrap/issues/4556",
+          "created_at": "2026-11-15T18:17:33Z",
+          "updated_at": "2026-11-15T18:27:11Z"
+        }
+      ]
+    },
+    {
+      "target_version": "10.0.28000.2731",
+      "candidate_count": 1,
+      "group_status": "incomplete",
+      "comparison_status_counts": {
+        "incomplete": 1
+      },
+      "review_classification_counts": {
+        "reported_failure": 1
+      },
+      "has_reported_failure": true,
+      "has_unverified_candidate": false,
+      "source_count": 1,
+      "source_issue_numbers": [
+        4559
+      ],
+      "candidate_ids": [
+        "d6e72c38052be093"
+      ],
+      "variants": [
+        {
+          "candidate_id": "d6e72c38052be093",
+          "sha256": "d6e72c38052be093af12c5777f4eb0cd6950a72f94f926c6ab85fb3291bfa345",
+          "comparison_status": "incomplete",
+          "review_classification": "reported_failure",
+          "section_results": [
+            {
+              "section": "10.0.28000.2731",
+              "status": "new_section",
+              "candidate_key_count": 3,
+              "production_key_count": 0
+            }
+          ],
+          "issue_numbers": [
+            4559
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "issue_number": 4559,
+          "author": "YuJinSong412",
+          "source_type": "issue_body",
+          "source_url": "https://github.com/stascorp/rdpwrap/issues/4559",
+          "created_at": "2026-11-18T06:04:54Z",
+          "updated_at": "2026-11-18T07:52:28Z"
+        }
+      ]
+    },
+    {
+      "target_version": "10.0.26100.33438",
+      "candidate_count": 1,
+      "group_status": "new_section",
+      "comparison_status_counts": {
+        "new_section": 1
+      },
+      "review_classification_counts": {
+        "unverified": 1
+      },
+      "has_reported_failure": false,
+      "has_unverified_candidate": true,
+      "source_count": 1,
+      "source_issue_numbers": [
+        4531
+      ],
+      "candidate_ids": [
+        "058a6ee4170e997c"
+      ],
+      "variants": [
+        {
+          "candidate_id": "058a6ee4170e997c",
+          "sha256": "058a6ee4170e997cff525d5483c2c6b216112492a30b4174ba78d209759c686d",
+          "comparison_status": "new_section",
+          "review_classification": "unverified",
+          "section_results": [
+            {
+              "section": "10.0.26100.33438",
+              "status": "new_section",
+              "candidate_key_count": 12,
+              "production_key_count": 0
+            },
+            {
+              "section": "10.0.26100.33438-SLInit",
+              "status": "new_section",
+              "candidate_key_count": 8,
+              "production_key_count": 0
+            }
+          ],
+          "issue_numbers": [
+            4531
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "issue_number": 4531,
+          "author": "777MAC777",
+          "source_type": "issue_body",
+          "source_url": "https://github.com/stascorp/rdpwrap/issues/4531",
+          "created_at": "2026-11-02T03:44:18Z",
+          "updated_at": "2026-11-02T10:17:49Z"
+        }
+      ]
+    },
+    {
+      "target_version": "10.0.26100.10068",
+      "candidate_count": 2,
+      "group_status": "mixed_variants",
+      "comparison_status_counts": {
+        "exact_match": 1,
+        "incomplete": 1
+      },
+      "review_classification_counts": {
+        "reported_failure": 2
+      },
+      "has_reported_failure": true,
+      "has_unverified_candidate": false,
+      "source_count": 5,
+      "source_issue_numbers": [
+        4561,
+        4562,
+        4563,
+        4566,
+        4567
+      ],
+      "candidate_ids": [
+        "2431dba60cf09c26",
+        "610ed31fc1c1da9e"
+      ],
+      "variants": [
+        {
+          "candidate_id": "2431dba60cf09c26",
+          "sha256": "2431dba60cf09c2659b3a3abe0f90158b19cb56068138ee12536714aa58fd680",
+          "comparison_status": "incomplete",
+          "review_classification": "reported_failure",
+          "section_results": [
+            {
+              "section": "10.0.26100.10068-SLInit",
+              "status": "exact_match",
+              "candidate_key_count": 8,
+              "production_key_count": 8
+            }
+          ],
+          "issue_numbers": [
+            4567
+          ]
+        },
+        {
+          "candidate_id": "610ed31fc1c1da9e",
+          "sha256": "610ed31fc1c1da9e08156c7aee8907ea1a6ced651e1b9929190ddc67369af5d7",
+          "comparison_status": "exact_match",
+          "review_classification": "reported_failure",
+          "section_results": [
+            {
+              "section": "10.0.26100.10068",
+              "status": "exact_match",
+              "candidate_key_count": 12,
+              "production_key_count": 12
+            },
+            {
+              "section": "10.0.26100.10068-SLInit",
+              "status": "exact_match",
+              "candidate_key_count": 8,
+              "production_key_count": 8
+            }
+          ],
+          "issue_numbers": [
+            4561,
+            4562,
+            4563,
+            4566
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "issue_number": 4561,
+          "author": "itsupportJSB",
+          "source_type": "comment",
+          "source_url": "https://github.com/stascorp/rdpwrap/issues/4561#issuecomment-7033387528",
+          "created_at": "2026-11-20T07:32:56Z",
+          "updated_at": "2026-11-20T10:26:06Z"
+        },
+        {
+          "issue_number": 4562,
+          "author": "5udarshanshetty",
+          "source_type": "comment",
+          "source_url": "https://github.com/stascorp/rdpwrap/issues/4562#issuecomment-7032380287",
+          "created_at": "2026-11-20T06:34:09Z",
+          "updated_at": "2026-11-20T06:34:09Z"
+        },
+        {
+          "issue_number": 4563,
+          "author": "patrusov-it",
+          "source_type": "comment",
+          "source_url": "https://github.com/stascorp/rdpwrap/issues/4563#issuecomment-7045792146",
+          "created_at": "2026-11-20T17:13:07Z",
+          "updated_at": "2026-11-20T17:15:58Z"
+        },
+        {
+          "issue_number": 4566,
+          "author": "Aakash8799",
+          "source_type": "issue_body",
+          "source_url": "https://github.com/stascorp/rdpwrap/issues/4566",
+          "created_at": "2026-11-21T08:31:28Z",
+          "updated_at": "2026-11-21T08:34:25Z"
+        },
+        {
+          "issue_number": 4567,
+          "author": "AlejandroDVedia",
+          "source_type": "issue_body",
+          "source_url": "https://github.com/stascorp/rdpwrap/issues/4567",
+          "created_at": "2026-11-21T21:14:27Z",
+          "updated_at": "2026-11-21T21:22:43Z"
+        }
+      ]
+    },
+    {
+      "target_version": "10.0.26100.10003",
+      "candidate_count": 1,
+      "group_status": "new_section",
+      "comparison_status_counts": {
+        "new_section": 1
+      },
+      "review_classification_counts": {
+        "unverified": 1
+      },
+      "has_reported_failure": false,
+      "has_unverified_candidate": true,
+      "source_count": 1,
+      "source_issue_numbers": [
+        4558
+      ],
+      "candidate_ids": [
+        "2122254dd40e65a2"
+      ],
+      "variants": [
+        {
+          "candidate_id": "2122254dd40e65a2",
+          "sha256": "2122254dd40e65a21b73a2f329cb8f45531d720fd97a2ab04263a5b482dd5bad",
+          "comparison_status": "new_section",
+          "review_classification": "unverified",
+          "section_results": [
+            {
+              "section": "10.0.26100.10003",
+              "status": "new_section",
+              "candidate_key_count": 12,
+              "production_key_count": 0
+            },
+            {
+              "section": "10.0.26100.10003-SLInit",
+              "status": "new_section",
+              "candidate_key_count": 8,
+              "production_key_count": 0
+            }
+          ],
+          "issue_numbers": [
+            4558
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "issue_number": 4558,
+          "author": "AmirHosseinBozorgi",
+          "source_type": "comment",
+          "source_url": "https://github.com/stascorp/rdpwrap/issues/4558#issuecomment-6965672711",
+          "created_at": "2026-11-18T00:57:36Z",
+          "updated_at": "2026-11-19T15:34:36Z"
+        }
+      ]
+    },
+    {
+      "target_version": "10.0.26100.9836",
+      "candidate_count": 1,
+      "group_status": "new_section",
+      "comparison_status_counts": {
+        "new_section": 1
+      },
+      "review_classification_counts": {
+        "unverified": 1
+      },
+      "has_reported_failure": false,
+      "has_unverified_candidate": true,
+      "source_count": 1,
+      "source_issue_numbers": [
+        4528
+      ],
+      "candidate_ids": [
+        "7b618e283c8df05e"
+      ],
+      "variants": [
+        {
+          "candidate_id": "7b618e283c8df05e",
+          "sha256": "7b618e283c8df05e09aad60f560e355371e908a960a5777ec70964294befa84b",
+          "comparison_status": "new_section",
+          "review_classification": "unverified",
+          "section_results": [
+            {
+              "section": "10.0.26100.9836",
+              "status": "new_section",
+              "candidate_key_count": 12,
+              "production_key_count": 0
+            },
+            {
+              "section": "10.0.26100.9836-SLInit",
+              "status": "new_section",
+              "candidate_key_count": 8,
+              "production_key_count": 0
+            }
+          ],
+          "issue_numbers": [
+            4528
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "issue_number": 4528,
+          "author": "AmirHosseinBozorgi",
+          "source_type": "comment",
+          "source_url": "https://github.com/stascorp/rdpwrap/issues/4528#issuecomment-6540959443",
+          "created_at": "2026-10-31T08:06:51Z",
+          "updated_at": "2026-10-31T08:06:51Z"
+        }
+      ]
+    },
+    {
+      "target_version": "10.0.26100.9818",
+      "candidate_count": 4,
+      "group_status": "mixed_variants",
+      "comparison_status_counts": {
+        "exact_match": 3,
+        "new_keys": 1
+      },
+      "review_classification_counts": {
+        "reported_failure": 1,
+        "unverified": 3
+      },
+      "has_reported_failure": true,
+      "has_unverified_candidate": true,
+      "source_count": 5,
+      "source_issue_numbers": [
+        4522,
+        4523,
+        4547,
+        4549,
+        4557
+      ],
+      "candidate_ids": [
+        "264d8b8ca055f7ab",
+        "bfd4c8204a3a20b3",
+        "c4d78b9869743791",
+        "eefad50a2fe920b2"
+      ],
+      "variants": [
+        {
+          "candidate_id": "264d8b8ca055f7ab",
+          "sha256": "264d8b8ca055f7abdb32feb5e2448edb54bbba2f859994cf5b28eb6e975e237e",
+          "comparison_status": "exact_match",
+          "review_classification": "unverified",
+          "section_results": [
+            {
+              "section": "10.0.26100.9818",
+              "status": "exact_match",
+              "candidate_key_count": 12,
+              "production_key_count": 12
+            },
+            {
+              "section": "10.0.26100.9818-SLInit",
+              "status": "exact_match",
+              "candidate_key_count": 8,
+              "production_key_count": 8
+            }
+          ],
+          "issue_numbers": [
+            4547
+          ]
+        },
+        {
+          "candidate_id": "bfd4c8204a3a20b3",
+          "sha256": "bfd4c8204a3a20b329de9606b465034f2d49a52ce1747c3c68d1deb8497d0f13",
+          "comparison_status": "exact_match",
+          "review_classification": "unverified",
+          "section_results": [
+            {
+              "section": "10.0.26100.9818",
+              "status": "exact_match",
+              "candidate_key_count": 12,
+              "production_key_count": 12
+            },
+            {
+              "section": "10.0.26100.9818-SLInit",
+              "status": "exact_match",
+              "candidate_key_count": 8,
+              "production_key_count": 8
+            }
+          ],
+          "issue_numbers": [
+            4523
+          ]
+        },
+        {
+          "candidate_id": "c4d78b9869743791",
+          "sha256": "c4d78b9869743791b1c0e700d5f8d55a4c3b4df2db014b1ac8d4cb2823a64b90",
+          "comparison_status": "new_keys",
+          "review_classification": "reported_failure",
+          "section_results": [
+            {
+              "section": "10.0.26100.9818",
+              "status": "exact_match",
+              "candidate_key_count": 12,
+              "production_key_count": 12
+            },
+            {
+              "section": "10.0.26100.9818-SLInit",
+              "status": "candidate_has_new_keys",
+              "candidate_key_count": 10,
+              "production_key_count": 8
+            }
+          ],
+          "issue_numbers": [
+            4549
+          ]
+        },
+        {
+          "candidate_id": "eefad50a2fe920b2",
+          "sha256": "eefad50a2fe920b27b638cbc55f90e99b22b2fac05d5fc87c896a6c1f477085a",
+          "comparison_status": "exact_match",
+          "review_classification": "unverified",
+          "section_results": [
+            {
+              "section": "10.0.26100.9818",
+              "status": "exact_match",
+              "candidate_key_count": 12,
+              "production_key_count": 12
+            },
+            {
+              "section": "10.0.26100.9818-SLInit",
+              "status": "exact_match",
+              "candidate_key_count": 8,
+              "production_key_count": 8
+            }
+          ],
+          "issue_numbers": [
+            4522,
+            4557
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "issue_number": 4522,
+          "author": "xpinx2pin",
+          "source_type": "comment",
+          "source_url": "https://github.com/stascorp/rdpwrap/issues/4522#issuecomment-6485828100",
+          "created_at": "2026-10-29T02:02:18Z",
+          "updated_at": "2026-10-29T02:02:18Z"
+        },
+        {
+          "issue_number": 4523,
+          "author": "pravyroxor",
+          "source_type": "comment",
+          "source_url": "https://github.com/stascorp/rdpwrap/issues/4523#issuecomment-6494962971",
+          "created_at": "2026-10-29T11:05:16Z",
+          "updated_at": "2026-10-29T11:11:42Z"
+        },
+        {
+          "issue_number": 4547,
+          "author": "Furtif2005Sno",
+          "source_type": "comment",
+          "source_url": "https://github.com/stascorp/rdpwrap/issues/4547#issuecomment-6821987518",
+          "created_at": "2026-11-12T11:11:03Z",
+          "updated_at": "2026-11-12T12:10:28Z"
+        },
+        {
+          "issue_number": 4549,
+          "author": "tipstar23",
+          "source_type": "issue_body",
+          "source_url": "https://github.com/stascorp/rdpwrap/issues/4549",
+          "created_at": "2026-11-13T05:30:33Z",
+          "updated_at": "2026-11-13T10:22:54Z"
+        },
+        {
+          "issue_number": 4557,
+          "author": "Valkk",
+          "source_type": "issue_body",
+          "source_url": "https://github.com/stascorp/rdpwrap/issues/4557",
+          "created_at": "2026-11-16T02:52:09Z",
+          "updated_at": "2026-11-16T10:40:44Z"
+        }
+      ]
+    },
+    {
+      "target_version": "10.0.26100.9577",
+      "candidate_count": 1,
+      "group_status": "new_section",
+      "comparison_status_counts": {
+        "new_section": 1
+      },
+      "review_classification_counts": {
+        "unverified": 1
+      },
+      "has_reported_failure": false,
+      "has_unverified_candidate": true,
+      "source_count": 1,
+      "source_issue_numbers": [
+        4532
+      ],
+      "candidate_ids": [
+        "76885a3c6da62afb"
+      ],
+      "variants": [
+        {
+          "candidate_id": "76885a3c6da62afb",
+          "sha256": "76885a3c6da62afb059929543297408d30fb23848f20d2f86f5469245c67b981",
+          "comparison_status": "new_section",
+          "review_classification": "unverified",
+          "section_results": [
+            {
+              "section": "10.0.26100.9577",
+              "status": "new_section",
+              "candidate_key_count": 12,
+              "production_key_count": 0
+            },
+            {
+              "section": "10.0.26100.9577-SLInit",
+              "status": "new_section",
+              "candidate_key_count": 8,
+              "production_key_count": 0
+            }
+          ],
+          "issue_numbers": [
+            4532
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "issue_number": 4532,
+          "author": "saurav-biswas",
+          "source_type": "comment",
+          "source_url": "https://github.com/stascorp/rdpwrap/issues/4532#issuecomment-6584586054",
+          "created_at": "2026-11-02T18:08:18Z",
+          "updated_at": "2026-11-02T18:08:18Z"
+        }
+      ]
+    },
+    {
+      "target_version": "10.0.26100.9549",
+      "candidate_count": 1,
+      "group_status": "exact_match",
+      "comparison_status_counts": {
+        "exact_match": 1
+      },
+      "review_classification_counts": {
+        "unverified": 1
+      },
+      "has_reported_failure": false,
+      "has_unverified_candidate": true,
+      "source_count": 1,
+      "source_issue_numbers": [
+        4538
+      ],
+      "candidate_ids": [
+        "0bbbdf9b46ffc856"
+      ],
+      "variants": [
+        {
+          "candidate_id": "0bbbdf9b46ffc856",
+          "sha256": "0bbbdf9b46ffc85619738fbf310911ca773e468bdd1d9740ac821b14a04801bd",
+          "comparison_status": "exact_match",
+          "review_classification": "unverified",
+          "section_results": [
+            {
+              "section": "10.0.26100.9549",
+              "status": "exact_match",
+              "candidate_key_count": 12,
+              "production_key_count": 12
+            },
+            {
+              "section": "10.0.26100.9549-SLInit",
+              "status": "exact_match",
+              "candidate_key_count": 8,
+              "production_key_count": 8
+            }
+          ],
+          "issue_numbers": [
+            4538
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "issue_number": 4538,
+          "author": "Johnston557",
+          "source_type": "issue_body",
+          "source_url": "https://github.com/stascorp/rdpwrap/issues/4538",
+          "created_at": "2026-11-08T13:12:35Z",
+          "updated_at": "2026-11-08T13:37:33Z"
+        }
+      ]
+    },
+    {
+      "target_version": "10.0.19041.7811",
+      "candidate_count": 2,
+      "group_status": "new_section",
+      "comparison_status_counts": {
+        "new_section": 2
+      },
+      "review_classification_counts": {
+        "unverified": 2
+      },
+      "has_reported_failure": false,
+      "has_unverified_candidate": true,
+      "source_count": 2,
+      "source_issue_numbers": [
+        4540,
+        4569
+      ],
+      "candidate_ids": [
+        "47a2b48d62842022",
+        "9a5825a8120e53d5"
+      ],
+      "variants": [
+        {
+          "candidate_id": "47a2b48d62842022",
+          "sha256": "47a2b48d62842022e3328085f2cc794274cdcb326a20c0fb9740397494278d50",
+          "comparison_status": "new_section",
+          "review_classification": "unverified",
+          "section_results": [
+            {
+              "section": "10.0.19041.7811",
+              "status": "new_section",
+              "candidate_key_count": 12,
+              "production_key_count": 0
+            },
+            {
+              "section": "10.0.19041.7811-SLInit",
+              "status": "new_section",
+              "candidate_key_count": 8,
+              "production_key_count": 0
+            }
+          ],
+          "issue_numbers": [
+            4540
+          ]
+        },
+        {
+          "candidate_id": "9a5825a8120e53d5",
+          "sha256": "9a5825a8120e53d5dfa7e2c0619287315b7fe416f9129e905eaca81a6130ffd9",
+          "comparison_status": "new_section",
+          "review_classification": "unverified",
+          "section_results": [
+            {
+              "section": "10.0.19041.7811",
+              "status": "new_section",
+              "candidate_key_count": 12,
+              "production_key_count": 0
+            },
+            {
+              "section": "10.0.19041.7811-SLInit",
+              "status": "new_section",
+              "candidate_key_count": 8,
+              "production_key_count": 0
+            }
+          ],
+          "issue_numbers": [
+            4569
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "issue_number": 4540,
+          "author": "frankenzipfel",
+          "source_type": "comment",
+          "source_url": "https://github.com/stascorp/rdpwrap/issues/4540#issuecomment-6793047105",
+          "created_at": "2026-11-11T10:10:41Z",
+          "updated_at": "2026-11-11T10:10:41Z"
+        },
+        {
+          "issue_number": 4569,
+          "author": "saurav-biswas",
+          "source_type": "comment",
+          "source_url": "https://github.com/stascorp/rdpwrap/issues/4569#issuecomment-7124558566",
+          "created_at": "2026-11-24T07:02:55Z",
+          "updated_at": "2026-11-24T07:02:55Z"
+        }
+      ]
+    }
+  ],
   "comparisons": [
     {
       "candidate_id": "cd9cda194131ab34",
@@ -487,6 +1503,165 @@
           "source_url": "https://github.com/stascorp/rdpwrap/issues/4540#issuecomment-6793047105",
           "created_at": "2026-11-11T10:10:41Z",
           "updated_at": "2026-11-11T10:10:41Z"
+        }
+      ]
+    },
+    {
+      "candidate_id": "9a5825a8120e53d5",
+      "sha256": "9a5825a8120e53d5dfa7e2c0619287315b7fe416f9129e905eaca81a6130ffd9",
+      "ini_target_versions": [
+        "10.0.19041.7811"
+      ],
+      "candidate_review_classification": "unverified",
+      "comparison_status": "new_section",
+      "comparison_flags": [
+        "new_section"
+      ],
+      "section_results": [
+        {
+          "section": "10.0.19041.7811",
+          "status": "new_section",
+          "candidate_key_count": 12,
+          "production_key_count": 0,
+          "value_differences": [],
+          "candidate_only_keys": [
+            "defpolicycode.x86",
+            "defpolicyoffset.x86",
+            "defpolicypatch.x86",
+            "localonlycode.x86",
+            "localonlyoffset.x86",
+            "localonlypatch.x86",
+            "singleusercode.x86",
+            "singleuseroffset.x86",
+            "singleuserpatch.x86",
+            "slinitfunc.x86",
+            "slinithook.x86",
+            "slinitoffset.x86"
+          ],
+          "candidate_entries": [
+            {
+              "key": "defpolicycode.x86",
+              "value": "CDefPolicy_Query_eax_ecx"
+            },
+            {
+              "key": "defpolicyoffset.x86",
+              "value": "41DC9"
+            },
+            {
+              "key": "defpolicypatch.x86",
+              "value": "1"
+            },
+            {
+              "key": "localonlycode.x86",
+              "value": "jmpshort"
+            },
+            {
+              "key": "localonlyoffset.x86",
+              "value": "C3A89"
+            },
+            {
+              "key": "localonlypatch.x86",
+              "value": "1"
+            },
+            {
+              "key": "singleusercode.x86",
+              "value": "pop_eax_add_esp_12_nop_2"
+            },
+            {
+              "key": "singleuseroffset.x86",
+              "value": "45E27"
+            },
+            {
+              "key": "singleuserpatch.x86",
+              "value": "1"
+            },
+            {
+              "key": "slinitfunc.x86",
+              "value": "New_CSLQuery_Initialize"
+            },
+            {
+              "key": "slinithook.x86",
+              "value": "1"
+            },
+            {
+              "key": "slinitoffset.x86",
+              "value": "71DDA"
+            }
+          ],
+          "production_only_keys": []
+        },
+        {
+          "section": "10.0.19041.7811-SLInit",
+          "status": "new_section",
+          "candidate_key_count": 8,
+          "production_key_count": 0,
+          "value_differences": [],
+          "candidate_only_keys": [
+            "bappserverallowed.x86",
+            "bfusenabled.x86",
+            "binitialized.x86",
+            "bmultimonallowed.x86",
+            "bremoteconnallowed.x86",
+            "bserversku.x86",
+            "lmaxusersessions.x86",
+            "ulmaxdebugsessions.x86"
+          ],
+          "candidate_entries": [
+            {
+              "key": "bappserverallowed.x86",
+              "value": "E59A4"
+            },
+            {
+              "key": "bfusenabled.x86",
+              "value": "E59B8"
+            },
+            {
+              "key": "binitialized.x86",
+              "value": "E5994"
+            },
+            {
+              "key": "bmultimonallowed.x86",
+              "value": "E59B0"
+            },
+            {
+              "key": "bremoteconnallowed.x86",
+              "value": "E59AC"
+            },
+            {
+              "key": "bserversku.x86",
+              "value": "E5998"
+            },
+            {
+              "key": "lmaxusersessions.x86",
+              "value": "E599C"
+            },
+            {
+              "key": "ulmaxdebugsessions.x86",
+              "value": "E59B4"
+            }
+          ],
+          "production_only_keys": []
+        }
+      ],
+      "new_sections": [
+        "10.0.19041.7811",
+        "10.0.19041.7811-SLInit"
+      ],
+      "value_differences": [],
+      "candidate_only_keys": [],
+      "production_only_keys": [],
+      "unsectioned_entries": [],
+      "duplicate_keys": [],
+      "parser_warnings": [],
+      "source_count": 1,
+      "sources": [
+        {
+          "source_type": "comment",
+          "issue_number": 4569,
+          "author": "saurav-biswas",
+          "source_url": "https://github.com/stascorp/rdpwrap/issues/4569#issuecomment-7124558566",
+          "created_at": "2026-11-24T07:02:55Z",
+          "updated_at": "2026-11-24T07:02:55Z"
         }
       ]
     },

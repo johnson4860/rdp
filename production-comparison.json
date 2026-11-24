@@ -1,25 +1,37 @@
 {
-  "schema_version": 1,
-  "generated_at": "2026-11-24T07:16:20Z",
+  "schema_version": 2,
+  "generated_at": "2026-11-24T08:14:08Z",
   "baseline": {
     "path": "rdpwrap.ini",
     "sha256": "70b2bd9c97b990d1ed845b561f8265a5544fcb554c9eb1b08b623a3a3e88fe07",
     "main_updated": "2026-07-21",
-    "git_commit": "7944912b697b896a011dcb7d5b02bb5f88c46ef7",
-    "section_count": 1426
+    "git_commit": "9bb035d31a6e8250ae2eaf0698050f635b5e2db5",
+    "section_count": 1426,
+    "architecture_key_counts": {
+      "x86": 3936,
+      "x64": 13998
+    }
   },
-  "candidate_count": 20,
+  "candidate_count": 21,
+  "target_version_count": 14,
   "version_group_count": 14,
+  "architecture_group_count": 16,
+  "version_architecture_group_count": 16,
+  "architecture_counts": {
+    "mixed": 1,
+    "x64": 19,
+    "x86": 1
+  },
   "version_group_status_counts": {
     "exact_match": 1,
     "incomplete": 1,
     "mixed_difference": 1,
     "mixed_variants": 2,
-    "new_section": 9
+    "new_section": 11
   },
   "status_counts": {
     "mixed_difference": 1,
-    "new_section": 11,
+    "new_section": 12,
     "new_keys": 1,
     "incomplete": 2,
     "exact_match": 5
@@ -27,6 +39,8 @@
   "version_groups": [
     {
       "target_version": "10.0.29706.1000",
+      "architecture": "x64",
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_count": 1,
       "group_status": "new_section",
       "comparison_status_counts": {
@@ -48,6 +62,7 @@
         {
           "candidate_id": "a5bbfc377dc0a7d4",
           "sha256": "a5bbfc377dc0a7d4147b00a2c0536dc349701e8c736bde73338f04fb7b0291db",
+          "architecture": "x64",
           "comparison_status": "new_section",
           "review_classification": "unverified",
           "section_results": [
@@ -55,13 +70,19 @@
               "section": "10.0.29706.1000",
               "status": "new_section",
               "candidate_key_count": 12,
-              "production_key_count": 0
+              "production_key_count": 0,
+              "candidate_architecture_key_count": 12,
+              "production_architecture_key_count": 0,
+              "ignored_opposite_architecture_key_count": 0
             },
             {
               "section": "10.0.29706.1000-SLInit",
               "status": "new_section",
               "candidate_key_count": 8,
-              "production_key_count": 0
+              "production_key_count": 0,
+              "candidate_architecture_key_count": 8,
+              "production_architecture_key_count": 0,
+              "ignored_opposite_architecture_key_count": 0
             }
           ],
           "issue_numbers": [
@@ -82,6 +103,8 @@
     },
     {
       "target_version": "10.0.29683.1000",
+      "architecture": "x64",
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_count": 1,
       "group_status": "mixed_difference",
       "comparison_status_counts": {
@@ -103,6 +126,7 @@
         {
           "candidate_id": "cd9cda194131ab34",
           "sha256": "cd9cda194131ab34480f75a18e9df2eefaf35fc810abbdfb7bc639ca604035d1",
+          "architecture": "x64",
           "comparison_status": "mixed_difference",
           "review_classification": "unverified",
           "section_results": [
@@ -110,25 +134,37 @@
               "section": "10.0.29683.1000",
               "status": "new_section",
               "candidate_key_count": 12,
-              "production_key_count": 0
+              "production_key_count": 0,
+              "candidate_architecture_key_count": 12,
+              "production_architecture_key_count": 0,
+              "ignored_opposite_architecture_key_count": 0
             },
             {
               "section": "10.0.29683.1000-SLInit",
               "status": "new_section",
               "candidate_key_count": 8,
-              "production_key_count": 0
+              "production_key_count": 0,
+              "candidate_architecture_key_count": 8,
+              "production_architecture_key_count": 0,
+              "ignored_opposite_architecture_key_count": 0
             },
             {
               "section": "PatchCodes",
               "status": "candidate_has_new_keys",
               "candidate_key_count": 3,
-              "production_key_count": 21
+              "production_key_count": 21,
+              "candidate_architecture_key_count": 0,
+              "production_architecture_key_count": 0,
+              "ignored_opposite_architecture_key_count": 0
             },
             {
               "section": "SLInit",
               "status": "exact_match",
               "candidate_key_count": 8,
-              "production_key_count": 8
+              "production_key_count": 8,
+              "candidate_architecture_key_count": 0,
+              "production_architecture_key_count": 0,
+              "ignored_opposite_architecture_key_count": 0
             }
           ],
           "issue_numbers": [
@@ -149,6 +185,8 @@
     },
     {
       "target_version": "10.0.28000.3614",
+      "architecture": "x64",
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_count": 1,
       "group_status": "new_section",
       "comparison_status_counts": {
@@ -170,6 +208,7 @@
         {
           "candidate_id": "fa699b64efdd5027",
           "sha256": "fa699b64efdd5027517b85ad37675c4217f31ae3244130dff24e6ddda168d72a",
+          "architecture": "x64",
           "comparison_status": "new_section",
           "review_classification": "unverified",
           "section_results": [
@@ -177,13 +216,19 @@
               "section": "10.0.28000.3614",
               "status": "new_section",
               "candidate_key_count": 12,
-              "production_key_count": 0
+              "production_key_count": 0,
+              "candidate_architecture_key_count": 12,
+              "production_architecture_key_count": 0,
+              "ignored_opposite_architecture_key_count": 0
             },
             {
               "section": "10.0.28000.3614-SLInit",
               "status": "new_section",
               "candidate_key_count": 8,
-              "production_key_count": 0
+              "production_key_count": 0,
+              "candidate_architecture_key_count": 8,
+              "production_architecture_key_count": 0,
+              "ignored_opposite_architecture_key_count": 0
             }
           ],
           "issue_numbers": [
@@ -204,6 +249,8 @@
     },
     {
       "target_version": "10.0.28000.3393",
+      "architecture": "x64",
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_count": 1,
       "group_status": "new_section",
       "comparison_status_counts": {
@@ -225,6 +272,7 @@
         {
           "candidate_id": "d770f3499df85ab8",
           "sha256": "d770f3499df85ab83160d12f3ded033e52ec2a4a72282f694172fb56a206efe8",
+          "architecture": "x64",
           "comparison_status": "new_section",
           "review_classification": "unverified",
           "section_results": [
@@ -232,13 +280,19 @@
               "section": "10.0.28000.3393",
               "status": "new_section",
               "candidate_key_count": 12,
-              "production_key_count": 0
+              "production_key_count": 0,
+              "candidate_architecture_key_count": 12,
+              "production_architecture_key_count": 0,
+              "ignored_opposite_architecture_key_count": 0
             },
             {
               "section": "10.0.28000.3393-SLInit",
               "status": "new_section",
               "candidate_key_count": 8,
-              "production_key_count": 0
+              "production_key_count": 0,
+              "candidate_architecture_key_count": 8,
+              "production_architecture_key_count": 0,
+              "ignored_opposite_architecture_key_count": 0
             }
           ],
           "issue_numbers": [
@@ -259,6 +313,8 @@
     },
     {
       "target_version": "10.0.28000.3365",
+      "architecture": "x64",
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_count": 2,
       "group_status": "new_section",
       "comparison_status_counts": {
@@ -282,6 +338,7 @@
         {
           "candidate_id": "4827a1244d9b4ca0",
           "sha256": "4827a1244d9b4ca0897dcb68373707fa2b6405cc3b668fe12e9949e85a44fe67",
+          "architecture": "x64",
           "comparison_status": "new_section",
           "review_classification": "unverified",
           "section_results": [
@@ -289,13 +346,19 @@
               "section": "10.0.28000.3365",
               "status": "new_section",
               "candidate_key_count": 12,
-              "production_key_count": 0
+              "production_key_count": 0,
+              "candidate_architecture_key_count": 12,
+              "production_architecture_key_count": 0,
+              "ignored_opposite_architecture_key_count": 0
             },
             {
               "section": "10.0.28000.3365-SLInit",
               "status": "new_section",
               "candidate_key_count": 8,
-              "production_key_count": 0
+              "production_key_count": 0,
+              "candidate_architecture_key_count": 8,
+              "production_architecture_key_count": 0,
+              "ignored_opposite_architecture_key_count": 0
             }
           ],
           "issue_numbers": [
@@ -306,6 +369,7 @@
         {
           "candidate_id": "e03bf2c2eaed8de6",
           "sha256": "e03bf2c2eaed8de6463b5cb5e46513591639c659af18419994d82c2b79a84b46",
+          "architecture": "x64",
           "comparison_status": "new_section",
           "review_classification": "unverified",
           "section_results": [
@@ -313,7 +377,10 @@
               "section": "10.0.28000.3365",
               "status": "new_section",
               "candidate_key_count": 10,
-              "production_key_count": 0
+              "production_key_count": 0,
+              "candidate_architecture_key_count": 10,
+              "production_architecture_key_count": 0,
+              "ignored_opposite_architecture_key_count": 0
             }
           ],
           "issue_numbers": [
@@ -342,6 +409,8 @@
     },
     {
       "target_version": "10.0.28000.2731",
+      "architecture": "x64",
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_count": 1,
       "group_status": "incomplete",
       "comparison_status_counts": {
@@ -363,6 +432,7 @@
         {
           "candidate_id": "d6e72c38052be093",
           "sha256": "d6e72c38052be093af12c5777f4eb0cd6950a72f94f926c6ab85fb3291bfa345",
+          "architecture": "x64",
           "comparison_status": "incomplete",
           "review_classification": "reported_failure",
           "section_results": [
@@ -370,7 +440,10 @@
               "section": "10.0.28000.2731",
               "status": "new_section",
               "candidate_key_count": 3,
-              "production_key_count": 0
+              "production_key_count": 0,
+              "candidate_architecture_key_count": 3,
+              "production_architecture_key_count": 0,
+              "ignored_opposite_architecture_key_count": 0
             }
           ],
           "issue_numbers": [
@@ -391,6 +464,8 @@
     },
     {
       "target_version": "10.0.26100.33438",
+      "architecture": "x64",
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_count": 1,
       "group_status": "new_section",
       "comparison_status_counts": {
@@ -412,6 +487,7 @@
         {
           "candidate_id": "058a6ee4170e997c",
           "sha256": "058a6ee4170e997cff525d5483c2c6b216112492a30b4174ba78d209759c686d",
+          "architecture": "x64",
           "comparison_status": "new_section",
           "review_classification": "unverified",
           "section_results": [
@@ -419,13 +495,19 @@
               "section": "10.0.26100.33438",
               "status": "new_section",
               "candidate_key_count": 12,
-              "production_key_count": 0
+              "production_key_count": 0,
+              "candidate_architecture_key_count": 12,
+              "production_architecture_key_count": 0,
+              "ignored_opposite_architecture_key_count": 0
             },
             {
               "section": "10.0.26100.33438-SLInit",
               "status": "new_section",
               "candidate_key_count": 8,
-              "production_key_count": 0
+              "production_key_count": 0,
+              "candidate_architecture_key_count": 8,
+              "production_architecture_key_count": 0,
+              "ignored_opposite_architecture_key_count": 0
             }
           ],
           "issue_numbers": [
@@ -446,6 +528,8 @@
     },
     {
       "target_version": "10.0.26100.10068",
+      "architecture": "x64",
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_count": 2,
       "group_status": "mixed_variants",
       "comparison_status_counts": {
@@ -473,6 +557,7 @@
         {
           "candidate_id": "2431dba60cf09c26",
           "sha256": "2431dba60cf09c2659b3a3abe0f90158b19cb56068138ee12536714aa58fd680",
+          "architecture": "x64",
           "comparison_status": "incomplete",
           "review_classification": "reported_failure",
           "section_results": [
@@ -480,7 +565,10 @@
               "section": "10.0.26100.10068-SLInit",
               "status": "exact_match",
               "candidate_key_count": 8,
-              "production_key_count": 8
+              "production_key_count": 8,
+              "candidate_architecture_key_count": 8,
+              "production_architecture_key_count": 8,
+              "ignored_opposite_architecture_key_count": 0
             }
           ],
           "issue_numbers": [
@@ -490,6 +578,7 @@
         {
           "candidate_id": "610ed31fc1c1da9e",
           "sha256": "610ed31fc1c1da9e08156c7aee8907ea1a6ced651e1b9929190ddc67369af5d7",
+          "architecture": "x64",
           "comparison_status": "exact_match",
           "review_classification": "reported_failure",
           "section_results": [
@@ -497,13 +586,19 @@
               "section": "10.0.26100.10068",
               "status": "exact_match",
               "candidate_key_count": 12,
-              "production_key_count": 12
+              "production_key_count": 12,
+              "candidate_architecture_key_count": 12,
+              "production_architecture_key_count": 12,
+              "ignored_opposite_architecture_key_count": 0
             },
             {
               "section": "10.0.26100.10068-SLInit",
               "status": "exact_match",
               "candidate_key_count": 8,
-              "production_key_count": 8
+              "production_key_count": 8,
+              "candidate_architecture_key_count": 8,
+              "production_architecture_key_count": 8,
+              "ignored_opposite_architecture_key_count": 0
             }
           ],
           "issue_numbers": [
@@ -559,6 +654,8 @@
     },
     {
       "target_version": "10.0.26100.10003",
+      "architecture": "x64",
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_count": 1,
       "group_status": "new_section",
       "comparison_status_counts": {
@@ -580,6 +677,7 @@
         {
           "candidate_id": "2122254dd40e65a2",
           "sha256": "2122254dd40e65a21b73a2f329cb8f45531d720fd97a2ab04263a5b482dd5bad",
+          "architecture": "x64",
           "comparison_status": "new_section",
           "review_classification": "unverified",
           "section_results": [
@@ -587,13 +685,19 @@
               "section": "10.0.26100.10003",
               "status": "new_section",
               "candidate_key_count": 12,
-              "production_key_count": 0
+              "production_key_count": 0,
+              "candidate_architecture_key_count": 12,
+              "production_architecture_key_count": 0,
+              "ignored_opposite_architecture_key_count": 0
             },
             {
               "section": "10.0.26100.10003-SLInit",
               "status": "new_section",
               "candidate_key_count": 8,
-              "production_key_count": 0
+              "production_key_count": 0,
+              "candidate_architecture_key_count": 8,
+              "production_architecture_key_count": 0,
+              "ignored_opposite_architecture_key_count": 0
             }
           ],
           "issue_numbers": [
@@ -614,6 +718,8 @@
     },
     {
       "target_version": "10.0.26100.9836",
+      "architecture": "x64",
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_count": 1,
       "group_status": "new_section",
       "comparison_status_counts": {
@@ -635,6 +741,7 @@
         {
           "candidate_id": "7b618e283c8df05e",
           "sha256": "7b618e283c8df05e09aad60f560e355371e908a960a5777ec70964294befa84b",
+          "architecture": "x64",
           "comparison_status": "new_section",
           "review_classification": "unverified",
           "section_results": [
@@ -642,13 +749,19 @@
               "section": "10.0.26100.9836",
               "status": "new_section",
               "candidate_key_count": 12,
-              "production_key_count": 0
+              "production_key_count": 0,
+              "candidate_architecture_key_count": 12,
+              "production_architecture_key_count": 0,
+              "ignored_opposite_architecture_key_count": 0
             },
             {
               "section": "10.0.26100.9836-SLInit",
               "status": "new_section",
               "candidate_key_count": 8,
-              "production_key_count": 0
+              "production_key_count": 0,
+              "candidate_architecture_key_count": 8,
+              "production_architecture_key_count": 0,
+              "ignored_opposite_architecture_key_count": 0
             }
           ],
           "issue_numbers": [
@@ -669,6 +782,8 @@
     },
     {
       "target_version": "10.0.26100.9818",
+      "architecture": "x64",
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_count": 4,
       "group_status": "mixed_variants",
       "comparison_status_counts": {
@@ -699,6 +814,7 @@
         {
           "candidate_id": "264d8b8ca055f7ab",
           "sha256": "264d8b8ca055f7abdb32feb5e2448edb54bbba2f859994cf5b28eb6e975e237e",
+          "architecture": "x64",
           "comparison_status": "exact_match",
           "review_classification": "unverified",
           "section_results": [
@@ -706,13 +822,19 @@
               "section": "10.0.26100.9818",
               "status": "exact_match",
               "candidate_key_count": 12,
-              "production_key_count": 12
+              "production_key_count": 12,
+              "candidate_architecture_key_count": 12,
+              "production_architecture_key_count": 12,
+              "ignored_opposite_architecture_key_count": 0
             },
             {
               "section": "10.0.26100.9818-SLInit",
               "status": "exact_match",
               "candidate_key_count": 8,
-              "production_key_count": 8
+              "production_key_count": 8,
+              "candidate_architecture_key_count": 8,
+              "production_architecture_key_count": 8,
+              "ignored_opposite_architecture_key_count": 0
             }
           ],
           "issue_numbers": [
@@ -722,6 +844,7 @@
         {
           "candidate_id": "bfd4c8204a3a20b3",
           "sha256": "bfd4c8204a3a20b329de9606b465034f2d49a52ce1747c3c68d1deb8497d0f13",
+          "architecture": "x64",
           "comparison_status": "exact_match",
           "review_classification": "unverified",
           "section_results": [
@@ -729,13 +852,19 @@
               "section": "10.0.26100.9818",
               "status": "exact_match",
               "candidate_key_count": 12,
-              "production_key_count": 12
+              "production_key_count": 12,
+              "candidate_architecture_key_count": 12,
+              "production_architecture_key_count": 12,
+              "ignored_opposite_architecture_key_count": 0
             },
             {
               "section": "10.0.26100.9818-SLInit",
               "status": "exact_match",
               "candidate_key_count": 8,
-              "production_key_count": 8
+              "production_key_count": 8,
+              "candidate_architecture_key_count": 8,
+              "production_architecture_key_count": 8,
+              "ignored_opposite_architecture_key_count": 0
             }
           ],
           "issue_numbers": [
@@ -745,6 +874,7 @@
         {
           "candidate_id": "c4d78b9869743791",
           "sha256": "c4d78b9869743791b1c0e700d5f8d55a4c3b4df2db014b1ac8d4cb2823a64b90",
+          "architecture": "x64",
           "comparison_status": "new_keys",
           "review_classification": "reported_failure",
           "section_results": [
@@ -752,13 +882,19 @@
               "section": "10.0.26100.9818",
               "status": "exact_match",
               "candidate_key_count": 12,
-              "production_key_count": 12
+              "production_key_count": 12,
+              "candidate_architecture_key_count": 12,
+              "production_architecture_key_count": 12,
+              "ignored_opposite_architecture_key_count": 0
             },
             {
               "section": "10.0.26100.9818-SLInit",
               "status": "candidate_has_new_keys",
               "candidate_key_count": 10,
-              "production_key_count": 8
+              "production_key_count": 8,
+              "candidate_architecture_key_count": 8,
+              "production_architecture_key_count": 8,
+              "ignored_opposite_architecture_key_count": 0
             }
           ],
           "issue_numbers": [
@@ -768,6 +904,7 @@
         {
           "candidate_id": "eefad50a2fe920b2",
           "sha256": "eefad50a2fe920b27b638cbc55f90e99b22b2fac05d5fc87c896a6c1f477085a",
+          "architecture": "x64",
           "comparison_status": "exact_match",
           "review_classification": "unverified",
           "section_results": [
@@ -775,13 +912,19 @@
               "section": "10.0.26100.9818",
               "status": "exact_match",
               "candidate_key_count": 12,
-              "production_key_count": 12
+              "production_key_count": 12,
+              "candidate_architecture_key_count": 12,
+              "production_architecture_key_count": 12,
+              "ignored_opposite_architecture_key_count": 0
             },
             {
               "section": "10.0.26100.9818-SLInit",
               "status": "exact_match",
               "candidate_key_count": 8,
-              "production_key_count": 8
+              "production_key_count": 8,
+              "candidate_architecture_key_count": 8,
+              "production_architecture_key_count": 8,
+              "ignored_opposite_architecture_key_count": 0
             }
           ],
           "issue_numbers": [
@@ -835,6 +978,8 @@
     },
     {
       "target_version": "10.0.26100.9577",
+      "architecture": "x64",
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_count": 1,
       "group_status": "new_section",
       "comparison_status_counts": {
@@ -856,6 +1001,7 @@
         {
           "candidate_id": "76885a3c6da62afb",
           "sha256": "76885a3c6da62afb059929543297408d30fb23848f20d2f86f5469245c67b981",
+          "architecture": "x64",
           "comparison_status": "new_section",
           "review_classification": "unverified",
           "section_results": [
@@ -863,13 +1009,19 @@
               "section": "10.0.26100.9577",
               "status": "new_section",
               "candidate_key_count": 12,
-              "production_key_count": 0
+              "production_key_count": 0,
+              "candidate_architecture_key_count": 12,
+              "production_architecture_key_count": 0,
+              "ignored_opposite_architecture_key_count": 0
             },
             {
               "section": "10.0.26100.9577-SLInit",
               "status": "new_section",
               "candidate_key_count": 8,
-              "production_key_count": 0
+              "production_key_count": 0,
+              "candidate_architecture_key_count": 8,
+              "production_architecture_key_count": 0,
+              "ignored_opposite_architecture_key_count": 0
             }
           ],
           "issue_numbers": [
@@ -890,6 +1042,8 @@
     },
     {
       "target_version": "10.0.26100.9549",
+      "architecture": "x64",
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_count": 1,
       "group_status": "exact_match",
       "comparison_status_counts": {
@@ -911,6 +1065,7 @@
         {
           "candidate_id": "0bbbdf9b46ffc856",
           "sha256": "0bbbdf9b46ffc85619738fbf310911ca773e468bdd1d9740ac821b14a04801bd",
+          "architecture": "x64",
           "comparison_status": "exact_match",
           "review_classification": "unverified",
           "section_results": [
@@ -918,13 +1073,19 @@
               "section": "10.0.26100.9549",
               "status": "exact_match",
               "candidate_key_count": 12,
-              "production_key_count": 12
+              "production_key_count": 12,
+              "candidate_architecture_key_count": 12,
+              "production_architecture_key_count": 12,
+              "ignored_opposite_architecture_key_count": 0
             },
             {
               "section": "10.0.26100.9549-SLInit",
               "status": "exact_match",
               "candidate_key_count": 8,
-              "production_key_count": 8
+              "production_key_count": 8,
+              "candidate_architecture_key_count": 8,
+              "production_architecture_key_count": 8,
+              "ignored_opposite_architecture_key_count": 0
             }
           ],
           "issue_numbers": [
@@ -945,29 +1106,30 @@
     },
     {
       "target_version": "10.0.19041.7811",
-      "candidate_count": 2,
+      "architecture": "x64",
+      "architecture_detection": "explicit_ini_key_suffix",
+      "candidate_count": 1,
       "group_status": "new_section",
       "comparison_status_counts": {
-        "new_section": 2
+        "new_section": 1
       },
       "review_classification_counts": {
-        "unverified": 2
+        "unverified": 1
       },
       "has_reported_failure": false,
       "has_unverified_candidate": true,
-      "source_count": 2,
+      "source_count": 1,
       "source_issue_numbers": [
-        4540,
-        4569
+        4540
       ],
       "candidate_ids": [
-        "47a2b48d62842022",
-        "9a5825a8120e53d5"
+        "47a2b48d62842022"
       ],
       "variants": [
         {
           "candidate_id": "47a2b48d62842022",
           "sha256": "47a2b48d62842022e3328085f2cc794274cdcb326a20c0fb9740397494278d50",
+          "architecture": "x64",
           "comparison_status": "new_section",
           "review_classification": "unverified",
           "section_results": [
@@ -975,40 +1137,23 @@
               "section": "10.0.19041.7811",
               "status": "new_section",
               "candidate_key_count": 12,
-              "production_key_count": 0
+              "production_key_count": 0,
+              "candidate_architecture_key_count": 12,
+              "production_architecture_key_count": 0,
+              "ignored_opposite_architecture_key_count": 0
             },
             {
               "section": "10.0.19041.7811-SLInit",
               "status": "new_section",
               "candidate_key_count": 8,
-              "production_key_count": 0
+              "production_key_count": 0,
+              "candidate_architecture_key_count": 8,
+              "production_architecture_key_count": 0,
+              "ignored_opposite_architecture_key_count": 0
             }
           ],
           "issue_numbers": [
             4540
-          ]
-        },
-        {
-          "candidate_id": "9a5825a8120e53d5",
-          "sha256": "9a5825a8120e53d5dfa7e2c0619287315b7fe416f9129e905eaca81a6130ffd9",
-          "comparison_status": "new_section",
-          "review_classification": "unverified",
-          "section_results": [
-            {
-              "section": "10.0.19041.7811",
-              "status": "new_section",
-              "candidate_key_count": 12,
-              "production_key_count": 0
-            },
-            {
-              "section": "10.0.19041.7811-SLInit",
-              "status": "new_section",
-              "candidate_key_count": 8,
-              "production_key_count": 0
-            }
-          ],
-          "issue_numbers": [
-            4569
           ]
         }
       ],
@@ -1020,7 +1165,63 @@
           "source_url": "https://github.com/stascorp/rdpwrap/issues/4540#issuecomment-6793047105",
           "created_at": "2026-11-11T10:10:41Z",
           "updated_at": "2026-11-11T10:10:41Z"
-        },
+        }
+      ]
+    },
+    {
+      "target_version": "10.0.19041.7811",
+      "architecture": "x86",
+      "architecture_detection": "explicit_ini_key_suffix",
+      "candidate_count": 1,
+      "group_status": "new_section",
+      "comparison_status_counts": {
+        "new_section": 1
+      },
+      "review_classification_counts": {
+        "unverified": 1
+      },
+      "has_reported_failure": false,
+      "has_unverified_candidate": true,
+      "source_count": 1,
+      "source_issue_numbers": [
+        4569
+      ],
+      "candidate_ids": [
+        "9a5825a8120e53d5"
+      ],
+      "variants": [
+        {
+          "candidate_id": "9a5825a8120e53d5",
+          "sha256": "9a5825a8120e53d5dfa7e2c0619287315b7fe416f9129e905eaca81a6130ffd9",
+          "architecture": "x86",
+          "comparison_status": "new_section",
+          "review_classification": "unverified",
+          "section_results": [
+            {
+              "section": "10.0.19041.7811",
+              "status": "new_section",
+              "candidate_key_count": 12,
+              "production_key_count": 0,
+              "candidate_architecture_key_count": 12,
+              "production_architecture_key_count": 0,
+              "ignored_opposite_architecture_key_count": 0
+            },
+            {
+              "section": "10.0.19041.7811-SLInit",
+              "status": "new_section",
+              "candidate_key_count": 8,
+              "production_key_count": 0,
+              "candidate_architecture_key_count": 8,
+              "production_architecture_key_count": 0,
+              "ignored_opposite_architecture_key_count": 0
+            }
+          ],
+          "issue_numbers": [
+            4569
+          ]
+        }
+      ],
+      "sources": [
         {
           "issue_number": 4569,
           "author": "saurav-biswas",
@@ -1028,6 +1229,70 @@
           "source_url": "https://github.com/stascorp/rdpwrap/issues/4569#issuecomment-7124558566",
           "created_at": "2026-11-24T07:02:55Z",
           "updated_at": "2026-11-24T07:02:55Z"
+        }
+      ]
+    },
+    {
+      "target_version": "10.0.19041.7811",
+      "architecture": "mixed",
+      "architecture_detection": "mixed_or_not_detected",
+      "candidate_count": 1,
+      "group_status": "new_section",
+      "comparison_status_counts": {
+        "new_section": 1
+      },
+      "review_classification_counts": {
+        "unverified": 1
+      },
+      "has_reported_failure": false,
+      "has_unverified_candidate": true,
+      "source_count": 1,
+      "source_issue_numbers": [
+        4540
+      ],
+      "candidate_ids": [
+        "8341be74980828a2"
+      ],
+      "variants": [
+        {
+          "candidate_id": "8341be74980828a2",
+          "sha256": "8341be74980828a27ed2e8f4dea9b11bdf287e4d3c43edd6327732caed9af926",
+          "architecture": "mixed",
+          "comparison_status": "new_section",
+          "review_classification": "unverified",
+          "section_results": [
+            {
+              "section": "10.0.19041.7811",
+              "status": "new_section",
+              "candidate_key_count": 24,
+              "production_key_count": 0,
+              "candidate_architecture_key_count": 0,
+              "production_architecture_key_count": 0,
+              "ignored_opposite_architecture_key_count": 0
+            },
+            {
+              "section": "10.0.19041.7811-SLInit",
+              "status": "new_section",
+              "candidate_key_count": 16,
+              "production_key_count": 0,
+              "candidate_architecture_key_count": 0,
+              "production_architecture_key_count": 0,
+              "ignored_opposite_architecture_key_count": 0
+            }
+          ],
+          "issue_numbers": [
+            4540
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "issue_number": 4540,
+          "author": "frankenzipfel",
+          "source_type": "comment",
+          "source_url": "https://github.com/stascorp/rdpwrap/issues/4540#issuecomment-6793047105",
+          "created_at": "2026-11-11T10:10:41Z",
+          "updated_at": "2026-11-24T08:07:52Z"
         }
       ]
     }
@@ -1039,6 +1304,12 @@
       "ini_target_versions": [
         "10.0.29683.1000"
       ],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_review_classification": "unverified",
       "comparison_status": "mixed_difference",
       "comparison_flags": [
@@ -1049,8 +1320,13 @@
         {
           "section": "10.0.29683.1000",
           "status": "new_section",
+          "architecture": "x64",
           "candidate_key_count": 12,
           "production_key_count": 0,
+          "candidate_architecture_key_count": 12,
+          "production_architecture_key_count": 0,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [
             "defpolicycode.x64",
@@ -1121,8 +1397,13 @@
         {
           "section": "10.0.29683.1000-SLInit",
           "status": "new_section",
+          "architecture": "x64",
           "candidate_key_count": 8,
           "production_key_count": 0,
+          "candidate_architecture_key_count": 8,
+          "production_architecture_key_count": 0,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [
             "bappserverallowed.x64",
@@ -1173,8 +1454,13 @@
         {
           "section": "PatchCodes",
           "status": "candidate_has_new_keys",
+          "architecture": "x64",
           "candidate_key_count": 3,
           "production_key_count": 21,
+          "candidate_architecture_key_count": 0,
+          "production_architecture_key_count": 0,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [
             "cdefpolicy_query_29683_x64",
@@ -1206,8 +1492,13 @@
         {
           "section": "SLInit",
           "status": "exact_match",
+          "architecture": "x64",
           "candidate_key_count": 8,
           "production_key_count": 8,
+          "candidate_architecture_key_count": 0,
+          "production_architecture_key_count": 0,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [],
           "production_only_keys": []
@@ -1217,6 +1508,7 @@
         "10.0.29683.1000",
         "10.0.29683.1000-SLInit"
       ],
+      "new_architecture_sections": [],
       "value_differences": [],
       "candidate_only_keys": [
         {
@@ -1348,11 +1640,294 @@
       ]
     },
     {
+      "candidate_id": "8341be74980828a2",
+      "sha256": "8341be74980828a27ed2e8f4dea9b11bdf287e4d3c43edd6327732caed9af926",
+      "ini_target_versions": [
+        "10.0.19041.7811"
+      ],
+      "architecture": "mixed",
+      "architecture_key_counts": {
+        "x86": 20,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix",
+      "candidate_review_classification": "unverified",
+      "comparison_status": "new_section",
+      "comparison_flags": [
+        "mixed_architecture_candidate",
+        "new_section"
+      ],
+      "section_results": [
+        {
+          "section": "10.0.19041.7811",
+          "status": "new_section",
+          "architecture": "mixed",
+          "candidate_key_count": 24,
+          "production_key_count": 0,
+          "candidate_architecture_key_count": 0,
+          "production_architecture_key_count": 0,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
+          "value_differences": [],
+          "candidate_only_keys": [
+            "defpolicycode.x64",
+            "defpolicycode.x86",
+            "defpolicyoffset.x64",
+            "defpolicyoffset.x86",
+            "defpolicypatch.x64",
+            "defpolicypatch.x86",
+            "localonlycode.x64",
+            "localonlycode.x86",
+            "localonlyoffset.x64",
+            "localonlyoffset.x86",
+            "localonlypatch.x64",
+            "localonlypatch.x86",
+            "singleusercode.x64",
+            "singleusercode.x86",
+            "singleuseroffset.x64",
+            "singleuseroffset.x86",
+            "singleuserpatch.x64",
+            "singleuserpatch.x86",
+            "slinitfunc.x64",
+            "slinitfunc.x86",
+            "slinithook.x64",
+            "slinithook.x86",
+            "slinitoffset.x64",
+            "slinitoffset.x86"
+          ],
+          "candidate_entries": [
+            {
+              "key": "defpolicycode.x64",
+              "value": "CDefPolicy_Query_eax_rcx"
+            },
+            {
+              "key": "defpolicycode.x86",
+              "value": "CDefPolicy_Query_eax_ecx"
+            },
+            {
+              "key": "defpolicyoffset.x64",
+              "value": "1F455"
+            },
+            {
+              "key": "defpolicyoffset.x86",
+              "value": "41DC9"
+            },
+            {
+              "key": "defpolicypatch.x64",
+              "value": "1"
+            },
+            {
+              "key": "defpolicypatch.x86",
+              "value": "1"
+            },
+            {
+              "key": "localonlycode.x64",
+              "value": "jmpshort"
+            },
+            {
+              "key": "localonlycode.x86",
+              "value": "jmpshort"
+            },
+            {
+              "key": "localonlyoffset.x64",
+              "value": "93051"
+            },
+            {
+              "key": "localonlyoffset.x86",
+              "value": "C3A89"
+            },
+            {
+              "key": "localonlypatch.x64",
+              "value": "1"
+            },
+            {
+              "key": "localonlypatch.x86",
+              "value": "1"
+            },
+            {
+              "key": "singleusercode.x64",
+              "value": "mov_eax_1_nop_2"
+            },
+            {
+              "key": "singleusercode.x86",
+              "value": "pop_eax_add_esp_12_nop_2"
+            },
+            {
+              "key": "singleuseroffset.x64",
+              "value": "1846B"
+            },
+            {
+              "key": "singleuseroffset.x86",
+              "value": "45E27"
+            },
+            {
+              "key": "singleuserpatch.x64",
+              "value": "1"
+            },
+            {
+              "key": "singleuserpatch.x86",
+              "value": "1"
+            },
+            {
+              "key": "slinitfunc.x64",
+              "value": "New_CSLQuery_Initialize"
+            },
+            {
+              "key": "slinitfunc.x86",
+              "value": "New_CSLQuery_Initialize"
+            },
+            {
+              "key": "slinithook.x64",
+              "value": "1"
+            },
+            {
+              "key": "slinithook.x86",
+              "value": "1"
+            },
+            {
+              "key": "slinitoffset.x64",
+              "value": "29F1C"
+            },
+            {
+              "key": "slinitoffset.x86",
+              "value": "71DDA"
+            }
+          ],
+          "production_only_keys": []
+        },
+        {
+          "section": "10.0.19041.7811-SLInit",
+          "status": "new_section",
+          "architecture": "mixed",
+          "candidate_key_count": 16,
+          "production_key_count": 0,
+          "candidate_architecture_key_count": 0,
+          "production_architecture_key_count": 0,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
+          "value_differences": [],
+          "candidate_only_keys": [
+            "bappserverallowed.x64",
+            "bappserverallowed.x86",
+            "bfusenabled.x64",
+            "bfusenabled.x86",
+            "binitialized.x64",
+            "binitialized.x86",
+            "bmultimonallowed.x64",
+            "bmultimonallowed.x86",
+            "bremoteconnallowed.x64",
+            "bremoteconnallowed.x86",
+            "bserversku.x64",
+            "bserversku.x86",
+            "lmaxusersessions.x64",
+            "lmaxusersessions.x86",
+            "ulmaxdebugsessions.x64",
+            "ulmaxdebugsessions.x86"
+          ],
+          "candidate_entries": [
+            {
+              "key": "bappserverallowed.x64",
+              "value": "1260B0"
+            },
+            {
+              "key": "bappserverallowed.x86",
+              "value": "E59A4"
+            },
+            {
+              "key": "bfusenabled.x64",
+              "value": "1260C8"
+            },
+            {
+              "key": "bfusenabled.x86",
+              "value": "E59B8"
+            },
+            {
+              "key": "binitialized.x64",
+              "value": "1260A4"
+            },
+            {
+              "key": "binitialized.x86",
+              "value": "E5994"
+            },
+            {
+              "key": "bmultimonallowed.x64",
+              "value": "1260C0"
+            },
+            {
+              "key": "bmultimonallowed.x86",
+              "value": "E59B0"
+            },
+            {
+              "key": "bremoteconnallowed.x64",
+              "value": "1260BC"
+            },
+            {
+              "key": "bremoteconnallowed.x86",
+              "value": "E59AC"
+            },
+            {
+              "key": "bserversku.x64",
+              "value": "1260A8"
+            },
+            {
+              "key": "bserversku.x86",
+              "value": "E5998"
+            },
+            {
+              "key": "lmaxusersessions.x64",
+              "value": "1260AC"
+            },
+            {
+              "key": "lmaxusersessions.x86",
+              "value": "E599C"
+            },
+            {
+              "key": "ulmaxdebugsessions.x64",
+              "value": "1260C4"
+            },
+            {
+              "key": "ulmaxdebugsessions.x86",
+              "value": "E59B4"
+            }
+          ],
+          "production_only_keys": []
+        }
+      ],
+      "new_sections": [
+        "10.0.19041.7811",
+        "10.0.19041.7811-SLInit"
+      ],
+      "new_architecture_sections": [],
+      "value_differences": [],
+      "candidate_only_keys": [],
+      "production_only_keys": [],
+      "unsectioned_entries": [],
+      "duplicate_keys": [],
+      "parser_warnings": [],
+      "source_count": 1,
+      "sources": [
+        {
+          "source_type": "comment",
+          "issue_number": 4540,
+          "author": "frankenzipfel",
+          "source_url": "https://github.com/stascorp/rdpwrap/issues/4540#issuecomment-6793047105",
+          "created_at": "2026-11-11T10:10:41Z",
+          "updated_at": "2026-11-24T08:07:52Z"
+        }
+      ]
+    },
+    {
       "candidate_id": "47a2b48d62842022",
       "sha256": "47a2b48d62842022e3328085f2cc794274cdcb326a20c0fb9740397494278d50",
       "ini_target_versions": [
         "10.0.19041.7811"
       ],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_review_classification": "unverified",
       "comparison_status": "new_section",
       "comparison_flags": [
@@ -1362,8 +1937,13 @@
         {
           "section": "10.0.19041.7811",
           "status": "new_section",
+          "architecture": "x64",
           "candidate_key_count": 12,
           "production_key_count": 0,
+          "candidate_architecture_key_count": 12,
+          "production_architecture_key_count": 0,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [
             "defpolicycode.x64",
@@ -1434,8 +2014,13 @@
         {
           "section": "10.0.19041.7811-SLInit",
           "status": "new_section",
+          "architecture": "x64",
           "candidate_key_count": 8,
           "production_key_count": 0,
+          "candidate_architecture_key_count": 8,
+          "production_architecture_key_count": 0,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [
             "bappserverallowed.x64",
@@ -1488,6 +2073,7 @@
         "10.0.19041.7811",
         "10.0.19041.7811-SLInit"
       ],
+      "new_architecture_sections": [],
       "value_differences": [],
       "candidate_only_keys": [],
       "production_only_keys": [],
@@ -1512,6 +2098,12 @@
       "ini_target_versions": [
         "10.0.19041.7811"
       ],
+      "architecture": "x86",
+      "architecture_key_counts": {
+        "x86": 20,
+        "x64": 0
+      },
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_review_classification": "unverified",
       "comparison_status": "new_section",
       "comparison_flags": [
@@ -1521,8 +2113,13 @@
         {
           "section": "10.0.19041.7811",
           "status": "new_section",
+          "architecture": "x86",
           "candidate_key_count": 12,
           "production_key_count": 0,
+          "candidate_architecture_key_count": 12,
+          "production_architecture_key_count": 0,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [
             "defpolicycode.x86",
@@ -1593,8 +2190,13 @@
         {
           "section": "10.0.19041.7811-SLInit",
           "status": "new_section",
+          "architecture": "x86",
           "candidate_key_count": 8,
           "production_key_count": 0,
+          "candidate_architecture_key_count": 8,
+          "production_architecture_key_count": 0,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [
             "bappserverallowed.x86",
@@ -1647,6 +2249,7 @@
         "10.0.19041.7811",
         "10.0.19041.7811-SLInit"
       ],
+      "new_architecture_sections": [],
       "value_differences": [],
       "candidate_only_keys": [],
       "production_only_keys": [],
@@ -1671,6 +2274,12 @@
       "ini_target_versions": [
         "10.0.26100.10003"
       ],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_review_classification": "unverified",
       "comparison_status": "new_section",
       "comparison_flags": [
@@ -1680,8 +2289,13 @@
         {
           "section": "10.0.26100.10003",
           "status": "new_section",
+          "architecture": "x64",
           "candidate_key_count": 12,
           "production_key_count": 0,
+          "candidate_architecture_key_count": 12,
+          "production_architecture_key_count": 0,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [
             "defpolicycode.x64",
@@ -1752,8 +2366,13 @@
         {
           "section": "10.0.26100.10003-SLInit",
           "status": "new_section",
+          "architecture": "x64",
           "candidate_key_count": 8,
           "production_key_count": 0,
+          "candidate_architecture_key_count": 8,
+          "production_architecture_key_count": 0,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [
             "bappserverallowed.x64",
@@ -1806,6 +2425,7 @@
         "10.0.26100.10003",
         "10.0.26100.10003-SLInit"
       ],
+      "new_architecture_sections": [],
       "value_differences": [],
       "candidate_only_keys": [],
       "production_only_keys": [],
@@ -1830,6 +2450,12 @@
       "ini_target_versions": [
         "10.0.26100.33438"
       ],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_review_classification": "unverified",
       "comparison_status": "new_section",
       "comparison_flags": [
@@ -1839,8 +2465,13 @@
         {
           "section": "10.0.26100.33438",
           "status": "new_section",
+          "architecture": "x64",
           "candidate_key_count": 12,
           "production_key_count": 0,
+          "candidate_architecture_key_count": 12,
+          "production_architecture_key_count": 0,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [
             "defpolicycode.x64",
@@ -1911,8 +2542,13 @@
         {
           "section": "10.0.26100.33438-SLInit",
           "status": "new_section",
+          "architecture": "x64",
           "candidate_key_count": 8,
           "production_key_count": 0,
+          "candidate_architecture_key_count": 8,
+          "production_architecture_key_count": 0,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [
             "bappserverallowed.x64",
@@ -1965,6 +2601,7 @@
         "10.0.26100.33438",
         "10.0.26100.33438-SLInit"
       ],
+      "new_architecture_sections": [],
       "value_differences": [],
       "candidate_only_keys": [],
       "production_only_keys": [],
@@ -1989,6 +2626,12 @@
       "ini_target_versions": [
         "10.0.26100.9577"
       ],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_review_classification": "unverified",
       "comparison_status": "new_section",
       "comparison_flags": [
@@ -1998,8 +2641,13 @@
         {
           "section": "10.0.26100.9577",
           "status": "new_section",
+          "architecture": "x64",
           "candidate_key_count": 12,
           "production_key_count": 0,
+          "candidate_architecture_key_count": 12,
+          "production_architecture_key_count": 0,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [
             "defpolicycode.x64",
@@ -2070,8 +2718,13 @@
         {
           "section": "10.0.26100.9577-SLInit",
           "status": "new_section",
+          "architecture": "x64",
           "candidate_key_count": 8,
           "production_key_count": 0,
+          "candidate_architecture_key_count": 8,
+          "production_architecture_key_count": 0,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [
             "bappserverallowed.x64",
@@ -2124,6 +2777,7 @@
         "10.0.26100.9577",
         "10.0.26100.9577-SLInit"
       ],
+      "new_architecture_sections": [],
       "value_differences": [],
       "candidate_only_keys": [],
       "production_only_keys": [],
@@ -2148,6 +2802,12 @@
       "ini_target_versions": [
         "10.0.26100.9836"
       ],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_review_classification": "unverified",
       "comparison_status": "new_section",
       "comparison_flags": [
@@ -2157,8 +2817,13 @@
         {
           "section": "10.0.26100.9836",
           "status": "new_section",
+          "architecture": "x64",
           "candidate_key_count": 12,
           "production_key_count": 0,
+          "candidate_architecture_key_count": 12,
+          "production_architecture_key_count": 0,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [
             "defpolicycode.x64",
@@ -2229,8 +2894,13 @@
         {
           "section": "10.0.26100.9836-SLInit",
           "status": "new_section",
+          "architecture": "x64",
           "candidate_key_count": 8,
           "production_key_count": 0,
+          "candidate_architecture_key_count": 8,
+          "production_architecture_key_count": 0,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [
             "bappserverallowed.x64",
@@ -2283,6 +2953,7 @@
         "10.0.26100.9836",
         "10.0.26100.9836-SLInit"
       ],
+      "new_architecture_sections": [],
       "value_differences": [],
       "candidate_only_keys": [],
       "production_only_keys": [],
@@ -2307,6 +2978,12 @@
       "ini_target_versions": [
         "10.0.28000.3365"
       ],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_review_classification": "unverified",
       "comparison_status": "new_section",
       "comparison_flags": [
@@ -2316,8 +2993,13 @@
         {
           "section": "10.0.28000.3365",
           "status": "new_section",
+          "architecture": "x64",
           "candidate_key_count": 12,
           "production_key_count": 0,
+          "candidate_architecture_key_count": 12,
+          "production_architecture_key_count": 0,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [
             "defpolicycode.x64",
@@ -2388,8 +3070,13 @@
         {
           "section": "10.0.28000.3365-SLInit",
           "status": "new_section",
+          "architecture": "x64",
           "candidate_key_count": 8,
           "production_key_count": 0,
+          "candidate_architecture_key_count": 8,
+          "production_architecture_key_count": 0,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [
             "bappserverallowed.x64",
@@ -2442,6 +3129,7 @@
         "10.0.28000.3365",
         "10.0.28000.3365-SLInit"
       ],
+      "new_architecture_sections": [],
       "value_differences": [],
       "candidate_only_keys": [],
       "production_only_keys": [],
@@ -2474,6 +3162,12 @@
       "ini_target_versions": [
         "10.0.28000.3365"
       ],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 10
+      },
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_review_classification": "unverified",
       "comparison_status": "new_section",
       "comparison_flags": [
@@ -2483,8 +3177,13 @@
         {
           "section": "10.0.28000.3365",
           "status": "new_section",
+          "architecture": "x64",
           "candidate_key_count": 10,
           "production_key_count": 0,
+          "candidate_architecture_key_count": 10,
+          "production_architecture_key_count": 0,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [
             "defpolicycode.x64",
@@ -2546,6 +3245,7 @@
       "new_sections": [
         "10.0.28000.3365"
       ],
+      "new_architecture_sections": [],
       "value_differences": [],
       "candidate_only_keys": [],
       "production_only_keys": [],
@@ -2570,6 +3270,12 @@
       "ini_target_versions": [
         "10.0.28000.3393"
       ],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_review_classification": "unverified",
       "comparison_status": "new_section",
       "comparison_flags": [
@@ -2579,8 +3285,13 @@
         {
           "section": "10.0.28000.3393",
           "status": "new_section",
+          "architecture": "x64",
           "candidate_key_count": 12,
           "production_key_count": 0,
+          "candidate_architecture_key_count": 12,
+          "production_architecture_key_count": 0,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [
             "defpolicycode.x64",
@@ -2651,8 +3362,13 @@
         {
           "section": "10.0.28000.3393-SLInit",
           "status": "new_section",
+          "architecture": "x64",
           "candidate_key_count": 8,
           "production_key_count": 0,
+          "candidate_architecture_key_count": 8,
+          "production_architecture_key_count": 0,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [
             "bappserverallowed.x64",
@@ -2705,6 +3421,7 @@
         "10.0.28000.3393",
         "10.0.28000.3393-SLInit"
       ],
+      "new_architecture_sections": [],
       "value_differences": [],
       "candidate_only_keys": [],
       "production_only_keys": [],
@@ -2729,6 +3446,12 @@
       "ini_target_versions": [
         "10.0.28000.3614"
       ],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_review_classification": "unverified",
       "comparison_status": "new_section",
       "comparison_flags": [
@@ -2738,8 +3461,13 @@
         {
           "section": "10.0.28000.3614",
           "status": "new_section",
+          "architecture": "x64",
           "candidate_key_count": 12,
           "production_key_count": 0,
+          "candidate_architecture_key_count": 12,
+          "production_architecture_key_count": 0,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [
             "defpolicycode.x64",
@@ -2810,8 +3538,13 @@
         {
           "section": "10.0.28000.3614-SLInit",
           "status": "new_section",
+          "architecture": "x64",
           "candidate_key_count": 8,
           "production_key_count": 0,
+          "candidate_architecture_key_count": 8,
+          "production_architecture_key_count": 0,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [
             "bappserverallowed.x64",
@@ -2864,6 +3597,7 @@
         "10.0.28000.3614",
         "10.0.28000.3614-SLInit"
       ],
+      "new_architecture_sections": [],
       "value_differences": [],
       "candidate_only_keys": [],
       "production_only_keys": [],
@@ -2888,6 +3622,12 @@
       "ini_target_versions": [
         "10.0.29706.1000"
       ],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_review_classification": "unverified",
       "comparison_status": "new_section",
       "comparison_flags": [
@@ -2897,8 +3637,13 @@
         {
           "section": "10.0.29706.1000",
           "status": "new_section",
+          "architecture": "x64",
           "candidate_key_count": 12,
           "production_key_count": 0,
+          "candidate_architecture_key_count": 12,
+          "production_architecture_key_count": 0,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [
             "defpolicycode.x64",
@@ -2969,8 +3714,13 @@
         {
           "section": "10.0.29706.1000-SLInit",
           "status": "new_section",
+          "architecture": "x64",
           "candidate_key_count": 8,
           "production_key_count": 0,
+          "candidate_architecture_key_count": 8,
+          "production_architecture_key_count": 0,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [
             "bappserverallowed.x64",
@@ -3023,6 +3773,7 @@
         "10.0.29706.1000",
         "10.0.29706.1000-SLInit"
       ],
+      "new_architecture_sections": [],
       "value_differences": [],
       "candidate_only_keys": [],
       "production_only_keys": [],
@@ -3047,6 +3798,12 @@
       "ini_target_versions": [
         "10.0.26100.9818"
       ],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_review_classification": "reported_failure",
       "comparison_status": "new_keys",
       "comparison_flags": [
@@ -3056,8 +3813,13 @@
         {
           "section": "10.0.26100.9818",
           "status": "exact_match",
+          "architecture": "x64",
           "candidate_key_count": 12,
           "production_key_count": 12,
+          "candidate_architecture_key_count": 12,
+          "production_architecture_key_count": 12,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [],
           "production_only_keys": []
@@ -3065,8 +3827,13 @@
         {
           "section": "10.0.26100.9818-SLInit",
           "status": "candidate_has_new_keys",
+          "architecture": "x64",
           "candidate_key_count": 10,
           "production_key_count": 8,
+          "candidate_architecture_key_count": 8,
+          "production_architecture_key_count": 8,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [
             "cdefpolicy_query_r9d_rdi_jmp",
@@ -3076,6 +3843,7 @@
         }
       ],
       "new_sections": [],
+      "new_architecture_sections": [],
       "value_differences": [],
       "candidate_only_keys": [
         {
@@ -3111,6 +3879,12 @@
       "ini_target_versions": [
         "10.0.26100.10068"
       ],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_review_classification": "reported_failure",
       "comparison_status": "incomplete",
       "comparison_flags": [
@@ -3121,14 +3895,20 @@
         {
           "section": "10.0.26100.10068-SLInit",
           "status": "exact_match",
+          "architecture": "x64",
           "candidate_key_count": 8,
           "production_key_count": 8,
+          "candidate_architecture_key_count": 8,
+          "production_architecture_key_count": 8,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [],
           "production_only_keys": []
         }
       ],
       "new_sections": [],
+      "new_architecture_sections": [],
       "value_differences": [],
       "candidate_only_keys": [],
       "production_only_keys": [],
@@ -3216,6 +3996,12 @@
       "ini_target_versions": [
         "10.0.28000.2731"
       ],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 3
+      },
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_review_classification": "reported_failure",
       "comparison_status": "incomplete",
       "comparison_flags": [
@@ -3226,8 +4012,13 @@
         {
           "section": "10.0.28000.2731",
           "status": "new_section",
+          "architecture": "x64",
           "candidate_key_count": 3,
           "production_key_count": 0,
+          "candidate_architecture_key_count": 3,
+          "production_architecture_key_count": 0,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [
             "singleusercode.x64",
@@ -3254,6 +4045,7 @@
       "new_sections": [
         "10.0.28000.2731"
       ],
+      "new_architecture_sections": [],
       "value_differences": [],
       "candidate_only_keys": [],
       "production_only_keys": [],
@@ -3280,6 +4072,12 @@
       "ini_target_versions": [
         "10.0.26100.10068"
       ],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_review_classification": "reported_failure",
       "comparison_status": "exact_match",
       "comparison_flags": [],
@@ -3287,8 +4085,13 @@
         {
           "section": "10.0.26100.10068",
           "status": "exact_match",
+          "architecture": "x64",
           "candidate_key_count": 12,
           "production_key_count": 12,
+          "candidate_architecture_key_count": 12,
+          "production_architecture_key_count": 12,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [],
           "production_only_keys": []
@@ -3296,14 +4099,20 @@
         {
           "section": "10.0.26100.10068-SLInit",
           "status": "exact_match",
+          "architecture": "x64",
           "candidate_key_count": 8,
           "production_key_count": 8,
+          "candidate_architecture_key_count": 8,
+          "production_architecture_key_count": 8,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [],
           "production_only_keys": []
         }
       ],
       "new_sections": [],
+      "new_architecture_sections": [],
       "value_differences": [],
       "candidate_only_keys": [],
       "production_only_keys": [],
@@ -3352,6 +4161,12 @@
       "ini_target_versions": [
         "10.0.26100.9549"
       ],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_review_classification": "unverified",
       "comparison_status": "exact_match",
       "comparison_flags": [],
@@ -3359,8 +4174,13 @@
         {
           "section": "10.0.26100.9549",
           "status": "exact_match",
+          "architecture": "x64",
           "candidate_key_count": 12,
           "production_key_count": 12,
+          "candidate_architecture_key_count": 12,
+          "production_architecture_key_count": 12,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [],
           "production_only_keys": []
@@ -3368,14 +4188,20 @@
         {
           "section": "10.0.26100.9549-SLInit",
           "status": "exact_match",
+          "architecture": "x64",
           "candidate_key_count": 8,
           "production_key_count": 8,
+          "candidate_architecture_key_count": 8,
+          "production_architecture_key_count": 8,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [],
           "production_only_keys": []
         }
       ],
       "new_sections": [],
+      "new_architecture_sections": [],
       "value_differences": [],
       "candidate_only_keys": [],
       "production_only_keys": [],
@@ -3400,6 +4226,12 @@
       "ini_target_versions": [
         "10.0.26100.9818"
       ],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_review_classification": "unverified",
       "comparison_status": "exact_match",
       "comparison_flags": [],
@@ -3407,8 +4239,13 @@
         {
           "section": "10.0.26100.9818",
           "status": "exact_match",
+          "architecture": "x64",
           "candidate_key_count": 12,
           "production_key_count": 12,
+          "candidate_architecture_key_count": 12,
+          "production_architecture_key_count": 12,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [],
           "production_only_keys": []
@@ -3416,14 +4253,20 @@
         {
           "section": "10.0.26100.9818-SLInit",
           "status": "exact_match",
+          "architecture": "x64",
           "candidate_key_count": 8,
           "production_key_count": 8,
+          "candidate_architecture_key_count": 8,
+          "production_architecture_key_count": 8,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [],
           "production_only_keys": []
         }
       ],
       "new_sections": [],
+      "new_architecture_sections": [],
       "value_differences": [],
       "candidate_only_keys": [],
       "production_only_keys": [],
@@ -3448,6 +4291,12 @@
       "ini_target_versions": [
         "10.0.26100.9818"
       ],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_review_classification": "unverified",
       "comparison_status": "exact_match",
       "comparison_flags": [],
@@ -3455,8 +4304,13 @@
         {
           "section": "10.0.26100.9818",
           "status": "exact_match",
+          "architecture": "x64",
           "candidate_key_count": 12,
           "production_key_count": 12,
+          "candidate_architecture_key_count": 12,
+          "production_architecture_key_count": 12,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [],
           "production_only_keys": []
@@ -3464,14 +4318,20 @@
         {
           "section": "10.0.26100.9818-SLInit",
           "status": "exact_match",
+          "architecture": "x64",
           "candidate_key_count": 8,
           "production_key_count": 8,
+          "candidate_architecture_key_count": 8,
+          "production_architecture_key_count": 8,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [],
           "production_only_keys": []
         }
       ],
       "new_sections": [],
+      "new_architecture_sections": [],
       "value_differences": [],
       "candidate_only_keys": [],
       "production_only_keys": [],
@@ -3496,6 +4356,12 @@
       "ini_target_versions": [
         "10.0.26100.9818"
       ],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix",
       "candidate_review_classification": "unverified",
       "comparison_status": "exact_match",
       "comparison_flags": [],
@@ -3503,8 +4369,13 @@
         {
           "section": "10.0.26100.9818",
           "status": "exact_match",
+          "architecture": "x64",
           "candidate_key_count": 12,
           "production_key_count": 12,
+          "candidate_architecture_key_count": 12,
+          "production_architecture_key_count": 12,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [],
           "production_only_keys": []
@@ -3512,14 +4383,20 @@
         {
           "section": "10.0.26100.9818-SLInit",
           "status": "exact_match",
+          "architecture": "x64",
           "candidate_key_count": 8,
           "production_key_count": 8,
+          "candidate_architecture_key_count": 8,
+          "production_architecture_key_count": 8,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
           "value_differences": [],
           "candidate_only_keys": [],
           "production_only_keys": []
         }
       ],
       "new_sections": [],
+      "new_architecture_sections": [],
       "value_differences": [],
       "candidate_only_keys": [],
       "production_only_keys": [],

@@ -1,8 +1,68 @@
 {
   "schema_version": 2,
   "upstream": "stascorp/rdpwrap",
-  "updated_at": "2026-11-24T07:16:20Z",
+  "updated_at": "2026-11-24T08:14:08Z",
   "candidates": {
+    "8341be74980828a27ed2e8f4dea9b11bdf287e4d3c43edd6327732caed9af926": {
+      "candidate_id": "8341be74980828a2",
+      "sha256": "8341be74980828a27ed2e8f4dea9b11bdf287e4d3c43edd6327732caed9af926",
+      "content": "[10.0.19041.7811]\nSingleUserPatch.x86=1\nSingleUserOffset.x86=45E27\nSingleUserCode.x86=pop_eax_add_esp_12_nop_2\nDefPolicyPatch.x86=1\nDefPolicyOffset.x86=41DC9\nDefPolicyCode.x86=CDefPolicy_Query_eax_ecx\nLocalOnlyPatch.x86=1\nLocalOnlyOffset.x86=C3A89\nLocalOnlyCode.x86=jmpshort\nSLInitHook.x86=1\nSLInitOffset.x86=71DDA\nSLInitFunc.x86=New_CSLQuery_Initialize\nSingleUserPatch.x64=1\nSingleUserOffset.x64=1846B\nSingleUserCode.x64=mov_eax_1_nop_2\nDefPolicyPatch.x64=1\nDefPolicyOffset.x64=1F455\nDefPolicyCode.x64=CDefPolicy_Query_eax_rcx\nLocalOnlyPatch.x64=1\nLocalOnlyOffset.x64=93051\nLocalOnlyCode.x64=jmpshort\nSLInitHook.x64=1\nSLInitOffset.x64=29F1C\nSLInitFunc.x64=New_CSLQuery_Initialize\n[10.0.19041.7811-SLInit]\nbServerSku.x86=E5998\nbRemoteConnAllowed.x86=E59AC\nbFUSEnabled.x86=E59B8\nbAppServerAllowed.x86=E59A4\nbMultimonAllowed.x86=E59B0\nlMaxUserSessions.x86=E599C\nulMaxDebugSessions.x86=E59B4\nbInitialized.x86=E5994\nbServerSku.x64=1260A8\nbRemoteConnAllowed.x64=1260BC\nbFUSEnabled.x64=1260C8\nbAppServerAllowed.x64=1260B0\nbMultimonAllowed.x64=1260C0\nlMaxUserSessions.x64=1260AC\nulMaxDebugSessions.x64=1260C4\nbInitialized.x64=1260A4",
+      "status": "unverified",
+      "review_classification": "unverified",
+      "completeness": "complete",
+      "first_seen": "2026-11-24T08:14:07Z",
+      "last_seen": "2026-11-24T08:14:07Z",
+      "ini_target_versions": [
+        "10.0.19041.7811"
+      ],
+      "main_section_versions": [
+        "10.0.19041.7811"
+      ],
+      "slinit_section_versions": [
+        "10.0.19041.7811"
+      ],
+      "architecture": "mixed",
+      "architecture_key_counts": {
+        "x86": 20,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix",
+      "sections": [
+        "10.0.19041.7811",
+        "10.0.19041.7811-SLInit"
+      ],
+      "warnings": [],
+      "review_flags": [],
+      "sources": [
+        {
+          "issue_classification": "compatibility_request",
+          "failure_signals": [],
+          "triage_notes": [],
+          "duplicate_issue_refs": [],
+          "os_releases": [
+            "Windows 10"
+          ],
+          "os_build_hints": [],
+          "os_version_hints": [
+            "10.0.19041.7811"
+          ],
+          "termsrv_versions_explicit": [],
+          "labels": [
+            "add build"
+          ],
+          "issue_state": "open",
+          "issue_number": 4540,
+          "issue_title": "Windows 10 iot ent ltsc 21h2 ( 10.0.19041.7811 )  - Not Supported",
+          "issue_url": "https://github.com/stascorp/rdpwrap/issues/4540",
+          "source_type": "comment",
+          "source_url": "https://github.com/stascorp/rdpwrap/issues/4540#issuecomment-6793047105",
+          "author": "frankenzipfel",
+          "created_at": "2026-11-11T10:10:41Z",
+          "updated_at": "2026-11-24T08:07:52Z"
+        }
+      ],
+      "reported_failure_signals": []
+    },
     "9a5825a8120e53d5dfa7e2c0619287315b7fe416f9129e905eaca81a6130ffd9": {
       "candidate_id": "9a5825a8120e53d5",
       "sha256": "9a5825a8120e53d5dfa7e2c0619287315b7fe416f9129e905eaca81a6130ffd9",
@@ -53,7 +113,13 @@
           "updated_at": "2026-11-24T07:02:55Z"
         }
       ],
-      "reported_failure_signals": []
+      "reported_failure_signals": [],
+      "architecture": "x86",
+      "architecture_key_counts": {
+        "x86": 20,
+        "x64": 0
+      },
+      "architecture_detection": "explicit_ini_key_suffix"
     },
     "2431dba60cf09c2659b3a3abe0f90158b19cb56068138ee12536714aa58fd680": {
       "candidate_id": "2431dba60cf09c26",
@@ -113,7 +179,13 @@
       ],
       "reported_failure_signals": [
         "service_error_1067"
-      ]
+      ],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix"
     },
     "fa699b64efdd5027517b85ad37675c4217f31ae3244130dff24e6ddda168d72a": {
       "candidate_id": "fa699b64efdd5027",
@@ -167,7 +239,13 @@
           "updated_at": "2026-11-21T04:59:53Z"
         }
       ],
-      "reported_failure_signals": []
+      "reported_failure_signals": [],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix"
     },
     "610ed31fc1c1da9e08156c7aee8907ea1a6ced651e1b9929190ddc67369af5d7": {
       "candidate_id": "610ed31fc1c1da9e",
@@ -321,7 +399,13 @@
         "not_working_report",
         "patch_failure_report",
         "service_crash_report"
-      ]
+      ],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix"
     },
     "a5bbfc377dc0a7d4147b00a2c0536dc349701e8c736bde73338f04fb7b0291db": {
       "candidate_id": "a5bbfc377dc0a7d4",
@@ -371,7 +455,13 @@
           "updated_at": "2026-11-19T20:20:55Z"
         }
       ],
-      "reported_failure_signals": []
+      "reported_failure_signals": [],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix"
     },
     "2122254dd40e65a21b73a2f329cb8f45531d720fd97a2ab04263a5b482dd5bad": {
       "candidate_id": "2122254dd40e65a2",
@@ -425,7 +515,13 @@
           "updated_at": "2026-11-19T15:34:36Z"
         }
       ],
-      "reported_failure_signals": []
+      "reported_failure_signals": [],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix"
     },
     "d6e72c38052be093af12c5777f4eb0cd6950a72f94f926c6ab85fb3291bfa345": {
       "candidate_id": "d6e72c38052be093",
@@ -488,7 +584,13 @@
       ],
       "reported_failure_signals": [
         "service_crash_report"
-      ]
+      ],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 3
+      },
+      "architecture_detection": "explicit_ini_key_suffix"
     },
     "eefad50a2fe920b27b638cbc55f90e99b22b2fac05d5fc87c896a6c1f477085a": {
       "candidate_id": "eefad50a2fe920b2",
@@ -574,7 +676,13 @@
           "updated_at": "2026-10-29T02:02:18Z"
         }
       ],
-      "reported_failure_signals": []
+      "reported_failure_signals": [],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix"
     },
     "e03bf2c2eaed8de6463b5cb5e46513591639c659af18419994d82c2b79a84b46": {
       "candidate_id": "e03bf2c2eaed8de6",
@@ -643,7 +751,13 @@
           "updated_at": "2026-11-15T18:27:11Z"
         }
       ],
-      "reported_failure_signals": []
+      "reported_failure_signals": [],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 10
+      },
+      "architecture_detection": "explicit_ini_key_suffix"
     },
     "4827a1244d9b4ca0897dcb68373707fa2b6405cc3b668fe12e9949e85a44fe67": {
       "candidate_id": "4827a1244d9b4ca0",
@@ -741,7 +855,13 @@
           "updated_at": "2026-10-30T15:23:25Z"
         }
       ],
-      "reported_failure_signals": []
+      "reported_failure_signals": [],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix"
     },
     "c4d78b9869743791b1c0e700d5f8d55a4c3b4df2db014b1ac8d4cb2823a64b90": {
       "candidate_id": "c4d78b9869743791",
@@ -797,7 +917,13 @@
       ],
       "reported_failure_signals": [
         "not_working_report"
-      ]
+      ],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix"
     },
     "d770f3499df85ab83160d12f3ded033e52ec2a4a72282f694172fb56a206efe8": {
       "candidate_id": "d770f3499df85ab8",
@@ -851,7 +977,13 @@
           "updated_at": "2026-11-13T05:17:09Z"
         }
       ],
-      "reported_failure_signals": []
+      "reported_failure_signals": [],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix"
     },
     "264d8b8ca055f7abdb32feb5e2448edb54bbba2f859994cf5b28eb6e975e237e": {
       "candidate_id": "264d8b8ca055f7ab",
@@ -907,7 +1039,13 @@
           "updated_at": "2026-11-12T12:10:28Z"
         }
       ],
-      "reported_failure_signals": []
+      "reported_failure_signals": [],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix"
     },
     "47a2b48d62842022e3328085f2cc794274cdcb326a20c0fb9740397494278d50": {
       "candidate_id": "47a2b48d62842022",
@@ -961,7 +1099,13 @@
           "updated_at": "2026-11-11T10:10:41Z"
         }
       ],
-      "reported_failure_signals": []
+      "reported_failure_signals": [],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix"
     },
     "0bbbdf9b46ffc85619738fbf310911ca773e468bdd1d9740ac821b14a04801bd": {
       "candidate_id": "0bbbdf9b46ffc856",
@@ -1017,7 +1161,13 @@
           "updated_at": "2026-11-08T13:37:33Z"
         }
       ],
-      "reported_failure_signals": []
+      "reported_failure_signals": [],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix"
     },
     "76885a3c6da62afb059929543297408d30fb23848f20d2f86f5469245c67b981": {
       "candidate_id": "76885a3c6da62afb",
@@ -1071,7 +1221,13 @@
           "updated_at": "2026-11-02T18:08:18Z"
         }
       ],
-      "reported_failure_signals": []
+      "reported_failure_signals": [],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix"
     },
     "058a6ee4170e997cff525d5483c2c6b216112492a30b4174ba78d209759c686d": {
       "candidate_id": "058a6ee4170e997c",
@@ -1129,7 +1285,13 @@
           "updated_at": "2026-11-02T10:17:49Z"
         }
       ],
-      "reported_failure_signals": []
+      "reported_failure_signals": [],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix"
     },
     "cd9cda194131ab34480f75a18e9df2eefaf35fc810abbdfb7bc639ca604035d1": {
       "candidate_id": "cd9cda194131ab34",
@@ -1189,7 +1351,13 @@
           "updated_at": "2026-10-31T14:38:21Z"
         }
       ],
-      "reported_failure_signals": []
+      "reported_failure_signals": [],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix"
     },
     "7b618e283c8df05e09aad60f560e355371e908a960a5777ec70964294befa84b": {
       "candidate_id": "7b618e283c8df05e",
@@ -1243,7 +1411,13 @@
           "updated_at": "2026-10-31T08:06:51Z"
         }
       ],
-      "reported_failure_signals": []
+      "reported_failure_signals": [],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix"
     },
     "bfd4c8204a3a20b329de9606b465034f2d49a52ce1747c3c68d1deb8497d0f13": {
       "candidate_id": "bfd4c8204a3a20b3",
@@ -1299,7 +1473,13 @@
           "updated_at": "2026-10-29T11:11:42Z"
         }
       ],
-      "reported_failure_signals": []
+      "reported_failure_signals": [],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix"
     }
   },
   "issues": {
@@ -1336,15 +1516,19 @@
       "number": 4569,
       "title": "10.0.19041.7811 -  Windows 10 Pro 22H2 19045.7846 x86",
       "url": "https://github.com/stascorp/rdpwrap/issues/4569",
-      "state": "open",
-      "labels": [],
+      "state": "closed",
+      "labels": [
+        "duplicate"
+      ],
       "created_at": "2026-11-22T23:17:47Z",
-      "updated_at": "2026-11-24T07:02:55Z",
-      "monitor_seen_at": "2026-11-24T07:16:20Z",
-      "issue_classification": "general_activity",
+      "updated_at": "2026-11-24T08:08:49Z",
+      "monitor_seen_at": "2026-11-24T08:14:07Z",
+      "issue_classification": "duplicate_issue",
       "failure_signals": [],
       "triage_notes": [],
-      "duplicate_issue_refs": [],
+      "duplicate_issue_refs": [
+        4540
+      ],
       "os_metadata": {
         "os_releases": [
           "Windows 10 22H2"
@@ -1355,15 +1539,15 @@
         "os_version_hints": []
       },
       "termsrv_versions_explicit": [],
-      "ini_target_versions": [
+      "ini_target_versions": [],
+      "other_version_identifiers": [
         "10.0.19041.7811"
       ],
-      "other_version_identifiers": [],
       "version_relationships": [
         {
           "version": "10.0.19041.7811",
           "roles": [
-            "ini_section_target"
+            "other_version_identifier"
           ]
         },
         {
@@ -1373,15 +1557,13 @@
           ]
         }
       ],
-      "candidate_sha256s": [
-        "9a5825a8120e53d5dfa7e2c0619287315b7fe416f9129e905eaca81a6130ffd9"
-      ],
+      "candidate_sha256s": [],
       "attachment_links": [
         "https://github.com/user-attachments/assets/a7ec42ed-fe35-4bee-9611-0539f1fbed50",
         "https://github.com/user-attachments/files/35246987/termsrv.zip"
       ],
       "first_seen": "2026-11-24T02:18:30Z",
-      "last_seen": "2026-11-24T07:16:20Z"
+      "last_seen": "2026-11-24T08:14:07Z"
     },
     "4568": {
       "number": 4568,
@@ -2668,8 +2850,8 @@
         "add build"
       ],
       "created_at": "2026-11-11T02:21:44Z",
-      "updated_at": "2026-11-11T10:33:14Z",
-      "monitor_seen_at": "2026-11-24T02:18:30Z",
+      "updated_at": "2026-11-24T08:07:52Z",
+      "monitor_seen_at": "2026-11-24T08:14:07Z",
       "issue_classification": "compatibility_request",
       "failure_signals": [],
       "triage_notes": [],
@@ -2698,14 +2880,15 @@
         }
       ],
       "candidate_sha256s": [
-        "47a2b48d62842022e3328085f2cc794274cdcb326a20c0fb9740397494278d50"
+        "8341be74980828a27ed2e8f4dea9b11bdf287e4d3c43edd6327732caed9af926"
       ],
       "attachment_links": [
         "https://github.com/user-attachments/assets/fcaa1432-4c2e-4b95-897d-f798a468f694",
+        "https://github.com/user-attachments/files/35246987/termsrv.zip",
         "https://github.com/user-attachments/files/34682384/termsrv.zip"
       ],
       "first_seen": "2026-11-24T02:18:30Z",
-      "last_seen": "2026-11-24T02:18:30Z"
+      "last_seen": "2026-11-24T08:14:07Z"
     },
     "4539": {
       "number": 4539,

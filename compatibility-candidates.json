@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "upstream": "stascorp/rdpwrap",
-  "updated_at": "2026-11-24T09:53:21Z",
+  "updated_at": "2026-11-24T22:26:24Z",
   "candidates": {
     "8341be74980828a27ed2e8f4dea9b11bdf287e4d3c43edd6327732caed9af926": {
       "candidate_id": "8341be74980828a2",
@@ -1483,6 +1483,48 @@
     }
   },
   "issues": {
+    "4571": {
+      "number": 4571,
+      "title": "Windows 11 - 26H2 (10.0.26100.10068) - Not Supported",
+      "url": "https://github.com/stascorp/rdpwrap/issues/4571",
+      "state": "closed",
+      "labels": [
+        "duplicate"
+      ],
+      "created_at": "2026-11-24T18:02:05Z",
+      "updated_at": "2026-11-24T20:30:51Z",
+      "monitor_seen_at": "2026-11-24T22:26:23Z",
+      "issue_classification": "duplicate_issue",
+      "failure_signals": [],
+      "triage_notes": [],
+      "duplicate_issue_refs": [],
+      "os_metadata": {
+        "os_releases": [
+          "Windows 11"
+        ],
+        "os_build_hints": [],
+        "os_version_hints": [
+          "10.0.26100.10068"
+        ]
+      },
+      "termsrv_versions_explicit": [],
+      "ini_target_versions": [],
+      "other_version_identifiers": [],
+      "version_relationships": [
+        {
+          "version": "10.0.26100.10068",
+          "roles": [
+            "os_version_hint_from_title"
+          ]
+        }
+      ],
+      "candidate_sha256s": [],
+      "attachment_links": [
+        "https://github.com/user-attachments/assets/27b10b1b-4e29-4644-a8cf-c4a5461b6524"
+      ],
+      "first_seen": "2026-11-24T22:26:23Z",
+      "last_seen": "2026-11-24T22:26:23Z"
+    },
     "4570": {
       "number": 4570,
       "title": "26100.33822",

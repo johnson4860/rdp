@@ -3,12 +3,13 @@ name: RDP Update Monitor
 on:
   workflow_dispatch:
   schedule:
-    # Runs every 6 hours: 00:00, 06:00, 12:00, 18:00 UTC
-    # Malaysia time (UTC+8): 08:00, 14:00, 20:00, 02:00
+    # Every 6 hours: 00:17, 06:17, 12:17, 18:17 UTC
+    # Malaysia time (UTC+8): 08:17, 14:17, 20:17, 02:17
     - cron: "17 0,6,12,18 * * *"
 
 permissions:
   contents: write
+  issues: read
 
 concurrency:
   group: rdp-update-monitor
@@ -18,7 +19,6 @@ jobs:
   monitor:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -28,17 +28,23 @@ jobs:
         with:
           python-version: "3.x"
 
-      - name: Monitor RDP Wrapper issues and comments
+      - name: Test INI parser, classification, and Production comparison
+        run: python -m unittest discover -s tests -v
+
+      - name: Monitor upstream Issues and compare INI candidates with Production
+        env:
+          # Use the automatically generated repository token. No PAT or manual secret is needed.
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python .github/scripts/rdp_issue_monitor.py
 
-      - name: Save monitoring checkpoint
+      - name: Save monitor state, Candidate database, and Production comparison
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add monitor-state.json
+          git add monitor-state.json compatibility-candidates.json production-comparison.json
           if git diff --cached --quiet; then
-            echo "No checkpoint changes to save."
+            echo "No monitoring data changes to save."
           else
-            git commit -m "Update RDP monitor checkpoint"
+            git commit -m "Update RDP compatibility monitoring data"
             git push
           fi

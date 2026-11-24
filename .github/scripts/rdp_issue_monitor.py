@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""RDP Wrapper upstream monitor v1.2.2.
+"""RDP Wrapper upstream monitor v1.2.3.
 
 Collects public issue/comment activity, extracts INI candidates, and classifies
 reported compatibility context. It never downloads, installs, or publishes INI.
@@ -807,6 +807,134 @@ def compare_candidate_to_production(candidate: dict, production_text: str) -> di
     }
 
 
+def _version_sort_key(value: str) -> tuple:
+    """Sort dotted numeric INI targets numerically, with non-version labels last."""
+    match = re.fullmatch(r"(\d+(?:\.\d+){1,3})(.*)", value or "")
+    if not match:
+        return (0, (), (value or "").casefold())
+    numbers = tuple(int(part) for part in match.group(1).split("."))
+    suffix = match.group(2).casefold()
+    return (1, numbers, suffix)
+
+
+def build_version_groups(comparisons: list[dict]) -> list[dict]:
+    """Group unique INI hashes by target version without merging their content."""
+    grouped: dict[str, list[dict]] = {}
+    for item in comparisons:
+        versions = item.get("ini_target_versions") or ["(version not detected)"]
+        for version in versions:
+            grouped.setdefault(version, []).append(item)
+
+    groups = []
+    for version, candidates in grouped.items():
+        # A candidate that declares multiple target sections appears in each
+        # corresponding version group, but only once inside each group.
+        unique_candidates = {item.get("candidate_id") or item.get("sha256"): item for item in candidates}
+        candidate_items = list(unique_candidates.values())
+        comparison_counts: dict[str, int] = {}
+        review_counts: dict[str, int] = {}
+        source_map: dict[str, dict] = {}
+        for item in candidate_items:
+            comparison_status = item.get("comparison_status", "unknown")
+            comparison_counts[comparison_status] = comparison_counts.get(comparison_status, 0) + 1
+            review_status = item.get("candidate_review_classification", "unverified")
+            review_counts[review_status] = review_counts.get(review_status, 0) + 1
+            for source in item.get("sources", []):
+                source_url = source.get("source_url") or ""
+                source_key = source_url or "|".join(str(source.get(k) or "") for k in (
+                    "source_type", "issue_number", "author", "created_at"
+                ))
+                if source_key:
+                    source_map[source_key] = {
+                        "issue_number": source.get("issue_number"),
+                        "author": source.get("author"),
+                        "source_type": source.get("source_type"),
+                        "source_url": source_url,
+                        "created_at": source.get("created_at"),
+                        "updated_at": source.get("updated_at"),
+                    }
+
+        statuses = set(comparison_counts)
+        if len(statuses) > 1:
+            group_status = "mixed_variants"
+        elif statuses:
+            group_status = next(iter(statuses))
+        else:
+            group_status = "unknown"
+
+        source_items = sorted(
+            source_map.values(),
+            key=lambda src: (
+                int(src["issue_number"]) if str(src.get("issue_number", "")).isdigit() else 10**12,
+                src.get("created_at") or "",
+                src.get("source_url") or "",
+            ),
+        )
+        issue_numbers = sorted({
+            int(src["issue_number"]) for src in source_items
+            if str(src.get("issue_number", "")).isdigit()
+        })
+
+        variants = []
+        for item in sorted(candidate_items, key=lambda value: (value.get("candidate_id") or "")):
+            item_issues = sorted({
+                int(source["issue_number"]) for source in item.get("sources", [])
+                if str(source.get("issue_number", "")).isdigit()
+            })
+            variants.append({
+                "candidate_id": item.get("candidate_id"),
+                "sha256": item.get("sha256"),
+                "comparison_status": item.get("comparison_status", "unknown"),
+                "review_classification": item.get("candidate_review_classification", "unverified"),
+                "section_results": [
+                    {
+                        "section": section.get("section"),
+                        "status": section.get("status"),
+                        "candidate_key_count": section.get("candidate_key_count", 0),
+                        "production_key_count": section.get("production_key_count", 0),
+                    }
+                    for section in item.get("section_results", [])
+                ],
+                "issue_numbers": item_issues,
+            })
+
+        groups.append({
+            "target_version": version,
+            "candidate_count": len(candidate_items),
+            "group_status": group_status,
+            "comparison_status_counts": dict(sorted(comparison_counts.items())),
+            "review_classification_counts": dict(sorted(review_counts.items())),
+            "has_reported_failure": review_counts.get("reported_failure", 0) > 0,
+            "has_unverified_candidate": review_counts.get("unverified", 0) > 0,
+            "source_count": len(source_items),
+            "source_issue_numbers": issue_numbers,
+            "candidate_ids": [variant["candidate_id"] for variant in variants],
+            "variants": variants,
+            "sources": source_items,
+        })
+
+    # Newest numeric target first; unknown version labels are listed last.
+    return sorted(groups, key=lambda group: _version_sort_key(group["target_version"]), reverse=True)
+
+
+def _version_group_label(group: dict) -> str:
+    labels = {
+        "exact_match": "ALL CANDIDATES MATCH PRODUCTION",
+        "new_section": "NEW SECTION — NOT IN PRODUCTION",
+        "new_keys": "EXTRA KEYS — REVIEW DIFFERENCES",
+        "value_difference": "VALUE DIFFERENCE",
+        "mixed_difference": "MIXED DIFFERENCES",
+        "partial_match": "PARTIAL MATCH",
+        "incomplete": "INCOMPLETE CANDIDATE",
+        "mixed_variants": "MULTIPLE VARIANTS — RESULTS DIFFER",
+        "unknown": "NEEDS REVIEW",
+    }
+    label = labels.get(group.get("group_status", "unknown"), group.get("group_status", "unknown"))
+    if group.get("candidate_count", 0) > 1 and group.get("group_status") != "mixed_variants":
+        label += f" ({group['candidate_count']} variants)"
+    return label
+
+
 def build_production_comparison(database: dict, production_text: str, baseline_commit: str | None = None) -> dict:
     production_parsed = parse_ini_document(production_text)
     comparisons = []
@@ -830,6 +958,10 @@ def build_production_comparison(database: dict, production_text: str, baseline_c
     for item in comparisons:
         status = item["comparison_status"]
         counts[status] = counts.get(status, 0) + 1
+    version_groups = build_version_groups(comparisons)
+    group_status_counts: dict[str, int] = {}
+    for group in version_groups:
+        group_status_counts[group["group_status"]] = group_status_counts.get(group["group_status"], 0) + 1
     return {
         "schema_version": 1,
         "generated_at": iso_utc(utc_now()),
@@ -841,7 +973,10 @@ def build_production_comparison(database: dict, production_text: str, baseline_c
             "section_count": len(production_parsed["sections"]),
         },
         "candidate_count": len(comparisons),
+        "version_group_count": len(version_groups),
+        "version_group_status_counts": dict(sorted(group_status_counts.items())),
         "status_counts": counts,
+        "version_groups": version_groups,
         "comparisons": comparisons,
     }
 
@@ -867,7 +1002,52 @@ def build_comparison_report(comparison: dict) -> str:
     for status in ("new_section", "value_difference", "new_keys", "mixed_difference", "partial_match", "exact_match", "incomplete"):
         count = comparison["status_counts"].get(status, 0)
         lines.append(f"| `{status}` | {count} |")
-    lines.extend(["", "### Full candidate comparison list", ""])
+    lines.extend([
+        "",
+        f"- Unique INI target versions: `{comparison.get('version_group_count', len(comparison.get('version_groups', [])))}`",
+        "- Totals above count unique Candidate hashes; the version overview below groups those hashes by INI target version.",
+        "",
+        "### Grouped by INI target version",
+        "",
+        "| INI target version | Candidate variants | Production comparison | Review signals | Upstream Issues |",
+        "|---|---:|---|---|---|",
+    ])
+    version_groups = comparison.get("version_groups") or build_version_groups(comparison.get("comparisons", []))
+    for group in version_groups:
+        reviews = group.get("review_classification_counts", {})
+        review_labels = []
+        if reviews.get("reported_failure"):
+            review_labels.append(f"reported failure: {reviews['reported_failure']}")
+        if reviews.get("unverified"):
+            review_labels.append(f"unverified: {reviews['unverified']}")
+        if not review_labels:
+            review_labels.append("none recorded")
+        issue_text = ", ".join(f"[#{number}](https://github.com/{UPSTREAM_OWNER}/{UPSTREAM_REPO}/issues/{number})" for number in group.get("source_issue_numbers", [])) or "—"
+        lines.append(
+            f"| `{group['target_version']}` | {group['candidate_count']} | "
+            f"**{_version_group_label(group)}** | {'; '.join(review_labels)} | {issue_text} |"
+        )
+    if version_groups:
+        lines.extend(["", "#### Version group details", ""])
+        for group in version_groups:
+            lines.append(f"##### `{group['target_version']}` — {_version_group_label(group)}")
+            lines.append(f"- Unique Candidate variants: `{group['candidate_count']}`")
+            for variant in group.get("variants", []):
+                sections = ", ".join(
+                    f"`{section['section']}` ({section['status']}; {section['candidate_key_count']} candidate keys / {section['production_key_count']} production keys)"
+                    for section in variant.get("section_results", [])
+                ) or "no parsed sections"
+                issue_refs = ", ".join(f"#{number}" for number in variant.get("issue_numbers", [])) or "no issue source recorded"
+                lines.append(
+                    f"- Candidate `{variant['candidate_id']}` — `{variant['comparison_status']}`; "
+                    f"review `{variant['review_classification']}`; SHA-256 `{variant['sha256']}`; "
+                    f"source Issue(s): {issue_refs}; sections: {sections}"
+                )
+            if group.get("has_reported_failure"):
+                lines.append("- **Review warning:** at least one Candidate in this target-version group carries a reported-failure signal. This is not proof that every variant is defective.")
+            lines.append("")
+
+    lines.extend(["### Full candidate comparison list", ""])
     if not comparison["comparisons"]:
         lines.append("No upstream INI candidates are recorded yet.")
         return "\n".join(lines) + "\n"
@@ -952,7 +1132,7 @@ def build_comparison_report(comparison: dict) -> str:
 def build_report(issues: list[dict], since: datetime, scan_type: str, database: dict, event_counts: dict) -> str:
     checked_at = utc_now()
     lines = [
-        "# RDP Wrapper upstream monitor v1.2.2",
+        "# RDP Wrapper upstream monitor v1.2.3",
         "",
         f"- Checked at (UTC): `{iso_utc(checked_at)}`",
         f"- Upstream: [`{UPSTREAM_OWNER}/{UPSTREAM_REPO}`](https://github.com/{UPSTREAM_OWNER}/{UPSTREAM_REPO})",

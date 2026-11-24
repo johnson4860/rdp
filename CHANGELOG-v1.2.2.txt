@@ -1,0 +1,28 @@
+RDP Wrapper Upstream Monitor v1.2.2
+
+New: Production INI comparison
+- Reads the repository-root rdpwrap.ini from the current checkout.
+- Compares every unique Candidate in compatibility-candidates.json, not only candidates discovered in the latest scan.
+- Adds section-level and key/value-level comparison.
+- Reports exact_match, partial_match, new_section, new_keys, value_difference, mixed_difference, and incomplete.
+- Records the Production baseline SHA-256, [Main] Updated value, section count, and Git commit SHA.
+- Writes production-comparison.json and appends the full comparison to GitHub Actions Step Summary.
+- Shows all sources for every candidate, up to five links in the Summary; the JSON retains all sources.
+- New sections show their candidate key/value entries.
+
+Comparison rules
+- Section names and key names are case-insensitive.
+- Values are compared exactly after trimming surrounding whitespace.
+- Production-only keys are a partial match, not an exact match.
+- Candidate-only keys are reported as new keys.
+- Missing main section, unsectioned entries, or duplicate candidate keys cause an incomplete status.
+- Valid sections of an incomplete candidate are still compared section by section.
+
+Workflow
+- Adds production-comparison.json to the data commit.
+- Keeps the existing GH_TOKEN authentication, scheduled scan, state file, candidate database, tests, and permissions.
+
+Safety
+- Read-only comparison only. rdpwrap.ini is never modified.
+- An exact comparison only means the Candidate matches the current Production entries. It is not proof that RDP Wrapper works on a Windows build.
+- No candidate is marked Verified or Published automatically.

@@ -1,15 +1,11 @@
-RDP Issue Monitor v1.2.1 — GitHub API authentication hotfix
+RDP Wrapper Upstream Monitor v1.2.2
 
-See INSTALL-中文说明.txt for installation.
-See CHANGELOG-v1.2.1.txt for the hotfix details.
+Purpose
+- Monitor public stascorp/rdpwrap Issues and comments.
+- Extract and deduplicate INI candidates.
+- Compare every stored unique candidate with this repository's production rdpwrap.ini.
+- Produce a GitHub Actions Summary and production-comparison.json.
 
-Files to replace:
-- .github/workflows/rdp-monitor.yml
-- .github/scripts/rdp_issue_monitor.py
-- tests/test_rdp_issue_monitor.py
+The comparison baseline is the rdpwrap.ini checked out by actions/checkout at the exact workflow commit. It is not downloaded from another URL. The monitor never edits, installs, or publishes rdpwrap.ini.
 
-Keep existing generated data files:
-- monitor-state.json
-- compatibility-candidates.json
-
-No Personal Access Token or manually added repository secret is required.
+Install the three replacement files listed in INSTALL-中文说明.txt. Preserve monitor-state.json and compatibility-candidates.json.

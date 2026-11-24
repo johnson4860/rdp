@@ -307,5 +307,151 @@ class GitHubAuthenticationTests(unittest.TestCase):
 
 
 
+class ProductionComparisonTests(unittest.TestCase):
+    BASELINE = """; production RDP Wrapper INI
+[Main]
+Updated=2026-07-21
+
+[10.0.28000.3614]
+SingleUserPatch.x64=1
+SingleUserOffset.x64=2CE31
+SingleUserCode.x64=mov_eax_1_nop_2
+DefPolicyPatch.x64=1
+DefPolicyOffset.x64=AD1CD
+DefPolicyCode.x64=CDefPolicy_Query_r9d_rdi_jmp
+LocalOnlyPatch.x64=1
+LocalOnlyOffset.x64=A5207
+LocalOnlyCode.x64=jmpshort
+SLInitHook.x64=1
+SLInitOffset.x64=C0988
+SLInitFunc.x64=New_CSLQuery_Initialize
+ExtraProductionKey.x64=present
+
+[10.0.28000.3614-SLInit]
+bServerSku.x64=13BE1C
+bRemoteConnAllowed.x64=13BE34
+bFUSEnabled.x64=13BE44
+bAppServerAllowed.x64=13BE28
+bMultimonAllowed.x64=13BE38
+lMaxUserSessions.x64=13BE20
+ulMaxDebugSessions.x64=13BE40
+bInitialized.x64=13BE18
+"""
+
+    def make_candidate(self, content, review="unverified", candidate_id="abc123"):
+        return {
+            "candidate_id": candidate_id,
+            "sha256": monitor.candidate_hash(content),
+            "content": content,
+            "review_classification": review,
+            "sources": [{
+                "source_type": "comment",
+                "issue_number": 4564,
+                "author": "sample-user",
+                "source_url": "https://github.com/stascorp/rdpwrap/issues/4564#issuecomment-1",
+                "created_at": "2026-11-21T04:59:53Z",
+            }],
+        }
+
+    def test_case_and_whitespace_normalized_but_extra_production_key_is_partial_match(self):
+        candidate_text = INI_28000.replace("SingleUserOffset.x64=2CE31", " singleuseroffset.X64 = 2CE31 ")
+        baseline = self.BASELINE.replace("[10.0.28000.3614]", "[10.0.28000.3614]  ")
+        result = monitor.compare_candidate_to_production(self.make_candidate(candidate_text), baseline)
+        self.assertEqual(result["comparison_status"], "partial_match")
+        # Production intentionally has one additional key in the main section.
+        self.assertIn("production_has_extra_keys", result["comparison_flags"])
+
+    def test_exact_match_when_section_and_values_are_same(self):
+        baseline = self.BASELINE.replace("ExtraProductionKey.x64=present\n", "")
+        result = monitor.compare_candidate_to_production(self.make_candidate(INI_28000), baseline)
+        self.assertEqual(result["comparison_status"], "exact_match")
+        self.assertEqual(len(result["section_results"]), 2)
+
+    def test_value_difference_is_reported_with_both_values(self):
+        candidate_text = INI_28000.replace("SingleUserOffset.x64=2CE31", "SingleUserOffset.x64=2CE32")
+        baseline = self.BASELINE.replace("ExtraProductionKey.x64=present\n", "")
+        result = monitor.compare_candidate_to_production(self.make_candidate(candidate_text), baseline)
+        self.assertEqual(result["comparison_status"], "value_difference")
+        difference = next(item for item in result["value_differences"] if item["key"] == "singleuseroffset.x64")
+        self.assertEqual(difference["candidate_value"], "2CE32")
+        self.assertEqual(difference["production_value"], "2CE31")
+
+    def test_new_section_is_reported_when_version_not_in_production(self):
+        content = INI_28000.replace("28000.3614", "28000.9999")
+        result = monitor.compare_candidate_to_production(self.make_candidate(content), self.BASELINE)
+        self.assertEqual(result["comparison_status"], "new_section")
+        self.assertEqual(result["new_sections"], ["10.0.28000.9999", "10.0.28000.9999-SLInit"])
+
+    def test_candidate_only_key_is_reported(self):
+        baseline = self.BASELINE.replace("ExtraProductionKey.x64=present\n", "")
+        candidate_text = INI_28000.replace(
+            "SingleUserCode.x64=mov_eax_1_nop_2",
+            "SingleUserCode.x64=mov_eax_1_nop_2\nCandidateOnly.x64=ABC",
+        )
+        result = monitor.compare_candidate_to_production(self.make_candidate(candidate_text), baseline)
+        self.assertEqual(result["comparison_status"], "new_keys")
+        self.assertTrue(any(item["key"] == "candidateonly.x64" for item in result["candidate_only_keys"]))
+
+    def test_incomplete_candidate_reports_unsectioned_entries_and_compares_valid_section(self):
+        result = monitor.compare_candidate_to_production(
+            self.make_candidate(INI_26100_INCOMPLETE), self.BASELINE
+        )
+        self.assertEqual(result["comparison_status"], "incomplete")
+        self.assertGreater(len(result["unsectioned_entries"]), 0)
+        self.assertTrue(any(item["section"].endswith("-SLInit") for item in result["section_results"]))
+
+    def test_section_and_key_names_are_case_insensitive(self):
+        baseline = """[10.0.28000.3614]
+singleuserpatch.X64=1
+singleuseroffset.x64=2CE31
+singleusercode.X64=mov_eax_1_nop_2
+"""
+        candidate = """[10.0.28000.3614]
+SingleUserPatch.x64=1
+SingleUserOffset.x64=2CE31
+SingleUserCode.x64=mov_eax_1_nop_2
+"""
+        # Candidate is structurally incomplete because common fields are missing,
+        # but names/case do not create a false value difference.
+        result = monitor.compare_candidate_to_production(self.make_candidate(candidate), baseline)
+        self.assertNotIn("value_difference", result["comparison_flags"])
+        self.assertEqual(result["section_results"][0]["status"], "exact_match")
+
+    def test_production_comparison_includes_baseline_hash_and_main_updated(self):
+        database = {"candidates": {"hash": self.make_candidate(INI_28000)}}
+        result = monitor.build_production_comparison(database, self.BASELINE, "commit123")
+        self.assertEqual(result["baseline"]["main_updated"], "2026-07-21")
+        self.assertEqual(result["baseline"]["git_commit"], "commit123")
+        self.assertEqual(len(result["baseline"]["sha256"]), 64)
+        self.assertEqual(result["candidate_count"], 1)
+
+    def test_summary_lists_production_comparison_and_candidate_sources(self):
+        baseline = self.BASELINE.replace("ExtraProductionKey.x64=present\n", "")
+        database = {"candidates": {"hash": self.make_candidate(INI_28000)}}
+        result = monitor.build_production_comparison(database, baseline)
+        report = monitor.build_comparison_report(result)
+        self.assertIn("Upstream INI vs Production INI comparison", report)
+        self.assertIn("EXACT MATCH", report)
+        self.assertIn("issuecomment-1", report)
+        self.assertIn("read-only", report)
+
+
+    def test_new_section_plus_partial_match_is_mixed_difference(self):
+        candidate_text = INI_28000 + "\n\n[10.0.28000.9999]\nSingleUserPatch.x64=1\n"
+        baseline = self.BASELINE
+        result = monitor.compare_candidate_to_production(self.make_candidate(candidate_text), baseline)
+        self.assertEqual(result["comparison_status"], "mixed_difference")
+        self.assertIn("new_section", result["comparison_flags"])
+        self.assertIn("production_has_extra_keys", result["comparison_flags"])
+
+
+    def test_workflow_commits_comparison_json_and_checks_out_production_ini(self):
+        workflow_path = SCRIPT.parents[2] / ".github" / "workflows" / "rdp-monitor.yml"
+        workflow = workflow_path.read_text(encoding="utf-8")
+        self.assertIn("git add monitor-state.json compatibility-candidates.json production-comparison.json", workflow)
+        self.assertIn("actions/checkout", workflow)
+
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

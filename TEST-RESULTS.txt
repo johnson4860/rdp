@@ -1,29 +1,24 @@
-RDP Issue Monitor v1.2.1 local validation
+RDP Monitor v1.2.2 local test results
 
-Python syntax: PASS
-Unit tests: 25/25 PASS
-Workflow YAML parse: PASS
+Command:
+python -m unittest discover -s tests -v
 
-Additional authentication tests:
-- Missing token is rejected before any anonymous HTTP request is sent.
-- GH_TOKEN is preferred when present.
-- Authorization: Bearer header is attached to REST API requests.
-- The startup quota check rejects the unauthenticated 60-request quota.
-- Workflow injects the automatic secrets.GITHUB_TOKEN into the monitor step.
+Result:
+36 tests passed
+0 failures
+0 errors
 
-Existing v1.2 test areas:
-- Full INI section parsing and preservation
-- Missing primary section detection without inventing a header
-- SHA-256 candidate deduplication
-- Windows release / OS Build / title version separation
-- Explicit termsrv.dll association
-- Multi-role version relationship mapping
-- Service crash / start failure / Error 1067 / BSOD signal classification
-- Triage-note detection
-- Duplicate / invalid / compatibility-request separation
-- Candidate reported_failure and incomplete classifications
-- Source created_at vs updated_at reporting
-- v1 database migration and 30-day enrichment backfill
-- Issue record first_seen preservation
+Coverage includes:
+- Existing v1.2.1 extraction, database migration and authentication tests.
+- Exact match.
+- Production has extra keys (partial match).
+- Candidate has keys absent from Production.
+- New section detection.
+- Per-key value differences showing both sides.
+- Incomplete Candidate with unsectioned entries.
+- Case-insensitive Section and key names.
+- Production baseline SHA-256, [Main] Updated and commit metadata.
+- Mixed differences spanning new sections and production-only keys.
+- Summary output and workflow commit of production-comparison.json.
 
-These are local tests using synthetic fixtures based on the provided samples. They do not certify any INI as compatible with Windows or termsrv.dll, and they do not test live GitHub API authentication from the user's repository.
+These are local unit tests using synthetic INI fixtures. The first GitHub Actions run is still required to validate the comparison against the live repository's actual rdpwrap.ini and stored Candidate database.

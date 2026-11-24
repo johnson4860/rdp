@@ -35,6 +35,32 @@ lMaxUserSessions.x64=13BE20
 ulMaxDebugSessions.x64=13BE40
 bInitialized.x64=13BE18"""
 
+
+INI_19041_X86 = """[10.0.19041.7811]
+SingleUserPatch.x86=1
+SingleUserOffset.x86=45E27
+SingleUserCode.x86=pop_eax_add_esp_12_nop_2
+DefPolicyPatch.x86=1
+DefPolicyOffset.x86=41DC9
+DefPolicyCode.x86=CDefPolicy_Query_eax_ecx
+LocalOnlyPatch.x86=1
+LocalOnlyOffset.x86=C3A89
+LocalOnlyCode.x86=jmpshort
+SLInitHook.x86=1
+SLInitOffset.x86=71DDA
+SLInitFunc.x86=New_CSLQuery_Initialize
+[10.0.19041.7811-SLInit]
+bServerSku.x86=E5998
+bRemoteConnAllowed.x86=E59AC
+bFUSEnabled.x86=E59B8
+bAppServerAllowed.x86=E59A4
+bMultimonAllowed.x86=E59B0
+lMaxUserSessions.x86=E599C
+ulMaxDebugSessions.x86=E59B4
+bInitialized.x86=E5994"""
+
+INI_19041_X64 = INI_19041_X86.replace(".x86", ".x64")
+
 INI_26100_INCOMPLETE = """SingleUserPatch.x64=1
 SingleUserOffset.x64=AC67B
 SingleUserCode.x64=mov_eax_1_nop_2
@@ -88,6 +114,33 @@ class IniParserTests(unittest.TestCase):
         candidates = monitor.extract_ini_candidates(text)
         self.assertEqual(len(candidates), 1)
         self.assertEqual(candidates[0]["duplicate_occurrences"], 1)
+
+
+    def test_architecture_is_detected_only_from_explicit_ini_key_suffixes(self):
+        x86 = monitor.inspect_candidate(INI_19041_X86)
+        x64 = monitor.inspect_candidate(INI_19041_X64)
+        self.assertEqual(x86["architecture"], "x86")
+        self.assertEqual(x86["architecture_key_counts"]["x86"], 20)
+        self.assertEqual(x86["architecture_key_counts"]["x64"], 0)
+        self.assertEqual(x64["architecture"], "x64")
+        self.assertEqual(x64["architecture_key_counts"]["x64"], 20)
+
+    def test_candidate_with_both_suffixes_is_classified_as_mixed(self):
+        mixed = INI_19041_X86.replace("SingleUserPatch.x86=1", "SingleUserPatch.x86=1\nSingleUserPatch.x64=1")
+        details = monitor.inspect_candidate(mixed)
+        self.assertEqual(details["architecture"], "mixed")
+        self.assertGreater(details["architecture_key_counts"]["x86"], 0)
+        self.assertGreater(details["architecture_key_counts"]["x64"], 0)
+
+    def test_architecture_detection_does_not_use_os_or_version_text(self):
+        details = monitor.inspect_candidate("""; Windows 10 x64 10.0.19041.7811
+[10.0.19041.7811]
+SingleUserPatch=1
+DefPolicyPatch=1
+LocalOnlyPatch=1
+SLInitHook=1""")
+        self.assertEqual(details["architecture"], "unknown")
+        self.assertEqual(details["architecture_detection"], "not_detected")
 
 
 class VersionIntelligenceTests(unittest.TestCase):
@@ -234,6 +287,15 @@ class DatabaseTests(unittest.TestCase):
                 self.assertIn("30-day", scan)
                 self.assertTrue((monitor.utc_now() - since).days in (29, 30))
 
+
+    def test_candidate_database_records_architecture_evidence(self):
+        candidate = monitor.extract_ini_candidates(INI_19041_X86)[0]
+        database = {"schema_version": 2, "upstream": "stascorp/rdpwrap", "updated_at": None, "candidates": {}, "issues": {}}
+        source = {"source_type": "issue_body", "source_url": "https://github.com/stascorp/rdpwrap/issues/4569", "failure_signals": []}
+        monitor.add_candidate_to_database(database, candidate, source, "2026-11-24T00:00:00Z")
+        stored = next(iter(database["candidates"].values()))
+        self.assertEqual(stored["architecture"], "x86")
+        self.assertEqual(stored["architecture_key_counts"], {"x86": 20, "x64": 0})
 
     def test_incomplete_candidate_is_not_promoted(self):
         candidate = monitor.extract_ini_candidates(INI_26100_INCOMPLETE)[0]
@@ -417,6 +479,59 @@ SingleUserCode.x64=mov_eax_1_nop_2
         self.assertNotIn("value_difference", result["comparison_flags"])
         self.assertEqual(result["section_results"][0]["status"], "exact_match")
 
+    def test_x86_candidate_is_new_architecture_when_production_has_only_x64(self):
+        production_x64 = INI_19041_X64
+        candidate = self.make_candidate(INI_19041_X86, candidate_id="x86-candidate")
+        result = monitor.compare_candidate_to_production(candidate, production_x64)
+        self.assertEqual(result["architecture"], "x86")
+        self.assertEqual(result["comparison_status"], "new_architecture")
+        self.assertIn("new_architecture", result["comparison_flags"])
+        self.assertEqual(len(result["production_only_keys"]), 0)
+        self.assertTrue(all(
+            section["status"] == "new_architecture" for section in result["section_results"]
+        ))
+        self.assertTrue(all(
+            section["ignored_opposite_architecture_key_count"] > 0
+            for section in result["section_results"]
+        ))
+
+    def test_x86_candidate_ignores_x64_extras_when_production_has_both(self):
+        production_both = INI_19041_X64 + "\n" + INI_19041_X86
+        candidate = self.make_candidate(INI_19041_X86, candidate_id="x86-candidate")
+        result = monitor.compare_candidate_to_production(candidate, production_both)
+        self.assertEqual(result["comparison_status"], "exact_match")
+        self.assertEqual(len(result["production_only_keys"]), 0)
+        self.assertTrue(all(
+            section["ignored_opposite_architecture_key_count"] > 0
+            for section in result["section_results"]
+        ))
+
+    def test_same_target_version_is_split_into_x86_and_x64_groups(self):
+        baseline_both = INI_19041_X64 + "\n" + INI_19041_X86
+        x86_candidate = self.make_candidate(INI_19041_X86, candidate_id="candidate-x86")
+        x64_candidate = self.make_candidate(INI_19041_X64, candidate_id="candidate-x64")
+        result = monitor.build_production_comparison(
+            {"candidates": {
+                x86_candidate["sha256"]: x86_candidate,
+                x64_candidate["sha256"]: x64_candidate,
+            }},
+            baseline_both,
+        )
+        self.assertEqual(result["candidate_count"], 2)
+        self.assertEqual(result["target_version_count"], 1)
+        self.assertEqual(result["version_group_count"], 1)
+        self.assertEqual(result["architecture_group_count"], 2)
+        groups = {group["architecture"]: group for group in result["version_groups"]}
+        self.assertEqual(set(groups), {"x86", "x64"})
+        self.assertEqual(groups["x86"]["group_status"], "exact_match")
+        self.assertEqual(groups["x64"]["group_status"], "exact_match")
+
+    def test_production_architecture_counts_are_recorded(self):
+        result = monitor.build_production_comparison(
+            {"candidates": {}}, INI_19041_X64 + "\n" + INI_19041_X86
+        )
+        self.assertEqual(result["baseline"]["architecture_key_counts"], {"x86": 20, "x64": 20})
+
     def test_production_comparison_includes_baseline_hash_and_main_updated(self):
         database = {"candidates": {"hash": self.make_candidate(INI_28000)}}
         result = monitor.build_production_comparison(database, self.BASELINE, "commit123")
@@ -485,6 +600,8 @@ SingleUserCode.x64=mov_eax_1_nop_2
         self.assertIn("Version group details", report)
         self.assertIn("Candidate `grouped-candidate`", report)
         self.assertIn("source Issue(s): #4564", report)
+        self.assertIn("Architecture", report)
+        self.assertIn("Grouped by INI target version + architecture", report)
 
     def test_version_groups_are_sorted_newest_first_and_keep_incomplete_variants(self):
         baseline = self.BASELINE.replace("ExtraProductionKey.x64=present\n", "")
@@ -505,6 +622,7 @@ SingleUserCode.x64=mov_eax_1_nop_2
         workflow = workflow_path.read_text(encoding="utf-8")
         self.assertIn("git add monitor-state.json compatibility-candidates.json production-comparison.json", workflow)
         self.assertIn("actions/checkout", workflow)
+        self.assertIn("v1.2.4", SCRIPT.read_text(encoding="utf-8"))
 
 
 

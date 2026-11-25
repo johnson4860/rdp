@@ -1,11 +1,11 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-11-24T22:26:24Z",
+  "generated_at": "2026-11-25T08:32:53Z",
   "baseline": {
     "path": "rdpwrap.ini",
     "sha256": "70b2bd9c97b990d1ed845b561f8265a5544fcb554c9eb1b08b623a3a3e88fe07",
     "main_updated": "2026-07-21",
-    "git_commit": "898148f05b9f8488e76f3872a15a0797bd67462f",
+    "git_commit": "003a47060a4eefc034da77521cd32c5a7b7c6d6f",
     "section_count": 1426,
     "architecture_key_counts": {
       "x86": 3936,

@@ -1,25 +1,25 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-11-25T08:32:53Z",
+  "generated_at": "2026-11-25T21:41:21Z",
   "baseline": {
     "path": "rdpwrap.ini",
     "sha256": "70b2bd9c97b990d1ed845b561f8265a5544fcb554c9eb1b08b623a3a3e88fe07",
     "main_updated": "2026-07-21",
-    "git_commit": "003a47060a4eefc034da77521cd32c5a7b7c6d6f",
+    "git_commit": "131bf5b4285d351404826962b16c1daa4be057dd",
     "section_count": 1426,
     "architecture_key_counts": {
       "x86": 3936,
       "x64": 13998
     }
   },
-  "candidate_count": 21,
-  "target_version_count": 14,
-  "version_group_count": 14,
-  "architecture_group_count": 16,
-  "version_architecture_group_count": 16,
+  "candidate_count": 22,
+  "target_version_count": 15,
+  "version_group_count": 15,
+  "architecture_group_count": 17,
+  "version_architecture_group_count": 17,
   "architecture_counts": {
     "mixed": 1,
-    "x64": 19,
+    "x64": 20,
     "x86": 1
   },
   "version_group_status_counts": {
@@ -27,11 +27,11 @@
     "incomplete": 1,
     "mixed_difference": 1,
     "mixed_variants": 2,
-    "new_section": 11
+    "new_section": 12
   },
   "status_counts": {
     "mixed_difference": 1,
-    "new_section": 12,
+    "new_section": 13,
     "new_keys": 1,
     "incomplete": 2,
     "exact_match": 5
@@ -649,6 +649,70 @@
           "source_url": "https://github.com/stascorp/rdpwrap/issues/4567",
           "created_at": "2026-11-21T21:14:27Z",
           "updated_at": "2026-11-21T21:22:43Z"
+        }
+      ]
+    },
+    {
+      "target_version": "10.0.26100.10021",
+      "architecture": "x64",
+      "architecture_detection": "explicit_ini_key_suffix",
+      "candidate_count": 1,
+      "group_status": "new_section",
+      "comparison_status_counts": {
+        "new_section": 1
+      },
+      "review_classification_counts": {
+        "unverified": 1
+      },
+      "has_reported_failure": false,
+      "has_unverified_candidate": true,
+      "source_count": 1,
+      "source_issue_numbers": [
+        4568
+      ],
+      "candidate_ids": [
+        "e9d90f42402be7fa"
+      ],
+      "variants": [
+        {
+          "candidate_id": "e9d90f42402be7fa",
+          "sha256": "e9d90f42402be7fa57f13a51ed39025c02909bf356b58787a53f77d11cb3430a",
+          "architecture": "x64",
+          "comparison_status": "new_section",
+          "review_classification": "unverified",
+          "section_results": [
+            {
+              "section": "10.0.26100.10021",
+              "status": "new_section",
+              "candidate_key_count": 12,
+              "production_key_count": 0,
+              "candidate_architecture_key_count": 12,
+              "production_architecture_key_count": 0,
+              "ignored_opposite_architecture_key_count": 0
+            },
+            {
+              "section": "10.0.26100.10021-SLInit",
+              "status": "new_section",
+              "candidate_key_count": 8,
+              "production_key_count": 0,
+              "candidate_architecture_key_count": 8,
+              "production_architecture_key_count": 0,
+              "ignored_opposite_architecture_key_count": 0
+            }
+          ],
+          "issue_numbers": [
+            4568
+          ]
+        }
+      ],
+      "sources": [
+        {
+          "issue_number": 4568,
+          "author": "AmirHosseinBozorgi",
+          "source_type": "comment",
+          "source_url": "https://github.com/stascorp/rdpwrap/issues/4568#issuecomment-7169604013",
+          "created_at": "2026-11-25T17:30:33Z",
+          "updated_at": "2026-11-25T17:34:23Z"
         }
       ]
     },
@@ -2441,6 +2505,182 @@
           "source_url": "https://github.com/stascorp/rdpwrap/issues/4558#issuecomment-6965672711",
           "created_at": "2026-11-18T00:57:36Z",
           "updated_at": "2026-11-19T15:34:36Z"
+        }
+      ]
+    },
+    {
+      "candidate_id": "e9d90f42402be7fa",
+      "sha256": "e9d90f42402be7fa57f13a51ed39025c02909bf356b58787a53f77d11cb3430a",
+      "ini_target_versions": [
+        "10.0.26100.10021"
+      ],
+      "architecture": "x64",
+      "architecture_key_counts": {
+        "x86": 0,
+        "x64": 20
+      },
+      "architecture_detection": "explicit_ini_key_suffix",
+      "candidate_review_classification": "unverified",
+      "comparison_status": "new_section",
+      "comparison_flags": [
+        "new_section"
+      ],
+      "section_results": [
+        {
+          "section": "10.0.26100.10021",
+          "status": "new_section",
+          "architecture": "x64",
+          "candidate_key_count": 12,
+          "production_key_count": 0,
+          "candidate_architecture_key_count": 12,
+          "production_architecture_key_count": 0,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
+          "value_differences": [],
+          "candidate_only_keys": [
+            "defpolicycode.x64",
+            "defpolicyoffset.x64",
+            "defpolicypatch.x64",
+            "localonlycode.x64",
+            "localonlyoffset.x64",
+            "localonlypatch.x64",
+            "singleusercode.x64",
+            "singleuseroffset.x64",
+            "singleuserpatch.x64",
+            "slinitfunc.x64",
+            "slinithook.x64",
+            "slinitoffset.x64"
+          ],
+          "candidate_entries": [
+            {
+              "key": "defpolicycode.x64",
+              "value": "CDefPolicy_Query_r9d_rdi_jmp"
+            },
+            {
+              "key": "defpolicyoffset.x64",
+              "value": "AA9ED"
+            },
+            {
+              "key": "defpolicypatch.x64",
+              "value": "1"
+            },
+            {
+              "key": "localonlycode.x64",
+              "value": "jmpshort"
+            },
+            {
+              "key": "localonlyoffset.x64",
+              "value": "A0CD1"
+            },
+            {
+              "key": "localonlypatch.x64",
+              "value": "1"
+            },
+            {
+              "key": "singleusercode.x64",
+              "value": "mov_eax_1_nop_2"
+            },
+            {
+              "key": "singleuseroffset.x64",
+              "value": "AD84B"
+            },
+            {
+              "key": "singleuserpatch.x64",
+              "value": "1"
+            },
+            {
+              "key": "slinitfunc.x64",
+              "value": "New_CSLQuery_Initialize"
+            },
+            {
+              "key": "slinithook.x64",
+              "value": "1"
+            },
+            {
+              "key": "slinitoffset.x64",
+              "value": "C1AD0"
+            }
+          ],
+          "production_only_keys": []
+        },
+        {
+          "section": "10.0.26100.10021-SLInit",
+          "status": "new_section",
+          "architecture": "x64",
+          "candidate_key_count": 8,
+          "production_key_count": 0,
+          "candidate_architecture_key_count": 8,
+          "production_architecture_key_count": 0,
+          "ignored_opposite_architecture_key_count": 0,
+          "production_opposite_architectures": [],
+          "value_differences": [],
+          "candidate_only_keys": [
+            "bappserverallowed.x64",
+            "bfusenabled.x64",
+            "binitialized.x64",
+            "bmultimonallowed.x64",
+            "bremoteconnallowed.x64",
+            "bserversku.x64",
+            "lmaxusersessions.x64",
+            "ulmaxdebugsessions.x64"
+          ],
+          "candidate_entries": [
+            {
+              "key": "bappserverallowed.x64",
+              "value": "1363E0"
+            },
+            {
+              "key": "bfusenabled.x64",
+              "value": "1363FC"
+            },
+            {
+              "key": "binitialized.x64",
+              "value": "1363D0"
+            },
+            {
+              "key": "bmultimonallowed.x64",
+              "value": "1363F0"
+            },
+            {
+              "key": "bremoteconnallowed.x64",
+              "value": "1363EC"
+            },
+            {
+              "key": "bserversku.x64",
+              "value": "1363D4"
+            },
+            {
+              "key": "lmaxusersessions.x64",
+              "value": "1363D8"
+            },
+            {
+              "key": "ulmaxdebugsessions.x64",
+              "value": "1363F8"
+            }
+          ],
+          "production_only_keys": []
+        }
+      ],
+      "new_sections": [
+        "10.0.26100.10021",
+        "10.0.26100.10021-SLInit"
+      ],
+      "new_architecture_sections": [],
+      "value_differences": [],
+      "candidate_only_keys": [],
+      "production_only_keys": [],
+      "unsectioned_entries": [],
+      "duplicate_keys": [],
+      "parser_warnings": [],
+      "source_count": 1,
+      "sources": [
+        {
+          "source_type": "comment",
+          "issue_number": 4568,
+          "author": "AmirHosseinBozorgi",
+          "source_url": "https://github.com/stascorp/rdpwrap/issues/4568#issuecomment-7169604013",
+          "created_at": "2026-11-25T17:30:33Z",
+          "updated_at": "2026-11-25T17:34:23Z"
         }
       ]
     },

@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "upstream": "stascorp/rdpwrap",
-  "updated_at": "2026-11-26T08:16:34Z",
+  "updated_at": "2026-11-26T21:30:33Z",
   "candidates": {
     "e9d90f42402be7fa57f13a51ed39025c02909bf356b58787a53f77d11cb3430a": {
       "candidate_id": "e9d90f42402be7fa",
@@ -1543,6 +1543,63 @@
     }
   },
   "issues": {
+    "4572": {
+      "number": 4572,
+      "title": "Windows 11 25H2 Windows 11 RDP Wrapper 10.0.26100.10068 Not working.",
+      "url": "https://github.com/stascorp/rdpwrap/issues/4572",
+      "state": "closed",
+      "labels": [
+        "invalid"
+      ],
+      "created_at": "2026-11-26T09:12:22Z",
+      "updated_at": "2026-11-26T10:16:54Z",
+      "monitor_seen_at": "2026-11-26T21:30:32Z",
+      "issue_classification": "reported_failure",
+      "failure_signals": [
+        "not_working_report"
+      ],
+      "triage_notes": [
+        {
+          "signals": [
+            "not_rdp_wrapper_bug",
+            "direct_to_support"
+          ],
+          "author": "binarymaster",
+          "created_at": "2026-11-26T10:16:45Z",
+          "updated_at": "2026-11-26T10:16:45Z",
+          "url": "https://github.com/stascorp/rdpwrap/issues/4572#issuecomment-7189150907",
+          "excerpt": "\"not listening and fully supported\" is not RDP Wrapper bug. Please contact Telegram support chat for help (badge in readme)."
+        }
+      ],
+      "duplicate_issue_refs": [],
+      "os_metadata": {
+        "os_releases": [
+          "Windows 11 25H2",
+          "Windows 11"
+        ],
+        "os_build_hints": [],
+        "os_version_hints": [
+          "10.0.26100.10068"
+        ]
+      },
+      "termsrv_versions_explicit": [],
+      "ini_target_versions": [],
+      "other_version_identifiers": [],
+      "version_relationships": [
+        {
+          "version": "10.0.26100.10068",
+          "roles": [
+            "os_version_hint_from_title"
+          ]
+        }
+      ],
+      "candidate_sha256s": [],
+      "attachment_links": [
+        "https://github.com/user-attachments/assets/61637115-bce4-4a0d-9e3a-a258787a29b1"
+      ],
+      "first_seen": "2026-11-26T21:30:32Z",
+      "last_seen": "2026-11-26T21:30:32Z"
+    },
     "4571": {
       "number": 4571,
       "title": "Windows 11 - 26H2 (10.0.26100.10068) - Not Supported",

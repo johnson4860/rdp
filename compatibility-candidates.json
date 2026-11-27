@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "upstream": "stascorp/rdpwrap",
-  "updated_at": "2026-11-26T21:30:33Z",
+  "updated_at": "2026-11-27T08:30:56Z",
   "candidates": {
     "e9d90f42402be7fa57f13a51ed39025c02909bf356b58787a53f77d11cb3430a": {
       "candidate_id": "e9d90f42402be7fa",
@@ -1543,6 +1543,92 @@
     }
   },
   "issues": {
+    "4574": {
+      "number": 4574,
+      "title": "Windows 11 25H2 RDP Wrapper 10.0.26100.10068 Not working",
+      "url": "https://github.com/stascorp/rdpwrap/issues/4574",
+      "state": "open",
+      "labels": [],
+      "created_at": "2026-11-27T01:48:46Z",
+      "updated_at": "2026-11-27T02:51:56Z",
+      "monitor_seen_at": "2026-11-27T08:30:55Z",
+      "issue_classification": "reported_failure",
+      "failure_signals": [
+        "not_working_report"
+      ],
+      "triage_notes": [],
+      "duplicate_issue_refs": [],
+      "os_metadata": {
+        "os_releases": [
+          "Windows 11 25H2"
+        ],
+        "os_build_hints": [],
+        "os_version_hints": [
+          "10.0.26100.10068"
+        ]
+      },
+      "termsrv_versions_explicit": [],
+      "ini_target_versions": [],
+      "other_version_identifiers": [],
+      "version_relationships": [
+        {
+          "version": "10.0.26100.10068",
+          "roles": [
+            "os_version_hint_from_title"
+          ]
+        }
+      ],
+      "candidate_sha256s": [],
+      "attachment_links": [
+        "https://github.com/user-attachments/assets/3a26b69a-6ae4-402c-a8cc-a628eaf86382",
+        "https://github.com/user-attachments/files/35492663/termsrv.zip"
+      ],
+      "first_seen": "2026-11-27T08:30:55Z",
+      "last_seen": "2026-11-27T08:30:55Z"
+    },
+    "4573": {
+      "number": 4573,
+      "title": "Windows 11 25H2 Windows 11 RDP Wrapper 10.0.26100.10068 Not working.",
+      "url": "https://github.com/stascorp/rdpwrap/issues/4573",
+      "state": "open",
+      "labels": [],
+      "created_at": "2026-11-27T01:16:10Z",
+      "updated_at": "2026-11-27T01:16:10Z",
+      "monitor_seen_at": "2026-11-27T08:30:55Z",
+      "issue_classification": "reported_failure",
+      "failure_signals": [
+        "not_working_report"
+      ],
+      "triage_notes": [],
+      "duplicate_issue_refs": [],
+      "os_metadata": {
+        "os_releases": [
+          "Windows 11 25H2",
+          "Windows 11"
+        ],
+        "os_build_hints": [],
+        "os_version_hints": [
+          "10.0.26100.10068"
+        ]
+      },
+      "termsrv_versions_explicit": [],
+      "ini_target_versions": [],
+      "other_version_identifiers": [],
+      "version_relationships": [
+        {
+          "version": "10.0.26100.10068",
+          "roles": [
+            "os_version_hint_from_title"
+          ]
+        }
+      ],
+      "candidate_sha256s": [],
+      "attachment_links": [
+        "https://github.com/user-attachments/assets/1596183d-b88a-4756-8f6e-3333e5307d8d"
+      ],
+      "first_seen": "2026-11-27T08:30:55Z",
+      "last_seen": "2026-11-27T08:30:55Z"
+    },
     "4572": {
       "number": 4572,
       "title": "Windows 11 25H2 Windows 11 RDP Wrapper 10.0.26100.10068 Not working.",

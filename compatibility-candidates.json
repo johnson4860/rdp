@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "upstream": "stascorp/rdpwrap",
-  "updated_at": "2026-11-27T08:30:56Z",
+  "updated_at": "2026-11-27T21:16:16Z",
   "candidates": {
     "e9d90f42402be7fa57f13a51ed39025c02909bf356b58787a53f77d11cb3430a": {
       "candidate_id": "e9d90f42402be7fa",
@@ -1543,15 +1543,57 @@
     }
   },
   "issues": {
+    "4575": {
+      "number": 4575,
+      "title": "WIndows 11  26H2  26300.10075 - Not supported",
+      "url": "https://github.com/stascorp/rdpwrap/issues/4575",
+      "state": "closed",
+      "labels": [
+        "invalid"
+      ],
+      "created_at": "2026-11-27T15:30:17Z",
+      "updated_at": "2026-11-27T15:40:00Z",
+      "monitor_seen_at": "2026-11-27T21:16:15Z",
+      "issue_classification": "maintainer_labeled_invalid",
+      "failure_signals": [],
+      "triage_notes": [],
+      "duplicate_issue_refs": [],
+      "os_metadata": {
+        "os_releases": [
+          "Windows 11 26H2"
+        ],
+        "os_build_hints": [
+          "26300.10075"
+        ],
+        "os_version_hints": []
+      },
+      "termsrv_versions_explicit": [],
+      "ini_target_versions": [],
+      "other_version_identifiers": [],
+      "version_relationships": [
+        {
+          "version": "26300.10075",
+          "roles": [
+            "os_build_hint"
+          ]
+        }
+      ],
+      "candidate_sha256s": [],
+      "attachment_links": [],
+      "first_seen": "2026-11-27T21:16:15Z",
+      "last_seen": "2026-11-27T21:16:15Z"
+    },
     "4574": {
       "number": 4574,
       "title": "Windows 11 25H2 RDP Wrapper 10.0.26100.10068 Not working",
       "url": "https://github.com/stascorp/rdpwrap/issues/4574",
-      "state": "open",
-      "labels": [],
+      "state": "closed",
+      "labels": [
+        "duplicate"
+      ],
       "created_at": "2026-11-27T01:48:46Z",
-      "updated_at": "2026-11-27T02:51:56Z",
-      "monitor_seen_at": "2026-11-27T08:30:55Z",
+      "updated_at": "2026-11-27T11:24:54Z",
+      "monitor_seen_at": "2026-11-27T21:16:15Z",
       "issue_classification": "reported_failure",
       "failure_signals": [
         "not_working_report"
@@ -1584,22 +1626,36 @@
         "https://github.com/user-attachments/files/35492663/termsrv.zip"
       ],
       "first_seen": "2026-11-27T08:30:55Z",
-      "last_seen": "2026-11-27T08:30:55Z"
+      "last_seen": "2026-11-27T21:16:15Z"
     },
     "4573": {
       "number": 4573,
       "title": "Windows 11 25H2 Windows 11 RDP Wrapper 10.0.26100.10068 Not working.",
       "url": "https://github.com/stascorp/rdpwrap/issues/4573",
-      "state": "open",
-      "labels": [],
+      "state": "closed",
+      "labels": [
+        "invalid"
+      ],
       "created_at": "2026-11-27T01:16:10Z",
-      "updated_at": "2026-11-27T01:16:10Z",
-      "monitor_seen_at": "2026-11-27T08:30:55Z",
+      "updated_at": "2026-11-27T11:24:24Z",
+      "monitor_seen_at": "2026-11-27T21:16:15Z",
       "issue_classification": "reported_failure",
       "failure_signals": [
         "not_working_report"
       ],
-      "triage_notes": [],
+      "triage_notes": [
+        {
+          "signals": [
+            "not_rdp_wrapper_bug",
+            "direct_to_support"
+          ],
+          "author": "binarymaster",
+          "created_at": "2026-11-27T11:24:14Z",
+          "updated_at": "2026-11-27T11:24:14Z",
+          "url": "https://github.com/stascorp/rdpwrap/issues/4573#issuecomment-7217032992",
+          "excerpt": "Not RDP Wrapper bug. Please contact Telegram support chat for help (badge in readme)."
+        }
+      ],
       "duplicate_issue_refs": [],
       "os_metadata": {
         "os_releases": [
@@ -1627,7 +1683,7 @@
         "https://github.com/user-attachments/assets/1596183d-b88a-4756-8f6e-3333e5307d8d"
       ],
       "first_seen": "2026-11-27T08:30:55Z",
-      "last_seen": "2026-11-27T08:30:55Z"
+      "last_seen": "2026-11-27T21:16:15Z"
     },
     "4572": {
       "number": 4572,

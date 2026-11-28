@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "upstream": "stascorp/rdpwrap",
-  "updated_at": "2026-11-27T21:16:16Z",
+  "updated_at": "2026-11-28T07:48:02Z",
   "candidates": {
     "e9d90f42402be7fa57f13a51ed39025c02909bf356b58787a53f77d11cb3430a": {
       "candidate_id": "e9d90f42402be7fa",
